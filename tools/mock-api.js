@@ -5,10 +5,12 @@
 //   ?api_base=http://localhost:8787&code=TEST-FIRST
 //
 // Test codes:
-//   TEST-FIRST    -> valid, is_first_attempt=true
-//   TEST-REPEAT   -> valid, is_first_attempt=false
-//   TEST-NOATTEMPTS -> valid but attempts_remaining=0 (blocks on gate)
-//   anything else -> invalid code (400)
+//   TEST-FIRST      -> valid, is_first_attempt=true
+//   TEST-REPEAT     -> valid, is_first_attempt=false
+//   TEST-EXHAUSTED  -> valid:false, reason="exhausted"
+//   TEST-EXPIRED    -> valid:false, reason="expired"
+//   TEST-REVOKED    -> valid:false, reason="revoked"
+//   anything else   -> valid:false, reason="not_found"
 
 const http = require("node:http");
 
@@ -16,9 +18,11 @@ const PORT = Number(process.argv[2]) || 8787;
 const attemptCounts = new Map();
 
 const CODES = {
-  "TEST-FIRST": { display_name: "テスト 太郎", exam_type: "gaishoku_tokutei2", attempts_remaining: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "standard", is_first_attempt: true },
-  "TEST-REPEAT": { display_name: "テスト 花子", exam_type: "gaishoku_tokutei2", attempts_remaining: 2, expires_at: "2027-01-01T00:00:00Z", plan_type: "standard", is_first_attempt: false },
-  "TEST-NOATTEMPTS": { display_name: "テスト 次郎", exam_type: "gaishoku_tokutei2", attempts_remaining: 0, expires_at: "2027-01-01T00:00:00Z", plan_type: "standard", is_first_attempt: false },
+  "TEST-FIRST": { valid: true, display_name: "テスト 太郎", exam_type: "gaishoku_tokutei2", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
+  "TEST-REPEAT": { valid: true, display_name: "テスト 花子", exam_type: "gaishoku_tokutei2", remaining_attempts: 2, expires_at: "2027-01-01T00:00:00Z", plan_type: "one_time", is_first_attempt: false },
+  "TEST-EXHAUSTED": { valid: false, reason: "exhausted" },
+  "TEST-EXPIRED": { valid: false, reason: "expired" },
+  "TEST-REVOKED": { valid: false, reason: "revoked" },
 };
 
 function withCors(res) {
@@ -43,12 +47,12 @@ const server = http.createServer(async (req, res) => {
 
   if (req.method === "POST" && req.url === "/api/verify-code") {
     const { access_code } = await readJson(req);
-    const info = CODES[access_code];
-    if (!info) {
+    if (!access_code) {
       res.writeHead(400, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({ error: "invalid_code" }));
+      res.end(JSON.stringify({ valid: false, reason: "invalid_request" }));
       return;
     }
+    const info = CODES[access_code] || { valid: false, reason: "not_found" };
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify(info));
     return;
@@ -56,11 +60,16 @@ const server = http.createServer(async (req, res) => {
 
   if (req.method === "POST" && req.url === "/api/exam-results") {
     const payload = await readJson(req);
+    if (!payload.access_code) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ accepted: false, reason: "invalid_request" }));
+      return;
+    }
     const n = (attemptCounts.get(payload.access_code) || 0) + 1;
     attemptCounts.set(payload.access_code, n);
     console.log("exam-results received:", JSON.stringify(payload, null, 2));
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ ok: true, attempt_number: n }));
+    res.end(JSON.stringify({ accepted: true, attempt_number: n, remaining_attempts: Math.max(0, 3 - n) }));
     return;
   }
 

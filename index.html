@@ -171,7 +171,16 @@
 const { useState, useEffect, useRef } = React;
 
 const DATA_BASE = new URLSearchParams(location.search).get("data_base") || ".";
-const API_BASE = new URLSearchParams(location.search).get("api_base") || "https://<CORPORATE_SITE_DOMAIN>"; // TODO: điền domain thật khi corporate-site chốt
+const API_BASE = new URLSearchParams(location.search).get("api_base") || "https://corporate-site-avecvous-evolve.vercel.app";
+
+const CODE_REASON_MESSAGES = {
+  invalid_request: "リクエストが正しくありません。コードをご確認ください。",
+  not_found: "アクセスコードが見つかりません。コードをご確認ください。",
+  revoked: "このアクセスコードは無効化されています。担当者にご連絡ください。",
+  expired: "このアクセスコードの有効期限が切れています。担当者にご連絡ください。",
+  exhausted: "受験可能回数の上限に達しています。担当者にご連絡ください。",
+  exam_type_mismatch: "試験区分が一致しません。担当者にご連絡ください。",
+};
 
 let QUESTION_BANK = [];
 let BLUEPRINT = { gakka: [], jitsugi: [] };
@@ -257,11 +266,15 @@ function App(){
       const r=await fetch(`${API_BASE}/api/verify-code`,{
         method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({access_code:trimmed})
       });
-      if(!r.ok) throw new Error(`HTTP ${r.status}`);
       const info=await r.json();
-      if(info.attempts_remaining<=0){
+      if(!info.valid){
         setGateStatus("error");
-        setGateError("受験可能回数の上限に達しています。担当者にご連絡ください。");
+        setGateError(CODE_REASON_MESSAGES[info.reason] || "アクセスコードを確認できませんでした。コードをご確認のうえ再度お試しください。");
+        return;
+      }
+      if(!info.exam_type){
+        setGateStatus("error");
+        setGateError("この受験コードには試験区分が設定されていません。担当者にご連絡ください。");
         return;
       }
       await loadExamData(info.exam_type);
@@ -271,7 +284,7 @@ function App(){
       window.scrollTo(0,0);
     }catch(e){
       setGateStatus("error");
-      setGateError("アクセスコードを確認できませんでした。コードをご確認のうえ再度お試しください。");
+      setGateError("通信エラーが発生しました。しばらくしてから再度お試しください。");
     }
   }
 
@@ -334,9 +347,12 @@ function App(){
       const r=await fetch(`${API_BASE}/api/exam-results`,{
         method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)
       });
-      if(!r.ok) throw new Error(`HTTP ${r.status}`);
-      const body=await r.json().catch(()=>({}));
-      if(body.attempt_number!=null) setResultMeta({attemptNumber:body.attempt_number});
+      const body=await r.json();
+      if(!body.accepted){
+        setSaveState({status:"err",msg:CODE_REASON_MESSAGES[body.reason] || "結果の送信に失敗しました。担当者にご連絡ください。"});
+        return;
+      }
+      setResultMeta({attemptNumber:body.attempt_number, remainingAttempts:body.remaining_attempts});
       setSaveState({status:"ok",msg:"結果を送信しました。"});
     }catch(e){
       setSaveState({status:"err",msg:"結果の送信に失敗しました。担当者にご連絡ください。"});
@@ -529,7 +545,7 @@ function App(){
           <div className={"score-hero "+(result.passed?"pass":"fail")}>
             <div className="verdict-seal">{result.passed?"合":"否"}</div>
             <div className="score-big">{result.total}<span className="of"> / {result.maxTotal}</span></div>
-            <div className="score-sub">{verifyInfo?.display_name} 様{resultMeta.attemptNumber?` · 受験 ${resultMeta.attemptNumber}回目`:""} · {pct}% · 合格基準 {PASS_MARK}点</div>
+            <div className="score-sub">{verifyInfo?.display_name} 様{resultMeta.attemptNumber?` · 受験 ${resultMeta.attemptNumber}回目`:""}{resultMeta.remainingAttempts!=null?` · 残り${resultMeta.remainingAttempts}回`:""} · {pct}% · 合格基準 {PASS_MARK}点</div>
             <div className="verdict-label">{result.passed?"合格":"不合格"}</div>
           </div>
           <div className="sect-scores">
