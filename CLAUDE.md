@@ -99,3 +99,17 @@ data/
 ## Test local
 
 `tools/mock-api.js` mô phỏng 2 endpoint trên đúng theo contract ở trên (không có dependency ngoài Node built-in `http`). Đã verify bằng Playwright qua các kịch bản: lần đầu (đủ luồng gate→survey→start→quiz→result), lần sau (bỏ qua survey), hết lượt/hết hạn/bị thu hồi (chặn ở gate với đúng message theo `reason`), mã sai (`not_found`), thiếu `access_code` (`invalid_request`, HTTP 400) — payload gửi đi đúng contract, không phát sinh lỗi console.
+
+**Công thức chạy test local (2 lệnh song song):**
+```
+node tools/mock-api.js 8787      # mock API, port 8787
+npx serve -l 5500 .              # static server serving repo root, port 5500
+```
+
+**URL mở trình duyệt:**
+```
+http://localhost:5500/?api_base=http://localhost:8787&code=TEST-FIRST
+```
+- Phải mở ở path gốc `/` (không phải `/index.html?...`) — `serve` sẽ redirect và làm mất query string nếu mở `/index.html?...`.
+- Đổi `code=` để test kịch bản khác: `TEST-FIRST` (lần đầu, có survey), `TEST-REPEAT` (lần sau, bỏ qua survey), `TEST-EXHAUSTED`/`TEST-EXPIRED`/`TEST-REVOKED` (chặn ở gate), bất kỳ chuỗi khác (`not_found`).
+- Bỏ `?api_base=...` để gọi thẳng API production thật (`API_BASE` mặc định) — khi đó cần access code thật và origin phải nằm trong CORS allowlist của corporate-site (mặc định chỉ mở cho `https://evolveosaka-dev.github.io`, không phải `localhost`).

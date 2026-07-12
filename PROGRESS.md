@@ -8,6 +8,7 @@
   - `sendResult()` gửi `POST /api/exam-results` đúng contract thật (đã khớp với response schema `valid/reason`, `accepted/reason`, `remaining_attempts`).
   - `buildExam()`/`finishExam()` không đổi logic (RULE #1 trong `CLAUDE.md`), chỉ thêm 1 field pass-through `qid` đã được duyệt.
 - **E2E local pass**: test qua `tools/mock-api.js` (Playwright, 4+ kịch bản: lần đầu/lần sau/hết lượt/mã sai) và **hợp long với corporate-site thật — cả 3 trạm (verify-code, survey, exam-results) đều thông**.
+- **Bỏ ô email + đổi màn khảo sát sang 3 dropdown (年代/国籍/お住まい)** — đã tự test lại (local), xác nhận chạy đúng.
 
 ## Việc chờ
 
