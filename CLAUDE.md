@@ -55,7 +55,7 @@ data/
 `gate → survey (nếu is_first_attempt) → start → quiz → result`:
 
 1. **gate**: nhập access code (tự điền từ `?code=`), gọi `POST /api/verify-code`. Chặn lại nếu `valid:false` (hiện message theo `reason`) hoặc thiếu `exam_type`. Thành công → `loadExamData(exam_type)` → chuyển `survey` hoặc `start` tùy `is_first_attempt`.
-2. **survey** (chỉ hiện lần đầu, có thể bỏ qua): tuổi, nơi ở, opt-in mặc định tắt. Bỏ qua → không gửi field `survey` trong kết quả.
+2. **survey** (chỉ hiện lần đầu, có thể bỏ qua): 3 dropdown — 年代 (`AGE_RANGES`), 国籍 (`NATIONALITIES`), お住まい (`PREFECTURES`, 47 都道府県 + 海外) — cộng checkbox opt-in mặc định tắt. Bỏ qua → không gửi field `survey` trong kết quả.
 3. **start**: chỉ hiển thị `display_name` (từ verify-code, không cho sửa) — không còn ô nhập nào (email đã bị loại bỏ, xem mục API contract). `startExam()` gọi `buildExam()` ngay, không cần validate gì thêm.
 4. **quiz**: đếm ngược `EXAM_MINUTES` phút, tự nộp khi hết giờ; lưu lựa chọn vào `answers` theo `q.id`.
 5. `finishExam()`: chấm điểm, tạo `result`, chuyển **result**, gọi `sendResult(res)`.
@@ -85,13 +85,13 @@ data/
     "total_score": 0,
     "sections": [{ "topic": "衛生管理", "correct": 6, "total": 15 }],
     "wrong_questions": [{ "id": "gaishoku_tokutei2_011", "topic": "...", "question": "...", "user_answer": "...", "correct_answer": "..." }],
-    "survey": { "age": 30, "location": "大阪府", "opted_in": false }
+    "survey": { "age_range": "30代", "nationality": "ベトナム", "prefecture": "大阪府", "opted_in": false }
   }
   ```
   - **Không còn `email` trong payload** — email đã gắn với `access_code` trong DB corporate-site, server tự tra khi cần chứ FE không gửi nữa (FE cũng đã bỏ hẳn ô nhập email khỏi màn `start`). ⚠️ Nếu schema `exam-results` phía corporate-site đang khai báo `email` là field bắt buộc, cần đội corporate-site cập nhật đồng bộ (nếu chưa) — nếu không request sẽ bị `invalid_request` trở lại như lần hợp long trước.
   - `sections[].correct/total` = **số câu** đúng/tổng (không phải điểm).
   - `wrong_questions` chỉ chứa câu trả lời sai; `id` là `qid` gốc ổn định (không phải vị trí trong đề); `user_answer`/`correct_answer` là text đáp án, không phải index.
-  - `survey` chỉ có mặt khi `is_first_attempt` và người dùng không bỏ qua; ngược lại field này vắng mặt hoàn toàn.
+  - `survey` đổi từ ô gõ tự do (`age`/`location` number/text) sang 3 dropdown: `age_range` (string, "10代"–"50代以上"), `nationality` (string, danh sách + "その他"), `prefecture` (string, 47 都道府県 + "海外"), `opted_in` (boolean). Chỉ có mặt khi `is_first_attempt` và người dùng không bỏ qua; ngược lại field này vắng mặt hoàn toàn. ⚠️ **Danh sách `NATIONALITIES` trong `index.html` hiện là danh sách tạm** (10 quốc gia phổ biến + その他) — cần đội corporate-site xác nhận/cung cấp danh sách thật để khớp enum phía DB, tránh lệch giá trị khi ghi nhận.
   - Không gửi `attempt_number` — server tự gán khi ghi (RPC `submit_exam_result` phía corporate-site).
 - Chấp nhận (`accepted:true`, HTTP 200): `{ accepted, attempt_number, remaining_attempts }` — dùng để hiển thị "受験 N回目・残りM回" trên màn kết quả.
 - Từ chối (`accepted:false`): `{ accepted, reason }`, `reason` ∈ `"invalid_request"` (HTTP 400) | `"not_found" | "revoked" | "expired" | "exhausted" | "exam_type_mismatch"` (HTTP 200) — cùng map qua `CODE_REASON_MESSAGES`.

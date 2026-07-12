@@ -18,3 +18,4 @@
 
 - Domain production chính thức `avecvous-evolve.com` cho corporate-site (Phase 7 phía corporate-site) — khi gắn xong cần đổi `API_BASE` trong `index.html`.
 - **Đã bỏ hẳn ô nhập email và field `email` khỏi payload `/api/exam-results`** (email nay tra theo `access_code` trong DB, server tự lo). ⚠️ Cần đội corporate-site xác nhận schema `exam-results` không còn bắt buộc `email` — nếu vẫn required phía server sẽ lại bị `invalid_request` (400) như lần hợp long trước, cần sửa đồng bộ hai đầu trước khi go-live.
+- **Màn khảo sát đổi từ ô gõ tự do sang 3 dropdown** (年代/国籍/お住まい), payload `survey` đổi field name (`age_range`/`nationality`/`prefecture`/`opted_in` thay vì `age`/`location`/`opted_in`). ⚠️ **Danh sách `NATIONALITIES` trong `index.html` hiện là danh sách tạm** (10 quốc gia phổ biến + その他) — cần đội corporate-site xác nhận/cung cấp danh sách thật khớp enum phía DB trước khi go-live, tránh ghi nhận sai giá trị.
