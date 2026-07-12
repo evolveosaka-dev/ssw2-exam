@@ -18,8 +18,8 @@ const PORT = Number(process.argv[2]) || 8787;
 const attemptCounts = new Map();
 
 const CODES = {
-  "TEST-FIRST": { valid: true, display_name: "テスト 太郎", exam_type: "gaishoku_tokutei2", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
-  "TEST-REPEAT": { valid: true, display_name: "テスト 花子", exam_type: "gaishoku_tokutei2", remaining_attempts: 2, expires_at: "2027-01-01T00:00:00Z", plan_type: "one_time", is_first_attempt: false },
+  "TEST-FIRST": { valid: true, display_name: "テスト 太郎", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
+  "TEST-REPEAT": { valid: true, display_name: "テスト 花子", exam_type: "特定技能2号・外食業", remaining_attempts: 2, expires_at: "2027-01-01T00:00:00Z", plan_type: "one_time", is_first_attempt: false },
   "TEST-EXHAUSTED": { valid: false, reason: "exhausted" },
   "TEST-EXPIRED": { valid: false, reason: "expired" },
   "TEST-REVOKED": { valid: false, reason: "revoked" },

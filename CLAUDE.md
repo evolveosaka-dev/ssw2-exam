@@ -75,7 +75,7 @@ data/
   - `display_name`: rỗng `""` nếu user không có tên. `exam_type`: `string | null`. `plan_type`: `"trial" | "one_time" | "subscription"`.
   - `is_first_attempt` = true khi access_code chưa có bản ghi nào trong exam_results (server tính, không phải client).
 - Không hợp lệ (`valid:false`): `{ valid, reason }`, `reason` ∈ `"invalid_request"` (HTTP 400) | `"not_found" | "revoked" | "expired" | "exhausted"` (HTTP 200). FE map `reason` → message tiếng Nhật qua `CODE_REASON_MESSAGES` trong `index.html`.
-- ⚠️ Giá trị `exam_type` thật cho 外食業/2号 chưa xác nhận — đang là placeholder `gaishoku_tokutei2` trong `data/manifest.json`.
+- `exam_type` cho 外食業/2号 đã chốt và corporate-site đã triển khai: `"特定技能2号・外食業"` (khớp từng ký tự, gồm dấu `・` U+30FB) — là key trong `data/manifest.json`.
 
 **`POST /api/exam-results`**
 - Request:
