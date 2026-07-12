@@ -1,0 +1,12 @@
+{
+  "gaishoku_tokutei2": {
+    "industry": "gaishoku",
+    "industryLabel": "外食業",
+    "tier": "tokutei2",
+    "tierLabel": "特定技能２号",
+    "file": "data/gaishoku-tokutei2.json",
+    "examMinutes": 70,
+    "passMark": 163,
+    "totalMark": 250
+  }
+}

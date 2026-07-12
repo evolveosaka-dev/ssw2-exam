@@ -6,52 +6,93 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **TUYỆT ĐỐI KHÔNG thay đổi hành vi của hai khối logic sau, trừ khi người dùng yêu cầu tường minh và rõ ràng bằng lời:**
 
-1. **Logic ra đề** — hàm `buildExam()` trong `index.html` (~dòng 197-218) và hằng số `BLUEPRINT` (~dòng 178-191).
-   - Cách chọn số câu mỗi `sect`/`part` theo blueprint, cơ chế fallback khi thiếu câu (`extra`), cách `shuffle()` thứ tự 4 đáp án và remap lại `answer`/`why_wrong` index — giữ nguyên y hệt.
-2. **Logic chấm điểm** — hàm `finishExam()` trong `index.html` (~dòng 254-273).
+1. **Logic ra đề** — hàm `buildExam()` trong `index.html`.
+   - Cách chọn số câu mỗi `sect`/`part` theo `BLUEPRINT`, cơ chế fallback khi thiếu câu (`extra`), cách `shuffle()` thứ tự 4 đáp án và remap lại `answer`/`why_wrong` index — giữ nguyên y hệt.
+2. **Logic chấm điểm** — hàm `finishExam()` trong `index.html`.
    - Cách tính `sectScore`, `total`, `maxTotal`, so sánh với `PASS_MARK` để ra `passed` — giữ nguyên y hệt.
-   - Các hằng số `PASS_MARK = 163`, `TOTAL_MARK = 250`, `EXAM_MINUTES = 70` không được đổi trừ khi được yêu cầu trực tiếp.
+   - `BLUEPRINT`, `PASS_MARK`, `TOTAL_MARK`, `EXAM_MINUTES` là dữ liệu **theo ngành/bậc**, nạp lúc runtime từ `data/manifest.json` (xem mục Kiến trúc) — không hardcode lại thành hằng số cố định trong code.
 
-Mọi thay đổi khác (UI, màn hình gate access code, nguồn dữ liệu câu hỏi, endpoint/định dạng gửi kết quả, thêm ngành/topic...) đều được phép, **miễn là không chạm vào hai vùng trên**. Nếu một thay đổi bắt buộc phải sửa `buildExam`/`finishExam` (ví dụ: mở rộng sang nhiều ngành với blueprint khác nhau), phải dừng lại và hỏi lại người dùng trước khi sửa, không tự ý suy diễn.
+**Ngoại lệ duy nhất đã được duyệt và đã đóng (không còn treo, không cần hỏi lại):** `buildExam()` có thêm đúng 1 field pass-through `qid: q.qid` khi dựng object câu hỏi output — để `sendResult()` có thể tham chiếu id gốc ổn định trong ngân hàng đề. Không đụng vào lựa chọn câu, thuật toán shuffle, hay remap `answer`/`why_wrong`.
+
+Mọi thay đổi khác (UI, màn hình gate/survey, nguồn dữ liệu câu hỏi, endpoint/định dạng gửi kết quả, thêm ngành mới...) đều được phép, **miễn là không chạm vào hai vùng trên**. Nếu một thay đổi bắt buộc phải sửa thêm vào `buildExam`/`finishExam` ngoài ngoại lệ đã đóng ở trên, phải dừng lại và hỏi lại người dùng trước khi sửa, không tự ý suy diễn.
 
 ## Tổng quan dự án
 
-Đây là site thi thử "外食業 特定技能2号 技能測定試験" (luyện thi kỹ năng đặc định số 2 - ngành ẩm thực/nhà hàng, Nhật Bản), chạy tĩnh trên GitHub Pages, không có backend riêng.
+Site thi thử kỹ năng đặc định (特定技能) cho lao động nước ngoài tại Nhật, chạy tĩnh trên GitHub Pages, không có backend riêng trong repo này. Dự kiến mở rộng cho 11 ngành × 2 bậc (特定技能1号/2号); hiện tại chỉ có ngành ẩm thực/外食業 bậc 2号 (327 câu) làm **mẫu/template** cho các ngành sau. Xác thực và ghi nhận kết quả thi qua API của một hệ thống corporate-site riêng (xem mục API contract).
 
 ## Lệnh thường dùng
 
-Không có build step, không có package.json, không có test suite. Đây là 1 file HTML tĩnh duy nhất.
+Không có build step, không có package.json cho app, không có test suite tự động. `index.html` là app shell duy nhất (không build), dữ liệu đề nằm trong `data/`.
 
-- **Chạy thử local**: mở trực tiếp `index.html` bằng trình duyệt, hoặc serve qua bất kỳ static server nào (vd. `npx serve .`) để tránh giới hạn CORS/file:// nếu cần test fetch.
+- **Chạy thử local**: serve thư mục gốc qua static server bất kỳ (vd. `npx serve .`), vì `fetch()` tới `data/manifest.json`/API cần http(s), không chạy được qua `file://`.
+- **Test trước khi có API thật của corporate-site**: chạy `node tools/mock-api.js [port]` (mặc định 8787, không cần cài dependency), rồi mở app kèm query param override: `?api_base=http://localhost:8787&code=TEST-FIRST`. Các mã test có sẵn trong `tools/mock-api.js`: `TEST-FIRST` (lần đầu), `TEST-REPEAT` (lần sau), `TEST-NOATTEMPTS` (hết lượt), bất kỳ mã khác → lỗi xác thực.
+- `?code=` tự điền access code vào màn gate; `?data_base=`/`?api_base=` override nguồn data/API khi test local (mặc định `data_base="."`, `API_BASE` là domain corporate-site thật — xem TODO trong `index.html`).
 - **Deploy**: push lên nhánh mà GitHub Pages đang trỏ tới — không có CI/build pipeline.
-- Không có linter/formatter/test runner được cấu hình trong repo.
+- Không có linter/formatter được cấu hình trong repo.
 
 ## Kiến trúc
 
-Toàn bộ ứng dụng nằm trong **một file duy nhất `index.html`** (~247KB, phần lớn dung lượng là do ngân hàng câu hỏi nhúng dạng JSON trên 1 dòng). Không có module, không có bundler — React 18 UMD + Babel standalone được load qua CDN (`unpkg`), code viết trực tiếp trong thẻ `<script type="text/babel">` ở cuối file và Babel compile ngay trên trình duyệt lúc runtime.
+App shell là **một file `index.html`** (React 18 UMD + Babel standalone qua CDN, `<script type="text/babel">`, không bundler). Ngân hàng đề và cấu hình theo ngành/bậc nằm ngoài `index.html`, trong thư mục `data/`, nạp qua `fetch()` lúc runtime.
 
-### Ngân hàng câu hỏi
-
-Nhúng dưới dạng `<script type="application/json" id="question-bank">` (một dòng JSON dài), được đọc bằng `JSON.parse(document.getElementById("question-bank").textContent)` thành `QUESTION_BANK`. Mỗi câu hỏi có schema:
+### `data/` — ngân hàng đề theo ngành/bậc
 
 ```
-{ sect, part, q, options: [4 phần tử], answer (index đúng),
-  explain, why_wrong: {"1":..., "2":..., "3":...}, img? }
+data/
+  manifest.json              # exam_type -> {industry, industryLabel, tier, tierLabel, file, examMinutes, passMark, totalMark}
+  gaishoku-tokutei2.json     # {blueprint, sectLabels, questions}  — ngành mẫu (外食業/特定技能2号, 327 câu)
 ```
 
-- `sect` ∈ {`eisei`, `chori`, `sekkyaku`, `tenpo`} — 4 mảng kiến thức (vệ sinh, chế biến, tiếp khách, vận hành cửa hàng).
-- `part` ∈ {`gakka`, `jitsugi`} — phần lý thuyết (gakka) và phần thực hành/phán đoán (jitsugi).
-- Hiện có 327 câu, chỉ cho ngành ẩm thực (特定技能2号).
+- Key trong `manifest.json` là chuỗi `exam_type` mà API `/api/verify-code` trả về — phải khớp chính xác với giá trị thật từ corporate-site.
+- Mỗi file dữ liệu ngành đóng gói `blueprint` (số câu + điểm/câu mỗi sect×part), `sectLabels` (nhãn hiển thị + dùng làm `topic` khi gửi kết quả), và `questions` (mỗi câu có `qid` ổn định + schema gốc: `sect, part, q, options, answer, explain, why_wrong, img?`).
+- **Thêm ngành mới**: chỉ cần thêm 1 entry vào `manifest.json` + 1 file JSON cùng shape — không cần sửa `index.html`.
+
+### Nạp dữ liệu runtime
+
+`loadExamData(examType)` (đầu file JS trong `index.html`) fetch `manifest.json` rồi fetch file ngành tương ứng, gán vào các biến module-level `QUESTION_BANK`, `BLUEPRINT`, `SECT_LABEL`, `PASS_MARK`, `TOTAL_MARK`, `EXAM_MINUTES`, `EXAM_LABEL`. `buildExam()`/`finishExam()` đọc các biến này y hệt cách chúng hardcode trước đây — không phụ thuộc vào cách chúng được nạp.
 
 ### Flow thi (component `App`, state machine qua `screen`)
 
-`start` → `quiz` → `result`:
+`gate → survey (nếu is_first_attempt) → start → quiz → result`:
 
-1. **start**: nhập tên (bắt buộc)/email/phone. `startExam()` gọi `buildExam()` để tạo đề ngẫu nhiên theo `BLUEPRINT` (số câu + điểm/câu mỗi sect×part), shuffle thứ tự đáp án từng câu.
-2. **quiz**: đếm ngược `EXAM_MINUTES` phút, tự nộp khi hết giờ; lưu lựa chọn vào state `answers` theo `q.id`.
-3. `finishExam()`: chấm điểm, tạo object `result`, chuyển sang **result**, đồng thời gọi `sendResult(res)`.
-4. **result**: hiển thị điểm theo sect, đúng/sai từng câu kèm giải thích (`explain`) và lý do sai từng đáp án (`why_wrong`).
+1. **gate**: nhập access code (tự điền từ `?code=`), gọi `POST /api/verify-code`. Chặn lại nếu `attempts_remaining<=0` hoặc code không hợp lệ. Thành công → `loadExamData(exam_type)` → chuyển `survey` hoặc `start` tùy `is_first_attempt`.
+2. **survey** (chỉ hiện lần đầu, có thể bỏ qua): tuổi, nơi ở, opt-in mặc định tắt. Bỏ qua → không gửi field `survey` trong kết quả.
+3. **start**: hiển thị `display_name` (từ verify-code, không cho sửa), nhập email (bắt buộc). `startExam()` gọi `buildExam()`.
+4. **quiz**: đếm ngược `EXAM_MINUTES` phút, tự nộp khi hết giờ; lưu lựa chọn vào `answers` theo `q.id`.
+5. `finishExam()`: chấm điểm, tạo `result`, chuyển **result**, gọi `sendResult(res)`.
+6. **result**: điểm theo sect, đúng/sai từng câu kèm giải thích. Nút "もう一度" quay lại **gate** (để `attempts_remaining`/`is_first_attempt` được lấy lại đúng từ server).
 
 ### Gửi kết quả
 
-`sendResult()` POST kết quả (dạng `application/x-www-form-urlencoded` qua `URLSearchParams`, `fetch` với `mode:"no-cors"` — fire-and-forget, không đọc được response) tới `WEBHOOK_DEFAULT`, một URL webhook Make.com (Integromat) cứng trong code (~dòng 176). Make.com nhận payload rồi tự đẩy tiếp sang Google Sheets ở ngoài repo — không có API tự viết, không có backend trong repo này.
+`sendResult()` POST JSON tới `${API_BASE}/api/exam-results` (thật, có đọc response, không còn `no-cors`/webhook). Xem shape chính xác ở mục API contract bên dưới.
+
+## API contract (corporate-site, ngoài repo này)
+
+CORS mở cho origin `https://evolveosaka-dev.github.io`. Không có lớp token/session — `access_code` được gửi lại và server tự xác thực ở mỗi request.
+
+**`POST /api/verify-code`**
+- Request: `{ access_code }`
+- Response 200: `{ display_name, exam_type, attempts_remaining, expires_at, plan_type, is_first_attempt }`
+  - `is_first_attempt` = true khi access_code chưa có bản ghi nào trong exam_results (server tính, không phải client).
+  - `attempts_remaining<=0` → FE chặn lại dù response 200.
+- ⚠️ Giá trị `exam_type` thật cho 外食業/2号 và domain `API_BASE` thật chưa xác nhận — đang là placeholder trong `index.html` (tìm `TODO`).
+
+**`POST /api/exam-results`**
+- Request:
+  ```json
+  {
+    "access_code": "...", "email": "...", "exam_type": "...",
+    "total_score": 0,
+    "sections": [{ "topic": "衛生管理", "correct": 6, "total": 15 }],
+    "wrong_questions": [{ "id": "gaishoku_tokutei2_011", "topic": "...", "question": "...", "user_answer": "...", "correct_answer": "..." }],
+    "survey": { "age": 30, "location": "大阪府", "opted_in": false }
+  }
+  ```
+  - `sections[].correct/total` = **số câu** đúng/tổng (không phải điểm).
+  - `wrong_questions` chỉ chứa câu trả lời sai; `id` là `qid` gốc ổn định (không phải vị trí trong đề); `user_answer`/`correct_answer` là text đáp án, không phải index.
+  - `survey` chỉ có mặt khi `is_first_attempt` và người dùng không bỏ qua; ngược lại field này vắng mặt hoàn toàn.
+  - Không gửi `attempt_number` — server tự gán khi ghi (RPC `submit_exam_result` phía corporate-site).
+- Response: kỳ vọng có `attempt_number` (dùng để hiển thị "受験 N回目" trên màn kết quả, tùy chọn UI, không bắt buộc).
+
+## Test local
+
+`tools/mock-api.js` mô phỏng 2 endpoint trên (không có dependency ngoài Node built-in `http`). Đã verify bằng Playwright qua 4 kịch bản: lần đầu (đủ luồng gate→survey→start→quiz→result), lần sau (bỏ qua survey), hết lượt thi (chặn ở gate), mã sai (báo lỗi ở gate) — cả 4 đều cho payload đúng contract ở trên và không phát sinh lỗi console.
