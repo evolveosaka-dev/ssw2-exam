@@ -56,7 +56,7 @@ data/
 
 1. **gate**: nhập access code (tự điền từ `?code=`), gọi `POST /api/verify-code`. Chặn lại nếu `valid:false` (hiện message theo `reason`) hoặc thiếu `exam_type`. Thành công → `loadExamData(exam_type)` → chuyển `survey` hoặc `start` tùy `is_first_attempt`.
 2. **survey** (chỉ hiện lần đầu, có thể bỏ qua): tuổi, nơi ở, opt-in mặc định tắt. Bỏ qua → không gửi field `survey` trong kết quả.
-3. **start**: hiển thị `display_name` (từ verify-code, không cho sửa), nhập email (bắt buộc). `startExam()` gọi `buildExam()`.
+3. **start**: chỉ hiển thị `display_name` (từ verify-code, không cho sửa) — không còn ô nhập nào (email đã bị loại bỏ, xem mục API contract). `startExam()` gọi `buildExam()` ngay, không cần validate gì thêm.
 4. **quiz**: đếm ngược `EXAM_MINUTES` phút, tự nộp khi hết giờ; lưu lựa chọn vào `answers` theo `q.id`.
 5. `finishExam()`: chấm điểm, tạo `result`, chuyển **result**, gọi `sendResult(res)`.
 6. **result**: điểm theo sect, đúng/sai từng câu kèm giải thích, `attempt_number`/`remaining_attempts` từ response exam-results. Nút "もう一度" quay lại **gate** (để trạng thái lượt thi/`is_first_attempt` được lấy lại đúng từ server).
@@ -81,13 +81,14 @@ data/
 - Request:
   ```json
   {
-    "access_code": "...", "email": "...", "exam_type": "...",
+    "access_code": "...", "exam_type": "...",
     "total_score": 0,
     "sections": [{ "topic": "衛生管理", "correct": 6, "total": 15 }],
     "wrong_questions": [{ "id": "gaishoku_tokutei2_011", "topic": "...", "question": "...", "user_answer": "...", "correct_answer": "..." }],
     "survey": { "age": 30, "location": "大阪府", "opted_in": false }
   }
   ```
+  - **Không còn `email` trong payload** — email đã gắn với `access_code` trong DB corporate-site, server tự tra khi cần chứ FE không gửi nữa (FE cũng đã bỏ hẳn ô nhập email khỏi màn `start`). ⚠️ Nếu schema `exam-results` phía corporate-site đang khai báo `email` là field bắt buộc, cần đội corporate-site cập nhật đồng bộ (nếu chưa) — nếu không request sẽ bị `invalid_request` trở lại như lần hợp long trước.
   - `sections[].correct/total` = **số câu** đúng/tổng (không phải điểm).
   - `wrong_questions` chỉ chứa câu trả lời sai; `id` là `qid` gốc ổn định (không phải vị trí trong đề); `user_answer`/`correct_answer` là text đáp án, không phải index.
   - `survey` chỉ có mặt khi `is_first_attempt` và người dùng không bỏ qua; ngược lại field này vắng mặt hoàn toàn.

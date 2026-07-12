@@ -237,12 +237,10 @@ function App(){
   const [surveyLocation,setSurveyLocation]=useState("");
   const [surveyOptIn,setSurveyOptIn]=useState(false);
   const [survey,setSurvey]=useState(null);
-  const [email,setEmail]=useState("");
   const [questions,setQuestions]=useState([]);
   const [answers,setAnswers]=useState({});
   const [cur,setCur]=useState(0);
   const [remaining,setRemaining]=useState(0);
-  const [error,setError]=useState("");
   const [result,setResult]=useState(null);
   const [resultMeta,setResultMeta]=useState({});
   const [saveState,setSaveState]=useState({status:"idle",msg:""});
@@ -296,8 +294,6 @@ function App(){
   }
 
   function startExam(){
-    if(!email.trim()){ setError("メールアドレスを入力してください。"); return; }
-    setError("");
     const q=buildExam();
     setQuestions(q); setAnswers({}); setCur(0); setRemaining(EXAM_MINUTES*60);
     setScreen("quiz");
@@ -314,7 +310,6 @@ function App(){
     });
     const passed=total>=PASS_MARK;
     const res={
-      email:email.trim(),
       datetime:new Date().toISOString(), datetimeLocal:new Date().toLocaleString("ja-JP"),
       total, maxTotal, passMark:PASS_MARK, passed, sectScore,
       answered:Object.keys(answers).length, questionCount:questions.length,
@@ -339,7 +334,7 @@ function App(){
       correct_answer:questions[d.id].options[d.correct],
     }));
     const payload={
-      access_code:verifyInfo.access_code, email:res.email, exam_type:verifyInfo.exam_type,
+      access_code:verifyInfo.access_code, exam_type:verifyInfo.exam_type,
       total_score:res.total, sections, wrong_questions,
       ...(verifyInfo.is_first_attempt && survey ? { survey } : {}),
     };
@@ -436,18 +431,13 @@ function App(){
         <div className="panel">
           <h2>受験者情報</h2>
           <p className="hint">試験を始める前にご確認ください。</p>
-          <label className="field">
+          <label className="field" style={{marginBottom:4}}>
             <span className="lbl">お名前</span>
             <div style={{padding:"11px 12px",background:"var(--paper)",border:"1px solid var(--line)",borderRadius:"var(--radius)",fontSize:14.5}}>{verifyInfo?.display_name}</div>
-          </label>
-          <label className="field" style={{marginBottom:4}}>
-            <span className="lbl">メールアドレス <span className="vn-s">（必須）</span></span>
-            <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="例：example@mail.com" />
           </label>
           <p className="hint" style={{marginTop:8}}>
             提出すると結果は運営システムに自動送信され、担当者が確認できます。
           </p>
-          {error && <div className="err-box">{error}</div>}
           <button className="btn btn-seal" style={{width:"100%",marginTop:10}} onClick={startExam}>試験を始める</button>
         </div>
         <div className="panel">
