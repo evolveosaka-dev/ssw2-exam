@@ -85,13 +85,13 @@ data/
     "total_score": 0,
     "sections": [{ "topic": "衛生管理", "correct": 6, "total": 15 }],
     "wrong_questions": [{ "id": "gaishoku_tokutei2_011", "topic": "...", "question": "...", "user_answer": "...", "correct_answer": "..." }],
-    "survey": { "age_range": "30代", "nationality": "ベトナム", "prefecture": "大阪府", "opted_in": false }
+    "survey": { "age_range": "30代", "nationality": "ベトナム", "region": "大阪府", "marketing_opt_in": false }
   }
   ```
   - **Không còn `email` trong payload** — email đã gắn với `access_code` trong DB corporate-site, server tự tra khi cần chứ FE không gửi nữa (FE cũng đã bỏ hẳn ô nhập email khỏi màn `start`). ⚠️ Nếu schema `exam-results` phía corporate-site đang khai báo `email` là field bắt buộc, cần đội corporate-site cập nhật đồng bộ (nếu chưa) — nếu không request sẽ bị `invalid_request` trở lại như lần hợp long trước.
   - `sections[].correct/total` = **số câu** đúng/tổng (không phải điểm).
   - `wrong_questions` chỉ chứa câu trả lời sai; `id` là `qid` gốc ổn định (không phải vị trí trong đề); `user_answer`/`correct_answer` là text đáp án, không phải index.
-  - `survey` đổi từ ô gõ tự do (`age`/`location` number/text) sang 3 dropdown: `age_range` (string, "10代"–"50代以上"), `nationality` (string, danh sách + "その他"), `prefecture` (string, 47 都道府県 + "海外"), `opted_in` (boolean). Chỉ có mặt khi `is_first_attempt` và người dùng không bỏ qua; ngược lại field này vắng mặt hoàn toàn. ⚠️ **Danh sách `NATIONALITIES` trong `index.html` hiện là danh sách tạm** (10 quốc gia phổ biến + その他) — cần đội corporate-site xác nhận/cung cấp danh sách thật để khớp enum phía DB, tránh lệch giá trị khi ghi nhận.
+  - `survey` đổi từ ô gõ tự do (`age`/`location` number/text) sang 3 dropdown: `age_range` (string, "10代"–"50代以上"), `nationality` (string, danh sách + "その他"), `region` (string, 47 都道府県 + "海外" — **không phải `prefecture`**, tên field phải khớp chính xác với schema `zod` phía corporate-site), `marketing_opt_in` (boolean — **không phải `opted_in`**). Chỉ có mặt khi `is_first_attempt` và người dùng không bỏ qua; ngược lại field này vắng mặt hoàn toàn. `region` là field bắt buộc trong schema phía corporate-site (không cho phép thiếu), nên sai tên field này khiến **toàn bộ submit có kèm survey bị `invalid_request`** dù không hiện lỗi rõ ràng ở màn kết quả (màn kết quả tính điểm ở client, không phụ thuộc response của `sendResult()`) — đã từng xảy ra thực tế trong lần go-live đầu tiên, xem `git log` commit sửa lỗi này. Danh sách `NATIONALITIES` trong `index.html` đã đồng bộ đúng 9 giá trị với corporate-site (`src/lib/surveyCategories.ts`).
   - Không gửi `attempt_number` — server tự gán khi ghi (RPC `submit_exam_result` phía corporate-site).
 - Chấp nhận (`accepted:true`, HTTP 200): `{ accepted, attempt_number, remaining_attempts }` — dùng để hiển thị "受験 N回目・残りM回" trên màn kết quả.
 - Từ chối (`accepted:false`): `{ accepted, reason }`, `reason` ∈ `"invalid_request"` (HTTP 400) | `"not_found" | "revoked" | "expired" | "exhausted" | "exam_type_mismatch"` (HTTP 200) — cùng map qua `CODE_REASON_MESSAGES`.

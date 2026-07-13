@@ -189,8 +189,7 @@ const CODE_REASON_MESSAGES = {
 
 const AGE_RANGES = ["10代","20代","30代","40代","50代以上"];
 
-// TODO: xác nhận lại với corporate-site cho khớp chính xác danh sách quốc tịch thật (đang dùng danh sách tạm)
-const NATIONALITIES = ["ベトナム","フィリピン","インドネシア","ミャンマー","ネパール","中国","タイ","カンボジア","スリランカ","モンゴル","その他"];
+const NATIONALITIES = ["ベトナム","インドネシア","フィリピン","ミャンマー","カンボジア","ネパール","タイ","中国","その他"];
 
 const PREFECTURES = ["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県","茨城県","栃木県","群馬県",
   "埼玉県","千葉県","東京都","神奈川県","新潟県","富山県","石川県","福井県","山梨県","長野県",
@@ -305,7 +304,7 @@ function App(){
 
   function proceedFromSurvey(skip){
     if(skip){ setSurvey(null); }
-    else{ setSurvey({ age_range: surveyAgeRange||null, nationality: surveyNationality||null, prefecture: surveyPrefecture||null, opted_in: surveyOptIn }); }
+    else{ setSurvey({ age_range: surveyAgeRange||null, nationality: surveyNationality||null, region: surveyPrefecture||null, marketing_opt_in: surveyOptIn }); }
     setScreen("start");
     window.scrollTo(0,0);
   }
