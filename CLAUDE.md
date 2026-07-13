@@ -67,7 +67,7 @@ data/
 
 ## API contract (corporate-site, ngoài repo này)
 
-`API_BASE` mặc định = `https://corporate-site-avecvous-evolve.vercel.app` (alias production ổn định của corporate-site; domain tùy chỉnh `avecvous-evolve.com` sẽ gắn sau ở Phase 7 phía corporate-site — khi đó chỉ cần đổi giá trị này). CORS mở cho origin `https://evolveosaka-dev.github.io`. Không có lớp token/session — `access_code` được gửi lại và server tự xác thực ở mỗi request. Tất cả field response đều snake_case.
+`API_BASE` mặc định = hằng số `PRODUCTION_API_BASE` khai báo đầu `index.html`, hiện là `https://api.avecvous-evolve.com` (custom domain gắn vào project corporate-site trên Vercel, thay cho alias `.vercel.app` cũ vì alias đó bị Vercel Deployment Protection chặn với người dùng ẩn danh). Đổi domain production sau này chỉ cần sửa giá trị `PRODUCTION_API_BASE`. CORS mở cho origin `https://evolveosaka-dev.github.io`. Không có lớp token/session — `access_code` được gửi lại và server tự xác thực ở mỗi request. Tất cả field response đều snake_case.
 
 **`POST /api/verify-code`**
 - Request: `{ access_code }`

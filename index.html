@@ -170,8 +170,13 @@
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
 
+// ============================================================
+// GO-LIVE CONFIG — đổi domain API production ở đúng 1 chỗ này
+// ============================================================
+const PRODUCTION_API_BASE = "https://api.avecvous-evolve.com";
+
 const DATA_BASE = new URLSearchParams(location.search).get("data_base") || ".";
-const API_BASE = new URLSearchParams(location.search).get("api_base") || "https://corporate-site-avecvous-evolve.vercel.app";
+const API_BASE = new URLSearchParams(location.search).get("api_base") || PRODUCTION_API_BASE;
 
 const CODE_REASON_MESSAGES = {
   invalid_request: "リクエストが正しくありません。コードをご確認ください。",
