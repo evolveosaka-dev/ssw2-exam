@@ -125,6 +125,12 @@
   .ss-track { flex:1; height:8px; background:var(--line-soft); border-radius:5px; overflow:hidden; }
   .ss-fill { height:100%; background:var(--indigo); border-radius:5px; }
   .ss-pts { flex:0 0 auto; font-size:12px; font-weight:800; color:var(--indigo); font-variant-numeric:tabular-nums; }
+  .tb-red .tb-fill { background:var(--fail); }
+  .tb-yellow .tb-fill { background:var(--gold); }
+  .tb-green .tb-fill { background:var(--pass); }
+  .tb-red .tb-pct { color:var(--fail); }
+  .tb-yellow .tb-pct { color:var(--gold); }
+  .tb-green .tb-pct { color:var(--pass); }
   .save-status { margin-top:14px; font-size:12.5px; padding:10px 12px; border-radius:var(--radius);
     background:var(--amber-bg); border:1px solid var(--line-soft); color:var(--ink-soft); }
   .save-status.ok { background:rgba(47,122,77,.08); border-color:rgba(47,122,77,.25); color:var(--pass); }
@@ -187,6 +193,13 @@ const CODE_REASON_MESSAGES = {
   exam_type_mismatch: "試験区分が一致しません。担当者にご連絡ください。",
 };
 
+// TRIAL = 40問の体験版（合否判定なし）。FULL = 本番同一の55問（既存の合否判定）。
+// plan_type がどちらにも属さない場合はエラーで受験をブロックする（当て推量しない）。
+const TRIAL_PLAN_TYPES = ["trial"];
+const FULL_PLAN_TYPES = ["staff","one_time","subscription"];
+const TRIAL_EXAM_MINUTES = 30;
+const UPGRADE_URL_PLACEHOLDER = "#upgrade-phase5-todo";
+
 const AGE_RANGES = ["10代","20代","30代","40代","50代以上"];
 
 const NATIONALITIES = ["ベトナム","インドネシア","フィリピン","ミャンマー","カンボジア","ネパール","タイ","中国","その他"];
@@ -202,6 +215,9 @@ let BLUEPRINT = { gakka: [], jitsugi: [] };
 let SECT_LABEL = {};
 let PASS_MARK = null, TOTAL_MARK = null, EXAM_MINUTES = null;
 let EXAM_LABEL = { industryLabel:"", tierLabel:"" };
+// REAL_* = bản gốc 55問/250点/163点(PASS_MARK)/70分, chụp lại trước khi bị ghi đè cho chế độ TRIAL.
+// Dùng để hiển thị khối "本番の試験構成" trên màn kết quả trial — không bao giờ bị buildExam/finishExam đọc tới.
+let REAL_BLUEPRINT = null, REAL_PASS_MARK = null, REAL_TOTAL_MARK = null;
 
 async function loadExamData(examType){
   const manifest = await (await fetch(`${DATA_BASE}/data/manifest.json`)).json();
@@ -215,6 +231,13 @@ async function loadExamData(examType){
   TOTAL_MARK = cfg.totalMark;
   EXAM_MINUTES = cfg.examMinutes;
   EXAM_LABEL = { industryLabel: cfg.industryLabel, tierLabel: cfg.tierLabel };
+}
+
+// TRIAL専用: 本番のBLUEPRINTと同じsect構成を使い、各sectをn=5・per=1に固定した「入力データ」を作るだけ。
+// buildExam()のアルゴリズム（選定・シャッフル・remap）は一切変更しない — 呼び出し前にBLUEPRINTを差し替えるだけ。
+function deriveTrialBlueprint(full){
+  const shrink = arr => arr.map(s => ({...s, n:5, per:1}));
+  return { gakka: shrink(full.gakka), jitsugi: shrink(full.jitsugi) };
 }
 
 function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
@@ -244,6 +267,7 @@ function buildExam(){
 
 function App(){
   const [screen,setScreen]=useState("gate");
+  const [examMode,setExamMode]=useState("full");
   const [code,setCode]=useState(()=>new URLSearchParams(location.search).get("code")||"");
   const [gateStatus,setGateStatus]=useState("idle");
   const [gateError,setGateError]=useState("");
@@ -291,7 +315,22 @@ function App(){
         setGateError("この受験コードには試験区分が設定されていません。担当者にご連絡ください。");
         return;
       }
+      const mode = TRIAL_PLAN_TYPES.includes(info.plan_type) ? "trial"
+        : FULL_PLAN_TYPES.includes(info.plan_type) ? "full" : null;
+      if(!mode){
+        setGateStatus("error");
+        setGateError("不明なプランです。運営にお問い合わせください。");
+        return;
+      }
       await loadExamData(info.exam_type);
+      if(mode==="trial"){
+        REAL_BLUEPRINT=BLUEPRINT; REAL_PASS_MARK=PASS_MARK; REAL_TOTAL_MARK=TOTAL_MARK;
+        BLUEPRINT=deriveTrialBlueprint(REAL_BLUEPRINT);
+        TOTAL_MARK=[...BLUEPRINT.gakka,...BLUEPRINT.jitsugi].reduce((s,x)=>s+x.n*x.per,0);
+        PASS_MARK=null;
+        EXAM_MINUTES=TRIAL_EXAM_MINUTES;
+      }
+      setExamMode(mode);
       setVerifyInfo({...info, access_code:trimmed});
       setGateStatus("idle");
       setScreen(info.is_first_attempt?"survey":"start");
@@ -370,6 +409,24 @@ function App(){
     }
   }
 
+  // TRIAL専用の集計。finishExam()のsectScore（sect単位、part混在）とは別物 — finishExam()本体は未変更。
+  // questions/answersはfinishExam()実行後もstateに残っているため、ここで独立に part+sect単位へ再集計する。
+  function trialBreakdown(qs, ans){
+    const buckets = {};
+    qs.forEach(q=>{
+      const key = q.part+"_"+q.sect;
+      const b = (buckets[key] ||= {part:q.part, sect:q.sect, correct:0, total:0});
+      b.total++;
+      if(ans[q.id]===q.answer) b.correct++;
+    });
+    return Object.values(buckets);
+  }
+  function trialTierColor(rate){
+    if(rate<0.6) return "red";
+    if(rate<0.8) return "yellow";
+    return "green";
+  }
+
   function Masthead(){
     const totalQuestions=[...BLUEPRINT.gakka,...BLUEPRINT.jitsugi].reduce((s,x)=>s+x.n,0);
     return (
@@ -385,7 +442,9 @@ function App(){
           <div className="fact"><div className="num">{totalQuestions}</div><div className="lab">問</div></div>
           <div className="fact"><div className="num">{EXAM_MINUTES}</div><div className="lab">分</div></div>
           <div className="fact"><div className="num">{TOTAL_MARK}</div><div className="lab">満点</div></div>
-          <div className="fact"><div className="num">{PASS_MARK}</div><div className="lab">合格点</div></div>
+          {PASS_MARK!=null
+            ? <div className="fact"><div className="num">{PASS_MARK}</div><div className="lab">合格点</div></div>
+            : <div className="fact"><div className="num">体験</div><div className="lab">版</div></div>}
         </div>
       </div>
     );
@@ -471,7 +530,10 @@ function App(){
         </div>
         <div className="panel">
           <h2>出題構成</h2>
-          <p className="hint">学科{BLUEPRINT.gakka.reduce((s,x)=>s+x.n*x.per,0)}点分＋実技{BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n*x.per,0)}点分＝{TOTAL_MARK}点満点。合格基準は合計{PASS_MARK}点以上。</p>
+          <p className="hint">
+            学科{BLUEPRINT.gakka.reduce((s,x)=>s+x.n*x.per,0)}点分＋実技{BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n*x.per,0)}点分＝{TOTAL_MARK}点満点。
+            {PASS_MARK!=null ? `合格基準は合計${PASS_MARK}点以上。` : "体験版のため合否判定はありません。結果は正答率でお伝えします。"}
+          </p>
           <div style={{fontSize:12.5,fontWeight:700,margin:"4px 0 6px",color:"var(--indigo)"}}>
             学科試験 — {BLUEPRINT.gakka.reduce((s,x)=>s+x.n,0)}問 / {BLUEPRINT.gakka.reduce((s,x)=>s+x.n*x.per,0)}点
           </div>
@@ -561,29 +623,66 @@ function App(){
       <div className="wrap">
         <Masthead/>
         <div className="panel">
-          <div className={"score-hero "+(result.passed?"pass":"fail")}>
-            <div className="verdict-seal">{result.passed?"合":"否"}</div>
-            <div className="score-big">{result.total}<span className="of"> / {result.maxTotal}</span></div>
-            <div className="score-sub">{verifyInfo?.display_name} 様{resultMeta.attemptNumber?` · 受験 ${resultMeta.attemptNumber}回目`:""}{resultMeta.remainingAttempts!=null?` · 残り${resultMeta.remainingAttempts}回`:""} · {pct}% · 合格基準 {PASS_MARK}点</div>
-            <div className="verdict-label">{result.passed?"合格":"不合格"}</div>
-          </div>
-          <div className="sect-scores">
-            {Object.entries(result.sectScore).map(([k,v])=>(
-              <div className="ss-row" key={k}>
-                <div className="ss-name">{SECT_LABEL[k]}</div>
-                <div className="ss-track"><div className="ss-fill" style={{width:(v.got/v.max*100)+"%"}}/></div>
-                <div className="ss-pts">{v.got}/{v.max}</div>
+          {examMode==="trial" ? (
+            <>
+              <div className="sect-scores">
+                {trialBreakdown(questions,answers).map((b,i)=>{
+                  const rate=b.correct/b.total, tier=trialTierColor(rate);
+                  return (
+                    <div className={"ss-row tb-"+tier} key={i}>
+                      <div className="ss-name">{b.part==="gakka"?"学科":"実技"}・{SECT_LABEL[b.sect]}</div>
+                      <div className="ss-track"><div className="ss-fill tb-fill" style={{width:(rate*100)+"%"}}/></div>
+                      <div className="ss-pts tb-pct">{b.correct}/{b.total}（{Math.round(rate*100)}%）</div>
+                    </div>
+                  );
+                })}
               </div>
-            ))}
-          </div>
-          {saveState.status!=="idle" && (
-            <div className={"save-status "+(saveState.status==="ok"?"ok":saveState.status==="err"?"err":"")}>
-              {saveState.status==="sending" && "⏳ "}{saveState.msg}
-            </div>
+              <div className="rev-explain" style={{marginTop:16}}>
+                <div className="ex-lbl">本番の試験構成</div>
+                <div className="ex-jp">
+                  本番は学科{REAL_BLUEPRINT.gakka.reduce((s,x)=>s+x.n,0)}問{REAL_BLUEPRINT.gakka.reduce((s,x)=>s+x.n*x.per,0)}点＋実技{REAL_BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n,0)}問{REAL_BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n*x.per,0)}点＝{REAL_TOTAL_MARK}点満点、合格基準{REAL_PASS_MARK}点。
+                </div>
+                <div className="ex-vn" style={{borderTop:"none",paddingTop:0}}>
+                  この40問体験の正答率をもとにした目安です。本番形式(55問)では出題範囲が広がるため、結果は変わる可能性があります。しっかり対策するには有料プランがおすすめです。
+                </div>
+              </div>
+              {saveState.status!=="idle" && (
+                <div className={"save-status "+(saveState.status==="ok"?"ok":saveState.status==="err"?"err":"")}>
+                  {saveState.status==="sending" && "⏳ "}{saveState.msg}
+                </div>
+              )}
+              <div className="btn-row">
+                <a className="btn btn-seal" style={{flex:1,textDecoration:"none",display:"flex",alignItems:"center",justifyContent:"center"}} href={UPGRADE_URL_PLACEHOLDER}>有料プランで対策する</a>
+                <button className="btn btn-ghost" style={{flex:1}} onClick={()=>{setScreen("gate"); setResult(null); setResultMeta({}); setSurvey(null);}}>もう一度</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={"score-hero "+(result.passed?"pass":"fail")}>
+                <div className="verdict-seal">{result.passed?"合":"否"}</div>
+                <div className="score-big">{result.total}<span className="of"> / {result.maxTotal}</span></div>
+                <div className="score-sub">{verifyInfo?.display_name} 様{resultMeta.attemptNumber?` · 受験 ${resultMeta.attemptNumber}回目`:""}{resultMeta.remainingAttempts!=null?` · 残り${resultMeta.remainingAttempts}回`:""} · {pct}% · 合格基準 {PASS_MARK}点</div>
+                <div className="verdict-label">{result.passed?"合格":"不合格"}</div>
+              </div>
+              <div className="sect-scores">
+                {Object.entries(result.sectScore).map(([k,v])=>(
+                  <div className="ss-row" key={k}>
+                    <div className="ss-name">{SECT_LABEL[k]}</div>
+                    <div className="ss-track"><div className="ss-fill" style={{width:(v.got/v.max*100)+"%"}}/></div>
+                    <div className="ss-pts">{v.got}/{v.max}</div>
+                  </div>
+                ))}
+              </div>
+              {saveState.status!=="idle" && (
+                <div className={"save-status "+(saveState.status==="ok"?"ok":saveState.status==="err"?"err":"")}>
+                  {saveState.status==="sending" && "⏳ "}{saveState.msg}
+                </div>
+              )}
+              <div className="btn-row">
+                <button className="btn btn-ghost" onClick={()=>{setScreen("gate"); setResult(null); setResultMeta({}); setSurvey(null);}}>もう一度（新しい問題）</button>
+              </div>
+            </>
           )}
-          <div className="btn-row">
-            <button className="btn btn-ghost" onClick={()=>{setScreen("gate"); setResult(null); setResultMeta({}); setSurvey(null);}}>もう一度（新しい問題）</button>
-          </div>
         </div>
         <div className="panel">
           <h2>解説</h2>

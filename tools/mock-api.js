@@ -5,12 +5,16 @@
 //   ?api_base=http://localhost:8787&code=TEST-FIRST
 //
 // Test codes:
-//   TEST-FIRST      -> valid, is_first_attempt=true
-//   TEST-REPEAT     -> valid, is_first_attempt=false
-//   TEST-EXHAUSTED  -> valid:false, reason="exhausted"
-//   TEST-EXPIRED    -> valid:false, reason="expired"
-//   TEST-REVOKED    -> valid:false, reason="revoked"
-//   anything else   -> valid:false, reason="not_found"
+//   TEST-FIRST        -> valid, plan_type="subscription" (FULL/55問), is_first_attempt=true
+//   TEST-REPEAT       -> valid, plan_type="one_time" (FULL/55問), is_first_attempt=false
+//   TEST-STAFF        -> valid, plan_type="staff" (FULL/55問), is_first_attempt=true
+//   TEST-TRIAL-FIRST  -> valid, plan_type="trial" (TRIAL/40問), is_first_attempt=true
+//   TEST-TRIAL-REPEAT -> valid:false, reason="exhausted" (trial chỉ có 1 lượt, mô phỏng lượt đã dùng hết)
+//   TEST-UNKNOWN-PLAN -> valid, plan_type="beta" (không thuộc whitelist FULL/TRIAL nào -> FE phải chặn ở gate)
+//   TEST-EXHAUSTED    -> valid:false, reason="exhausted"
+//   TEST-EXPIRED      -> valid:false, reason="expired"
+//   TEST-REVOKED      -> valid:false, reason="revoked"
+//   anything else     -> valid:false, reason="not_found"
 
 const http = require("node:http");
 
@@ -20,6 +24,10 @@ const attemptCounts = new Map();
 const CODES = {
   "TEST-FIRST": { valid: true, display_name: "テスト 太郎", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
   "TEST-REPEAT": { valid: true, display_name: "テスト 花子", exam_type: "特定技能2号・外食業", remaining_attempts: 2, expires_at: "2027-01-01T00:00:00Z", plan_type: "one_time", is_first_attempt: false },
+  "TEST-STAFF": { valid: true, display_name: "テスト staff", exam_type: "特定技能2号・外食業", remaining_attempts: 5, expires_at: "2027-01-01T00:00:00Z", plan_type: "staff", is_first_attempt: true },
+  "TEST-TRIAL-FIRST": { valid: true, display_name: "テスト 次郎", exam_type: "特定技能2号・外食業", remaining_attempts: 1, expires_at: "2027-01-01T00:00:00Z", plan_type: "trial", is_first_attempt: true },
+  "TEST-TRIAL-REPEAT": { valid: false, reason: "exhausted" },
+  "TEST-UNKNOWN-PLAN": { valid: true, display_name: "テスト 不明", exam_type: "特定技能2号・外食業", remaining_attempts: 1, expires_at: "2027-01-01T00:00:00Z", plan_type: "beta", is_first_attempt: true },
   "TEST-EXHAUSTED": { valid: false, reason: "exhausted" },
   "TEST-EXPIRED": { valid: false, reason: "expired" },
   "TEST-REVOKED": { valid: false, reason: "revoked" },
