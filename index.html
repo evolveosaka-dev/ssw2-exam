@@ -136,6 +136,8 @@
   .save-status.ok { background:rgba(47,122,77,.08); border-color:rgba(47,122,77,.25); color:var(--pass); }
   .save-status.err { background:rgba(178,58,46,.07); border-color:rgba(178,58,46,.25); color:var(--seal-deep); }
   .rev-item { margin-top:14px; border:1px solid var(--line); border-radius:var(--radius); background:var(--paper-2); overflow:hidden; }
+  .rev-source { font-size:10.5px; color:var(--ink-soft); margin-top:4px; }
+  ruby rt { font-size:.6em; color:var(--ink-soft); font-weight:500; user-select:none; }
   .rev-head { padding:13px 15px; display:flex; gap:10px; align-items:flex-start; }
   .rev-badge { flex:0 0 auto; width:22px; height:22px; border-radius:50%; display:grid; place-items:center;
     font-weight:900; font-size:13px; color:#fff; }
@@ -218,6 +220,11 @@ let EXAM_LABEL = { industryLabel:"", tierLabel:"" };
 // REAL_* = bản gốc 55問/250点/163点(PASS_MARK)/70分, chụp lại trước khi bị ghi đè cho chế độ TRIAL.
 // Dùng để hiển thị khối "本番の試験構成" trên màn kết quả trial — không bao giờ bị buildExam/finishExam đọc tới.
 let REAL_BLUEPRINT = null, REAL_PASS_MARK = null, REAL_TOTAL_MARK = null;
+// FURIGANA: text gốc (nguyên văn, chưa qua buildExam) -> HTML <ruby> đã dựng sẵn (tiền xử lý offline bằng kuromoji).
+// SOURCE_BY_QID: qid -> {display, confidence} trích dẫn nguồn tài liệu, tra theo qid (buildExam đã passthrough qid).
+// Cả 2 chỉ dùng để HIỂN THỊ ở màn kết quả — không được buildExam()/finishExam() đọc tới, không ảnh hưởng RULE #1.
+let FURIGANA = {};
+let SOURCE_BY_QID = {};
 
 async function loadExamData(examType){
   const manifest = await (await fetch(`${DATA_BASE}/data/manifest.json`)).json();
@@ -231,6 +238,24 @@ async function loadExamData(examType){
   TOTAL_MARK = cfg.totalMark;
   EXAM_MINUTES = cfg.examMinutes;
   EXAM_LABEL = { industryLabel: cfg.industryLabel, tierLabel: cfg.tierLabel };
+  FURIGANA = {}; SOURCE_BY_QID = {};
+  try{
+    const metaPath = cfg.file.replace(/\.json$/, ".meta.json");
+    const meta = await (await fetch(`${DATA_BASE}/${metaPath}`)).json();
+    FURIGANA = meta.furigana || {};
+    SOURCE_BY_QID = meta.sourceByQid || {};
+  }catch(e){
+    // File bổ trợ (furigana/nguồn trích dẫn) là tùy chọn — thiếu thì màn kết quả
+    // chỉ hiện text thường, không có ruby/trích dẫn, không chặn luồng thi.
+  }
+}
+
+// Chỉ dùng để HIỂN THỊ ở màn kết quả (giải thích sau khi nộp bài) — tra theo đúng
+// text gốc nguyên văn, vốn được buildExam() giữ nguyên nội dung (chỉ đổi thứ tự/khóa).
+function withFurigana(text){
+  const html = FURIGANA[text];
+  if(!html) return text;
+  return <span dangerouslySetInnerHTML={{__html: html}} />;
 }
 
 // TRIAL専用: 本番のBLUEPRINTと同じsect構成を使い、各sectをn=5・per=1に固定した「入力データ」を作るだけ。
@@ -919,7 +944,8 @@ function App(){
                   <div className={"rev-badge "+(ok?"ok":"no")}>{ok?"✓":"✕"}</div>
                   <div>
                     <div className="rev-qmeta">問{idx+1} · {q.part==="gakka"?"学科":"実技"} · {q._sectJP} · {q.per}点</div>
-                    <div className="rev-q">{q.q}</div>
+                    <div className="rev-q">{withFurigana(q.q)}</div>
+                    {SOURCE_BY_QID[q.qid] && <div className="rev-source">出典：{SOURCE_BY_QID[q.qid].display}</div>}
                   </div>
                 </div>
                 <div className="rev-body">
@@ -929,7 +955,7 @@ function App(){
                     const isChosenWrong=i===chosen && chosen!==q.answer;
                     return (
                       <div key={i} className={"rev-opt"+(isCorrect?" correct":"")+(isChosenWrong?" chosen-wrong":"")}>
-                        <b>{"ABCD"[i]}.</b> {opt}
+                        <b>{"ABCD"[i]}.</b> {withFurigana(opt)}
                         {isCorrect && <span className="tag">正解</span>}
                         {isChosenWrong && <span className="tag">あなたの解答</span>}
                       </div>
@@ -937,12 +963,12 @@ function App(){
                   })}
                   <div className="rev-explain">
                     <div className="ex-lbl">解説</div>
-                    <div className="ex-jp">{q.explain}</div>
+                    <div className="ex-jp">{withFurigana(q.explain)}</div>
                   </div>
                   {q.why_wrong && Object.keys(q.why_wrong).length>0 && (
                     <div className="rev-why-wrong">
                       {Object.entries(q.why_wrong).sort((a,b)=>a[0]-b[0]).map(([i,reason])=>(
-                        <div key={i} style={{marginTop:4}}><b>{"ABCD"[Number(i)]} が誤りの理由：</b>{reason}</div>
+                        <div key={i} style={{marginTop:4}}><b>{"ABCD"[Number(i)]} が誤りの理由：</b>{withFurigana(reason)}</div>
                       ))}
                     </div>
                   )}

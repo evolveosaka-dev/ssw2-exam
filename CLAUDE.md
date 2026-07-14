@@ -40,14 +40,23 @@ App shell là **một file `index.html`** (React 18 UMD + Babel standalone qua C
 
 ```
 data/
-  manifest.json              # exam_type -> {industry, industryLabel, tier, tierLabel, file, examMinutes, passMark, totalMark}
-  gaishoku-tokutei2.json     # {blueprint, sectLabels, questions}  — ngành mẫu (外食業/特定技能2号, 425 câu, 3 đáp án/câu)
+  manifest.json                  # exam_type -> {industry, industryLabel, tier, tierLabel, file, examMinutes, passMark, totalMark}
+  gaishoku-tokutei2.json         # {blueprint, sectLabels, questions}  — ngành mẫu (外食業/特定技能2号, 425 câu, 3 đáp án/câu)
+  gaishoku-tokutei2.meta.json    # {furigana, sourceByQid} — dữ liệu bổ trợ CHỈ để hiển thị, xem mục "Furigana & nguồn trích dẫn"
 ```
 
 - Key trong `manifest.json` là chuỗi `exam_type` mà API `/api/verify-code` trả về — phải khớp chính xác với giá trị thật từ corporate-site.
 - Mỗi file dữ liệu ngành đóng gói `blueprint` (số câu + điểm/câu mỗi sect×part), `sectLabels` (nhãn hiển thị + dùng làm `topic` khi gửi kết quả), và `questions` (mỗi câu có `qid` ổn định + schema gốc: `sect, part, q, options, answer, explain, why_wrong, img?`). `options`/`answer`/`why_wrong` không cố định số lượng đáp án — `buildExam()` đọc `q.options.length` (xem RULE #1, ngoại lệ #2); hiện tại toàn bộ 425 câu của `gaishoku-tokutei2.json` là 3 đáp án/câu, cố ý cân độ dài đáp án đúng/sai trong khoảng ≤10 ký tự để giảm khả năng đoán bừa theo đáp án dài nhất.
-- `gaishoku-tokutei2.json` còn có thêm top-level `schemaVersion`, `examRules`, và field `type`/`source` (chương/trang nguồn) trong mỗi câu — phục vụ biên tập/truy vết nội dung, `index.html` không đọc tới các field này.
-- **Thêm ngành mới**: chỉ cần thêm 1 entry vào `manifest.json` + 1 file JSON cùng shape — không cần sửa `index.html`.
+- `gaishoku-tokutei2.json` còn có thêm top-level `schemaVersion`, `examRules`, và field `type`/`source` (chương/trang nguồn, kèm `match_confidence`) trong mỗi câu — `type`/`schemaVersion`/`examRules` chỉ phục vụ biên tập/truy vết nội dung, `index.html` không đọc tới; `source` thì được dùng gián tiếp qua `gaishoku-tokutei2.meta.json` (xem bên dưới), bản thân `buildExam()` không passthrough field `source`.
+- **Thêm ngành mới**: chỉ cần thêm 1 entry vào `manifest.json` + 1 file JSON cùng shape — không cần sửa `index.html`. File `.meta.json` là tùy chọn (xem bên dưới) — thiếu cũng không lỗi.
+
+### Furigana & nguồn trích dẫn (chỉ hiển thị ở màn kết quả, không đụng RULE #1)
+
+`gaishoku-tokutei2.meta.json` được sinh **offline, 1 lần**, không phải lúc runtime (script sinh không nằm trong repo, dùng thư viện phân tích hình vị tiếng Nhật `kuromoji`/IPADIC chạy qua Node — nếu cần sinh lại cho ngành mới, viết lại script tương tự, không cài kuromoji vào `index.html`). Shape:
+- `furigana`: map **text gốc nguyên văn** (câu hỏi/đáp án/giải thích/why_wrong, y hệt string trong `gaishoku-tokutei2.json`) → HTML `<ruby>…<rt>…</rt></ruby>` đã dựng sẵn. Tra theo đúng nội dung chữ vì `buildExam()` giữ nguyên nội dung text (chỉ đổi thứ tự/khóa) — nhờ vậy **không cần đụng `buildExam()`** để truyền furigana qua.
+- `sourceByQid`: map `qid` → `{display, confidence}`, tra theo `qid` (đã được `buildExam()` passthrough sẵn — ngoại lệ #1 của RULE #1) — cũng **không cần đụng `buildExam()`**. `display` đã áp ngưỡng `match_confidence ≥ 0.5` từ lúc sinh file: đủ ngưỡng thì hiện đủ `{tên tài liệu} {chương}（p.{trang}）`, dưới ngưỡng chỉ hiện tên tài liệu (vì đối chiếu trang/chương trong `source` gốc là kết quả khớp tự động, phần lớn (73%) có độ tin cậy thấp).
+- `loadExamData()` fetch file này **best-effort** (đường dẫn suy ra từ `cfg.file` bằng cách đổi đuôi `.json`→`.meta.json`) — lỗi/thiếu file thì `FURIGANA`/`SOURCE_BY_QID` rỗng, màn kết quả tự động rơi về hiện text thường/không có dòng "出典", không chặn luồng thi.
+- `withFurigana(text)` (module-level, ngoài `App`) tra `FURIGANA[text]`, có thì render `dangerouslySetInnerHTML` (HTML tự sinh offline, không phải input người dùng), không có thì trả về text thường — dùng ở khối "解説" (câu hỏi, đáp án, giải thích, why_wrong) trên màn kết quả, dùng chung cho cả FULL và TRIAL vì khối này đã share sẵn.
 
 ### Nạp dữ liệu runtime
 
