@@ -549,6 +549,26 @@ function App(){
     setSaveState({status:"idle",msg:""});
   }
 
+  // TRIAL専用「もう一度」: コード再入力・buildExam()の再抽選をせず、直前と
+  // 全く同じ questions(問題の並び・4択の並びとも)をそのまま使い回して
+  // 再受験させる。is_first_attempt をローカルで false に補正するのは、
+  // 2回目以降の提出でsurveyを重複送信しないため(サーバー側はCOALESCEで
+  // 冪等だが、送る必要が無いデータは送らない)。残り回数(resultMeta.
+  // remainingAttempts、直近の受理された提出結果から)が0の場合はこの関数は
+  // 呼ばれない(ボタン自体を出し分けている、下のJSX参照)。
+  function handleRetakeSameExam(){
+    if(saveState.retryable){
+      const proceed=window.confirm("前回の受験結果がまだ送信できていません。このまま進むと結果が失われる可能性があります。よろしいですか？");
+      if(!proceed) return;
+    }
+    setAnswers({}); setCur(0); setRemaining(EXAM_MINUTES*60);
+    setResult(null); setResultMeta({}); setSaveState({status:"idle",msg:""});
+    setVerifyInfo(v=>v && ({...v, is_first_attempt:false}));
+    submittingRef.current=false;
+    setScreen("quiz");
+    window.scrollTo(0,0);
+  }
+
   async function sendResult(res){
     const sections=Object.keys(res.sectScore).map(sect=>{
       const items=res.detail.filter(d=>d.sect===sect);
@@ -846,8 +866,13 @@ function App(){
               )}
               <div className="btn-row">
                 <a className="btn btn-seal" style={{flex:1,textDecoration:"none",display:"flex",alignItems:"center",justifyContent:"center"}} href={UPGRADE_URL_PLACEHOLDER}>有料プランで対策する</a>
-                <button className="btn btn-ghost" style={{flex:1}} onClick={handleRetake}>もう一度</button>
+                {(resultMeta.remainingAttempts==null || resultMeta.remainingAttempts>0) && (
+                  <button className="btn btn-ghost" style={{flex:1}} onClick={handleRetakeSameExam}>もう一度</button>
+                )}
               </div>
+              {resultMeta.remainingAttempts===0 && (
+                <p className="hint" style={{marginTop:10,marginBottom:0}}>無料体験の受験可能回数を使い切りました。引き続き対策するには有料プランをご検討ください。</p>
+              )}
             </>
           ) : (
             <>
