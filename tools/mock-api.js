@@ -14,6 +14,11 @@
 //   TEST-EXHAUSTED    -> valid:false, reason="exhausted"
 //   TEST-EXPIRED      -> valid:false, reason="expired"
 //   TEST-REVOKED      -> valid:false, reason="revoked"
+//   TEST-FLAKY        -> valid, plan_type="subscription" — POST /api/exam-results trả 500
+//                        cho 2 lần thử đầu (mỗi access_code), thành công ở lần thứ 3.
+//                        Dùng để test retry-with-backoff phía client.
+//   TEST-ALWAYS-DOWN  -> valid, plan_type="subscription" — POST /api/exam-results luôn trả 500.
+//                        Dùng để test "hết lượt retry -> giữ localStorage + gọi report-failure".
 //   anything else     -> valid:false, reason="not_found"
 
 const http = require("node:http");
@@ -31,7 +36,17 @@ const CODES = {
   "TEST-EXHAUSTED": { valid: false, reason: "exhausted" },
   "TEST-EXPIRED": { valid: false, reason: "expired" },
   "TEST-REVOKED": { valid: false, reason: "revoked" },
+  "TEST-FLAKY": { valid: true, display_name: "テスト 不安定", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
+  "TEST-ALWAYS-DOWN": { valid: true, display_name: "テスト 応答なし", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
 };
+
+// (access_code, client_submission_id) -> attempt_number, để mô phỏng dedup
+// idempotent phía server thật (submit_exam_result RPC): resend cùng
+// client_submission_id phải trả về cùng attempt_number, không tăng thêm.
+const submissionsBySubmissionId = new Map();
+// access_code -> số lần POST /api/exam-results đã nhận (kể cả các lần fail
+// giả lập của TEST-FLAKY), dùng để biết khi nào ngừng trả 500.
+const examResultCallCounts = new Map();
 
 function withCors(res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -73,11 +88,44 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify({ accepted: false, reason: "invalid_request" }));
       return;
     }
+
+    const callNumber = (examResultCallCounts.get(payload.access_code) || 0) + 1;
+    examResultCallCounts.set(payload.access_code, callNumber);
+
+    if (payload.access_code === "TEST-ALWAYS-DOWN" || (payload.access_code === "TEST-FLAKY" && callNumber <= 2)) {
+      console.log(`exam-results simulated 500 (call #${callNumber}):`, payload.access_code);
+      res.writeHead(500, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ accepted: false, reason: "simulated_server_error" }));
+      return;
+    }
+
+    // Idempotent replay: cùng client_submission_id -> trả lại đúng
+    // attempt_number cũ, không tăng thêm (mô phỏng submit_exam_result RPC thật).
+    const dedupKey = payload.client_submission_id
+      ? `${payload.access_code}|${payload.client_submission_id}`
+      : null;
+    if (dedupKey && submissionsBySubmissionId.has(dedupKey)) {
+      const n = submissionsBySubmissionId.get(dedupKey);
+      console.log("exam-results idempotent replay, attempt_number unchanged:", n);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ accepted: true, attempt_number: n, remaining_attempts: Math.max(0, 3 - n) }));
+      return;
+    }
+
     const n = (attemptCounts.get(payload.access_code) || 0) + 1;
     attemptCounts.set(payload.access_code, n);
+    if (dedupKey) submissionsBySubmissionId.set(dedupKey, n);
     console.log("exam-results received:", JSON.stringify(payload, null, 2));
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ accepted: true, attempt_number: n, remaining_attempts: Math.max(0, 3 - n) }));
+    return;
+  }
+
+  if (req.method === "POST" && req.url === "/api/exam-results/report-failure") {
+    const payload = await readJson(req).catch(() => ({}));
+    console.log("exam-results/report-failure (client gave up retrying):", JSON.stringify(payload));
+    res.writeHead(204);
+    res.end();
     return;
   }
 

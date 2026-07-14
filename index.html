@@ -265,6 +265,83 @@ function buildExam(){
   return out.map((q,i)=>({...q,id:i}));
 }
 
+// ============================================================
+// Kết quả gửi đi (sendResult) — chống mất dữ liệu khi network lỗi:
+// idempotency key (server dedup theo access_code+client_submission_id,
+// xem submit_exam_result phía corporate-site) + lưu tạm localStorage
+// trước khi fetch + retry có backoff + báo "bỏ cuộc" qua sendBeacon.
+// Không đụng tới buildExam()/finishExam() — chỉ nằm ở tầng gửi kết quả.
+// ============================================================
+const PENDING_RESULT_KEY = "ssw2exam_pending_result";
+const RETRY_DELAYS_MS = [0, 2000, 5000];
+
+function genSubmissionId(){
+  if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return Date.now()+"-"+Math.random().toString(36).slice(2);
+}
+
+function loadPendingResult(){
+  try{
+    const raw=localStorage.getItem(PENDING_RESULT_KEY);
+    return raw?JSON.parse(raw):null;
+  }catch(e){ return null; }
+}
+
+function savePendingResult(entry){
+  try{ localStorage.setItem(PENDING_RESULT_KEY, JSON.stringify(entry)); }catch(e){}
+}
+
+function clearPendingResult(){
+  try{ localStorage.removeItem(PENDING_RESULT_KEY); }catch(e){}
+}
+
+// 呼ばれるのはリトライを使い果たした後の最後の手段 — レスポンスは読まない
+// (sendBeaconは読めない)。corporate-site側がoutbox経由でこの「送信断念」を
+// 記録し、ユーザーからの申告なしに検知できるようにするための最終手段。
+function reportGiveUp(apiBase, payload){
+  try{
+    if(!navigator.sendBeacon) return;
+    const blob=new Blob([JSON.stringify({
+      access_code:payload.access_code, exam_type:payload.exam_type,
+      client_submission_id:payload.client_submission_id,
+    })], {type:"application/json"});
+    navigator.sendBeacon(`${apiBase}/api/exam-results/report-failure`, blob);
+  }catch(e){}
+}
+
+async function postExamResultOnce(apiBase, payload){
+  const r=await fetch(`${apiBase}/api/exam-results`,{
+    method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)
+  });
+  if(r.status>=500) throw new Error("server_error_"+r.status);
+  return await r.json();
+}
+
+// Trả về {done:true, body} khi có phản hồi từ server (accepted true hoặc
+// false — cả 2 đều là "done", vì false là quyết định nghiệp vụ không nên
+// retry). {done:false} chỉ khi hết cả 3 lần thử vì lỗi mạng/server 5xx.
+async function submitExamPayload(apiBase, payload, onStatus){
+  for(let attempt=0; attempt<RETRY_DELAYS_MS.length; attempt++){
+    if(attempt===0){
+      onStatus({status:"sending", msg:"送信中…"});
+    }else{
+      onStatus({status:"sending", msg:`通信エラーのため再試行しています…（${attempt+1}/${RETRY_DELAYS_MS.length}）`});
+    }
+    if(RETRY_DELAYS_MS[attempt]>0){
+      await new Promise(res=>setTimeout(res, RETRY_DELAYS_MS[attempt]));
+    }
+    try{
+      const body=await postExamResultOnce(apiBase, payload);
+      return {done:true, body};
+    }catch(e){
+      if(attempt===RETRY_DELAYS_MS.length-1){
+        reportGiveUp(apiBase, payload);
+        return {done:false};
+      }
+    }
+  }
+}
+
 function App(){
   const [screen,setScreen]=useState("gate");
   const [examMode,setExamMode]=useState("full");
@@ -284,7 +361,30 @@ function App(){
   const [result,setResult]=useState(null);
   const [resultMeta,setResultMeta]=useState({});
   const [saveState,setSaveState]=useState({status:"idle",msg:""});
+  const [resumeState,setResumeState]=useState(null);
   const timerRef=useRef(null);
+
+  async function resumePendingSubmission(){
+    const pending=loadPendingResult();
+    if(!pending) return;
+    setResumeState({status:"sending", msg:"前回の受験結果を送信しています…"});
+    const outcome=await submitExamPayload(pending.api_base || API_BASE, pending.payload, setResumeState);
+    if(!outcome.done){
+      setResumeState({status:"err", retryable:true,
+        msg:"前回の受験結果がまだ送信できていません。ネットワーク状況をご確認のうえ「再送信」を押してください。"});
+      return;
+    }
+    clearPendingResult();
+    const body=outcome.body;
+    if(!body.accepted){
+      setResumeState({status:"err",
+        msg:CODE_REASON_MESSAGES[body.reason] || "前回の受験結果の送信に失敗しました。担当者にご連絡ください。"});
+      return;
+    }
+    setResumeState({status:"ok", msg:"前回の受験結果を送信しました。"});
+  }
+
+  useEffect(()=>{ resumePendingSubmission(); },[]); // eslint-disable-line
 
   useEffect(()=>{
     if(screen!=="quiz") return;
@@ -375,8 +475,31 @@ function App(){
     sendResult(res);
   }
 
+  async function attemptResultSubmission(payload){
+    savePendingResult({payload, api_base:API_BASE, created_at:new Date().toISOString()});
+    const outcome=await submitExamPayload(API_BASE, payload, setSaveState);
+    if(!outcome.done){
+      setSaveState({status:"err", retryable:true,
+        msg:"通信状況が悪いため結果の送信が完了していません。画面を閉じずに「再送信」を押すか、時間をおいて再度お試しください。"});
+      return;
+    }
+    const body=outcome.body;
+    if(!body.accepted){
+      clearPendingResult();
+      setSaveState({status:"err",msg:CODE_REASON_MESSAGES[body.reason] || "結果の送信に失敗しました。担当者にご連絡ください。"});
+      return;
+    }
+    clearPendingResult();
+    setResultMeta({attemptNumber:body.attempt_number, remainingAttempts:body.remaining_attempts});
+    setSaveState({status:"ok",msg:"結果を送信しました。"});
+  }
+
+  function retryResultSubmission(){
+    const pending=loadPendingResult();
+    if(pending) attemptResultSubmission(pending.payload);
+  }
+
   async function sendResult(res){
-    setSaveState({status:"sending",msg:"送信中…"});
     const sections=Object.keys(res.sectScore).map(sect=>{
       const items=res.detail.filter(d=>d.sect===sect);
       return { topic:SECT_LABEL[sect], correct:items.filter(d=>d.isCorrect).length, total:items.length };
@@ -391,22 +514,10 @@ function App(){
     const payload={
       access_code:verifyInfo.access_code, exam_type:verifyInfo.exam_type,
       total_score:res.total, sections, wrong_questions,
+      client_submission_id:genSubmissionId(),
       ...(verifyInfo.is_first_attempt && survey ? { survey } : {}),
     };
-    try{
-      const r=await fetch(`${API_BASE}/api/exam-results`,{
-        method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)
-      });
-      const body=await r.json();
-      if(!body.accepted){
-        setSaveState({status:"err",msg:CODE_REASON_MESSAGES[body.reason] || "結果の送信に失敗しました。担当者にご連絡ください。"});
-        return;
-      }
-      setResultMeta({attemptNumber:body.attempt_number, remainingAttempts:body.remaining_attempts});
-      setSaveState({status:"ok",msg:"結果を送信しました。"});
-    }catch(e){
-      setSaveState({status:"err",msg:"結果の送信に失敗しました。担当者にご連絡ください。"});
-    }
+    await attemptResultSubmission(payload);
   }
 
   // TRIAL専用の集計。finishExam()のsectScore（sect単位、part混在）とは別物 — finishExam()本体は未変更。
@@ -450,20 +561,46 @@ function App(){
     );
   }
 
+  // 送信が終わるまで「結果画面がもう完了したように見える」ことを防ぐための
+  // 全面オーバーレイ。screen==="result"のスコア表示部分にのみ重ねる —
+  // finishExam()のscreen遷移そのものには触れない。
+  function SavingOverlay(){
+    return (
+      <div style={{position:"absolute",inset:0,background:"rgba(247,243,236,.94)",
+        display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",
+        gap:8,borderRadius:"var(--radius)",zIndex:5,textAlign:"center",padding:20}}>
+        <div style={{fontSize:15,fontWeight:800,color:"var(--indigo)"}}>結果を送信しています…</div>
+        <div style={{fontSize:12.5,color:"var(--ink-soft)"}}>画面を閉じずにそのままお待ちください。</div>
+      </div>
+    );
+  }
+
   if(screen==="gate"){
+    const resumeBusy=resumeState && resumeState.status==="sending";
     return (
       <div className="wrap">
+        {resumeState && resumeState.status!=="idle" && (
+          <div className="panel">
+            <h2>前回の受験結果の送信</h2>
+            <div className={"save-status "+(resumeState.status==="ok"?"ok":resumeState.status==="err"?"err":"")}>
+              {resumeState.status==="sending" && "⏳ "}{resumeState.msg}
+            </div>
+            {resumeState.retryable && (
+              <button className="btn btn-seal" style={{width:"100%",marginTop:10}} onClick={resumePendingSubmission}>再送信</button>
+            )}
+          </div>
+        )}
         <div className="panel">
           <h2>アクセスコード</h2>
           <p className="hint">受験するにはアクセスコードを入力してください。</p>
           <label className="field" style={{marginBottom:4}}>
             <span className="lbl">アクセスコード <span className="vn-s">（必須）</span></span>
             <input type="text" value={code} onChange={e=>setCode(e.target.value)} placeholder="例：ABCD-1234"
-              disabled={gateStatus==="verifying"}
+              disabled={gateStatus==="verifying"||resumeBusy}
               onKeyDown={e=>{ if(e.key==="Enter") verifyCode(); }} />
           </label>
           {gateError && <div className="err-box">{gateError}</div>}
-          <button className="btn btn-seal" style={{width:"100%",marginTop:10}} disabled={gateStatus==="verifying"} onClick={verifyCode}>
+          <button className="btn btn-seal" style={{width:"100%",marginTop:10}} disabled={gateStatus==="verifying"||resumeBusy} onClick={verifyCode}>
             {gateStatus==="verifying"?"確認中…":"認証する"}
           </button>
         </div>
@@ -625,31 +762,37 @@ function App(){
         <div className="panel">
           {examMode==="trial" ? (
             <>
-              <div className="sect-scores">
-                {trialBreakdown(questions,answers).map((b,i)=>{
-                  const rate=b.correct/b.total, tier=trialTierColor(rate);
-                  return (
-                    <div className={"ss-row tb-"+tier} key={i}>
-                      <div className="ss-name">{b.part==="gakka"?"学科":"実技"}・{SECT_LABEL[b.sect]}</div>
-                      <div className="ss-track"><div className="ss-fill tb-fill" style={{width:(rate*100)+"%"}}/></div>
-                      <div className="ss-pts tb-pct">{b.correct}/{b.total}（{Math.round(rate*100)}%）</div>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="rev-explain" style={{marginTop:16}}>
-                <div className="ex-lbl">本番の試験構成</div>
-                <div className="ex-jp">
-                  本番は学科{REAL_BLUEPRINT.gakka.reduce((s,x)=>s+x.n,0)}問{REAL_BLUEPRINT.gakka.reduce((s,x)=>s+x.n*x.per,0)}点＋実技{REAL_BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n,0)}問{REAL_BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n*x.per,0)}点＝{REAL_TOTAL_MARK}点満点、合格基準{REAL_PASS_MARK}点。
+              <div style={{position:"relative"}}>
+                <div className="sect-scores">
+                  {trialBreakdown(questions,answers).map((b,i)=>{
+                    const rate=b.correct/b.total, tier=trialTierColor(rate);
+                    return (
+                      <div className={"ss-row tb-"+tier} key={i}>
+                        <div className="ss-name">{b.part==="gakka"?"学科":"実技"}・{SECT_LABEL[b.sect]}</div>
+                        <div className="ss-track"><div className="ss-fill tb-fill" style={{width:(rate*100)+"%"}}/></div>
+                        <div className="ss-pts tb-pct">{b.correct}/{b.total}（{Math.round(rate*100)}%）</div>
+                      </div>
+                    );
+                  })}
                 </div>
-                <div className="ex-vn" style={{borderTop:"none",paddingTop:0}}>
-                  この40問体験の正答率をもとにした目安です。本番形式(55問)では出題範囲が広がるため、結果は変わる可能性があります。しっかり対策するには有料プランがおすすめです。
+                <div className="rev-explain" style={{marginTop:16}}>
+                  <div className="ex-lbl">本番の試験構成</div>
+                  <div className="ex-jp">
+                    本番は学科{REAL_BLUEPRINT.gakka.reduce((s,x)=>s+x.n,0)}問{REAL_BLUEPRINT.gakka.reduce((s,x)=>s+x.n*x.per,0)}点＋実技{REAL_BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n,0)}問{REAL_BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n*x.per,0)}点＝{REAL_TOTAL_MARK}点満点、合格基準{REAL_PASS_MARK}点。
+                  </div>
+                  <div className="ex-vn" style={{borderTop:"none",paddingTop:0}}>
+                    この40問体験の正答率をもとにした目安です。本番形式(55問)では出題範囲が広がるため、結果は変わる可能性があります。しっかり対策するには有料プランがおすすめです。
+                  </div>
                 </div>
+                {saveState.status==="sending" && <SavingOverlay/>}
               </div>
               {saveState.status!=="idle" && (
                 <div className={"save-status "+(saveState.status==="ok"?"ok":saveState.status==="err"?"err":"")}>
                   {saveState.status==="sending" && "⏳ "}{saveState.msg}
                 </div>
+              )}
+              {saveState.retryable && (
+                <button className="btn btn-seal" style={{width:"100%",marginTop:8}} onClick={retryResultSubmission}>再送信</button>
               )}
               <div className="btn-row">
                 <a className="btn btn-seal" style={{flex:1,textDecoration:"none",display:"flex",alignItems:"center",justifyContent:"center"}} href={UPGRADE_URL_PLACEHOLDER}>有料プランで対策する</a>
@@ -658,25 +801,31 @@ function App(){
             </>
           ) : (
             <>
-              <div className={"score-hero "+(result.passed?"pass":"fail")}>
-                <div className="verdict-seal">{result.passed?"合":"否"}</div>
-                <div className="score-big">{result.total}<span className="of"> / {result.maxTotal}</span></div>
-                <div className="score-sub">{verifyInfo?.display_name} 様{resultMeta.attemptNumber?` · 受験 ${resultMeta.attemptNumber}回目`:""}{resultMeta.remainingAttempts!=null?` · 残り${resultMeta.remainingAttempts}回`:""} · {pct}% · 合格基準 {PASS_MARK}点</div>
-                <div className="verdict-label">{result.passed?"合格":"不合格"}</div>
-              </div>
-              <div className="sect-scores">
-                {Object.entries(result.sectScore).map(([k,v])=>(
-                  <div className="ss-row" key={k}>
-                    <div className="ss-name">{SECT_LABEL[k]}</div>
-                    <div className="ss-track"><div className="ss-fill" style={{width:(v.got/v.max*100)+"%"}}/></div>
-                    <div className="ss-pts">{v.got}/{v.max}</div>
-                  </div>
-                ))}
+              <div style={{position:"relative"}}>
+                <div className={"score-hero "+(result.passed?"pass":"fail")}>
+                  <div className="verdict-seal">{result.passed?"合":"否"}</div>
+                  <div className="score-big">{result.total}<span className="of"> / {result.maxTotal}</span></div>
+                  <div className="score-sub">{verifyInfo?.display_name} 様{resultMeta.attemptNumber?` · 受験 ${resultMeta.attemptNumber}回目`:""}{resultMeta.remainingAttempts!=null?` · 残り${resultMeta.remainingAttempts}回`:""} · {pct}% · 合格基準 {PASS_MARK}点</div>
+                  <div className="verdict-label">{result.passed?"合格":"不合格"}</div>
+                </div>
+                <div className="sect-scores">
+                  {Object.entries(result.sectScore).map(([k,v])=>(
+                    <div className="ss-row" key={k}>
+                      <div className="ss-name">{SECT_LABEL[k]}</div>
+                      <div className="ss-track"><div className="ss-fill" style={{width:(v.got/v.max*100)+"%"}}/></div>
+                      <div className="ss-pts">{v.got}/{v.max}</div>
+                    </div>
+                  ))}
+                </div>
+                {saveState.status==="sending" && <SavingOverlay/>}
               </div>
               {saveState.status!=="idle" && (
                 <div className={"save-status "+(saveState.status==="ok"?"ok":saveState.status==="err"?"err":"")}>
                   {saveState.status==="sending" && "⏳ "}{saveState.msg}
                 </div>
+              )}
+              {saveState.retryable && (
+                <button className="btn btn-seal" style={{width:"100%",marginTop:8}} onClick={retryResultSubmission}>再送信</button>
               )}
               <div className="btn-row">
                 <button className="btn btn-ghost" onClick={()=>{setScreen("gate"); setResult(null); setResultMeta({}); setSurvey(null);}}>もう一度（新しい問題）</button>
