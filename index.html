@@ -251,7 +251,7 @@ function buildExam(){
       let picks=shuffle(pool).slice(0,sect.n);
       if(picks.length<sect.n){ picks=picks.concat(shuffle(extra).slice(0,sect.n-picks.length)); }
       picks.forEach(q=>{
-        const order=shuffle([0,1,2,3]);
+        const order=shuffle(q.options.map((_,i)=>i));
         const newOptions=order.map(i=>q.options[i]);
         const newAnswer=order.indexOf(q.answer);
         const remap={}; order.forEach((oldI,newI)=>{ remap[oldI]=newI; });
@@ -550,7 +550,7 @@ function App(){
   }
 
   // TRIAL専用「もう一度」: コード再入力・buildExam()の再抽選をせず、直前と
-  // 全く同じ questions(問題の並び・4択の並びとも)をそのまま使い回して
+  // 全く同じ questions(問題の並び・3択の並びとも)をそのまま使い回して
   // 再受験させる。is_first_attempt をローカルで false に補正するのは、
   // 2回目以降の提出でsurveyを重複送信しないため(サーバー側はCOALESCEで
   // 冪等だが、送る必要が無いデータは送らない)。残り回数(resultMeta.
