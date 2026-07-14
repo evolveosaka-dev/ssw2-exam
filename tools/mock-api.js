@@ -19,6 +19,9 @@
 //                        Dùng để test retry-with-backoff phía client.
 //   TEST-ALWAYS-DOWN  -> valid, plan_type="subscription" — POST /api/exam-results luôn trả 500.
 //                        Dùng để test "hết lượt retry -> giữ localStorage + gọi report-failure".
+//   TEST-BAD-RESPONSE -> valid, plan_type="subscription" — POST /api/exam-results luôn trả 404
+//                        với body không phải JSON (mô phỏng api_base sai/WAF chặn). Dùng để test
+//                        "fail fast, không đợi hết 3 lần retry" (NonRetryableSubmitError).
 //   anything else     -> valid:false, reason="not_found"
 
 const http = require("node:http");
@@ -38,6 +41,7 @@ const CODES = {
   "TEST-REVOKED": { valid: false, reason: "revoked" },
   "TEST-FLAKY": { valid: true, display_name: "テスト 不安定", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
   "TEST-ALWAYS-DOWN": { valid: true, display_name: "テスト 応答なし", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
+  "TEST-BAD-RESPONSE": { valid: true, display_name: "テスト 不正応答", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
 };
 
 // (access_code, client_submission_id) -> attempt_number, để mô phỏng dedup
@@ -96,6 +100,13 @@ const server = http.createServer(async (req, res) => {
       console.log(`exam-results simulated 500 (call #${callNumber}):`, payload.access_code);
       res.writeHead(500, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ accepted: false, reason: "simulated_server_error" }));
+      return;
+    }
+
+    if (payload.access_code === "TEST-BAD-RESPONSE") {
+      console.log(`exam-results simulated non-JSON 404 (call #${callNumber})`);
+      res.writeHead(404, { "Content-Type": "text/html" });
+      res.end("<html><body>Not Found</body></html>");
       return;
     }
 

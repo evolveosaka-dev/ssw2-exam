@@ -309,17 +309,29 @@ function reportGiveUp(apiBase, payload){
   }catch(e){}
 }
 
+// 500系はネットワーク/サーバー側の一時的な問題として扱いretryする。それ以外の
+// ステータスでbodyがJSONとして読めない場合(api_base設定ミス・WAF/CDNのブロック
+// ページ等)は「リトライしても絶対に直らない」設定エラーの一種であり、ネットワーク
+// エラーと区別してすぐに諦める(NonRetryableSubmitError) — 3回分のリトライ待機
+// (最大7秒)を無駄にしない。
+class NonRetryableSubmitError extends Error {}
+
 async function postExamResultOnce(apiBase, payload){
   const r=await fetch(`${apiBase}/api/exam-results`,{
     method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)
   });
   if(r.status>=500) throw new Error("server_error_"+r.status);
-  return await r.json();
+  try{
+    return await r.json();
+  }catch(e){
+    throw new NonRetryableSubmitError("invalid_response_status_"+r.status);
+  }
 }
 
 // Trả về {done:true, body} khi có phản hồi từ server (accepted true hoặc
 // false — cả 2 đều là "done", vì false là quyết định nghiệp vụ không nên
-// retry). {done:false} chỉ khi hết cả 3 lần thử vì lỗi mạng/server 5xx.
+// retry). {done:false} khi hết cả 3 lần thử vì lỗi mạng/server 5xx, hoặc
+// ngay lập tức (không đợi hết 3 lần) khi gặp NonRetryableSubmitError.
 async function submitExamPayload(apiBase, payload, onStatus){
   for(let attempt=0; attempt<RETRY_DELAYS_MS.length; attempt++){
     if(attempt===0){
@@ -334,7 +346,7 @@ async function submitExamPayload(apiBase, payload, onStatus){
       const body=await postExamResultOnce(apiBase, payload);
       return {done:true, body};
     }catch(e){
-      if(attempt===RETRY_DELAYS_MS.length-1){
+      if(e instanceof NonRetryableSubmitError || attempt===RETRY_DELAYS_MS.length-1){
         reportGiveUp(apiBase, payload);
         return {done:false};
       }
@@ -363,10 +375,23 @@ function App(){
   const [saveState,setSaveState]=useState({status:"idle",msg:""});
   const [resumeState,setResumeState]=useState(null);
   const timerRef=useRef(null);
+  // Chặn finishExam() bị gọi 2 lần cho cùng 1 lượt thi (double-tap trên 2 nút
+  // submit, hoặc tap trùng lúc hết giờ tự nộp) — mỗi lần gọi sinh 1
+  // client_submission_id khác nhau nên server không dedup được, dẫn đến tốn
+  // 2 lượt thi + race ghi đè localStorage. Dùng ref (không phải state) vì
+  // cần chặn đồng bộ, không đợi re-render. Không sửa finishExam() — chỉ bọc
+  // ở nơi gọi.
+  const submittingRef=useRef(false);
 
   async function resumePendingSubmission(){
     const pending=loadPendingResult();
-    if(!pending) return;
+    if(!pending){
+      // resumeState が非nullなら手動「再送信」経由の呼び出し(初回mount時は
+      // まだnullなのでここは通らない) — 他タブが既に送信済みにしていた場合、
+      // 無反応にせず解決済みである旨を表示する。
+      setResumeState(prev => prev ? {status:"ok", msg:"送信対象が見つかりません(既に送信済みの可能性があります)。"} : null);
+      return;
+    }
     setResumeState({status:"sending", msg:"前回の受験結果を送信しています…"});
     const outcome=await submitExamPayload(pending.api_base || API_BASE, pending.payload, setResumeState);
     if(!outcome.done){
@@ -389,7 +414,7 @@ function App(){
   useEffect(()=>{
     if(screen!=="quiz") return;
     timerRef.current=setInterval(()=>{
-      setRemaining(r=>{ if(r<=1){clearInterval(timerRef.current); finishExam(); return 0;} return r-1; });
+      setRemaining(r=>{ if(r<=1){clearInterval(timerRef.current); if(!submittingRef.current){submittingRef.current=true; finishExam();} return 0;} return r-1; });
     },1000);
     return ()=>clearInterval(timerRef.current);
   },[screen]); // eslint-disable-line
@@ -451,8 +476,15 @@ function App(){
   function startExam(){
     const q=buildExam();
     setQuestions(q); setAnswers({}); setCur(0); setRemaining(EXAM_MINUTES*60);
+    submittingRef.current=false;
     setScreen("quiz");
     window.scrollTo(0,0);
+  }
+
+  function handleSubmitClick(){
+    if(submittingRef.current) return;
+    submittingRef.current=true;
+    finishExam();
   }
 
   function finishExam(){
@@ -496,7 +528,25 @@ function App(){
 
   function retryResultSubmission(){
     const pending=loadPendingResult();
-    if(pending) attemptResultSubmission(pending.payload);
+    if(pending){
+      attemptResultSubmission(pending.payload);
+    }else{
+      // Already resolved elsewhere (e.g. another tab's resumePendingSubmission
+      // beat us to it) — say so instead of silently doing nothing.
+      setSaveState({status:"ok", msg:"送信対象が見つかりません(既に送信済みの可能性があります)。"});
+    }
+  }
+
+  // まだ再送信できていない結果(saveState.retryable)を残したまま次に進むと
+  // ssw2exam_pending_result が新しい受験のペイロードで上書きされ、前回の結果が
+  // 復元不能になる — 次に進む前に必ず確認を挟む。
+  function handleRetake(){
+    if(saveState.retryable){
+      const proceed=window.confirm("前回の受験結果がまだ送信できていません。このまま進むと結果が失われる可能性があります。よろしいですか？");
+      if(!proceed) return;
+    }
+    setScreen("gate"); setResult(null); setResultMeta({}); setSurvey(null);
+    setSaveState({status:"idle",msg:""});
   }
 
   async function sendResult(res){
@@ -739,7 +789,7 @@ function App(){
               {cur<questions.length-1 ? (
                 <button className="btn btn-primary" style={{flex:1}} onClick={()=>setCur(c=>Math.min(questions.length-1,c+1))}>次へ →</button>
               ) : (
-                <button className="btn btn-seal" style={{flex:1}} onClick={finishExam}>提出する</button>
+                <button className="btn btn-seal" style={{flex:1}} onClick={handleSubmitClick}>提出する</button>
               )}
             </div>
             <div className="palette">
@@ -747,7 +797,7 @@ function App(){
                 <button key={i} className={"pnum"+(answers[qq.id]!=null?" done":"")+(i===cur?" cur":"")} onClick={()=>setCur(i)}>{i+1}</button>
               ))}
             </div>
-            <button className="btn btn-seal" style={{width:"100%",marginTop:18}} onClick={finishExam}>採点する（提出）</button>
+            <button className="btn btn-seal" style={{width:"100%",marginTop:18}} onClick={handleSubmitClick}>採点する（提出）</button>
           </div>
         </div>
       </div>
@@ -796,7 +846,7 @@ function App(){
               )}
               <div className="btn-row">
                 <a className="btn btn-seal" style={{flex:1,textDecoration:"none",display:"flex",alignItems:"center",justifyContent:"center"}} href={UPGRADE_URL_PLACEHOLDER}>有料プランで対策する</a>
-                <button className="btn btn-ghost" style={{flex:1}} onClick={()=>{setScreen("gate"); setResult(null); setResultMeta({}); setSurvey(null);}}>もう一度</button>
+                <button className="btn btn-ghost" style={{flex:1}} onClick={handleRetake}>もう一度</button>
               </div>
             </>
           ) : (
@@ -828,7 +878,7 @@ function App(){
                 <button className="btn btn-seal" style={{width:"100%",marginTop:8}} onClick={retryResultSubmission}>再送信</button>
               )}
               <div className="btn-row">
-                <button className="btn btn-ghost" onClick={()=>{setScreen("gate"); setResult(null); setResultMeta({}); setSurvey(null);}}>もう一度（新しい問題）</button>
+                <button className="btn btn-ghost" onClick={handleRetake}>もう一度（新しい問題）</button>
               </div>
             </>
           )}
