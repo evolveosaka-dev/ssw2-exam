@@ -71,7 +71,7 @@
    "qid": "gaishoku_tokutei2_001",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食中毒予防の3原則として正しいものはどれか。",
    "options": [
     "食材を購入し、保管してから提供するという流れ",
@@ -89,7 +89,7 @@
    "qid": "gaishoku_tokutei2_002",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食中毒予防で「増やさない」ために、冷蔵保存の温度として適切なものはどれか。",
    "options": [
     "20℃前後（常温に近い温度帯）",
@@ -107,7 +107,7 @@
    "qid": "gaishoku_tokutei2_003",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "加熱調理で食中毒菌を「やっつける」ための中心温度と時間の目安はどれか。",
    "options": [
     "中心部75℃で1分以上",
@@ -125,7 +125,7 @@
    "qid": "gaishoku_tokutei2_004",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "HACCPに沿った衛生管理を構成する2つの基準の組み合わせとして正しいものはどれか。",
    "options": [
     "発注の基準と納品時の検収基準の組み合わせ",
@@ -143,7 +143,7 @@
    "qid": "gaishoku_tokutei2_005",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "表示が義務付けられている特定原材料8品目に含まれないものはどれか。",
    "options": [
     "そば（表示義務のある特定原材料の一つ）",
@@ -161,7 +161,7 @@
    "qid": "gaishoku_tokutei2_006",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "衛生管理の基礎となる「5S活動」に含まれないものはどれか。",
    "options": [
     "清掃（店内や調理場をきれいにすること）",
@@ -179,7 +179,7 @@
    "qid": "gaishoku_tokutei2_007",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "手洗いが特に必要なタイミングとして適切でないものはどれか。",
    "options": [
     "生の食肉・魚介・卵など生鮮食材を扱ったすぐ後のタイミング",
@@ -197,7 +197,7 @@
    "qid": "gaishoku_tokutei2_008",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "飲用に適する水（井戸水など）を使用する場合の管理として正しいものはどれか。",
    "options": [
     "水質検査を一度も行わずにそのまま継続して使用してよい",
@@ -215,7 +215,7 @@
    "qid": "gaishoku_tokutei2_009",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "洗浄と消毒の違いについて正しいものはどれか。",
    "options": [
     "消毒は汚れや異物を目に見えて洗い落とすことである",
@@ -233,7 +233,7 @@
    "qid": "gaishoku_tokutei2_010",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ねずみや昆虫の駆除について、法令上の目安として正しいものはどれか。",
    "options": [
     "ねずみや昆虫を見つけたときだけ駆除すればよい",
@@ -251,7 +251,7 @@
    "qid": "gaishoku_tokutei2_011",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "加熱してもすぐには死滅せず、加熱後の温度管理が特に重要となる菌はどれか。",
    "options": [
     "カンピロバクター（鶏肉が主な原因の菌）",
@@ -269,7 +269,7 @@
    "qid": "gaishoku_tokutei2_012",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "冷凍食品の解凍方法として最も適切なものはどれか。",
    "options": [
     "厨房の常温に長時間置いたまま自然に解凍する",
@@ -287,7 +287,7 @@
    "qid": "gaishoku_tokutei2_013",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "厨房で生の鶏肉を切ったまな板で、次に生野菜のサラダを切ろうとしている。最も適切な対応はどれか。",
    "options": [
     "まな板と包丁を洗浄・消毒してから、または別のものに替えて使う",
@@ -305,7 +305,7 @@
    "qid": "gaishoku_tokutei2_014",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "大量に加熱調理したカレーを当日提供せず保存する。ウエルシュ菌対策として最も適切な冷却はどれか。",
    "options": [
     "大鍋に入れたままの状態で常温に置いてゆっくりと冷ます",
@@ -323,7 +323,7 @@
    "qid": "gaishoku_tokutei2_015",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "お客様から「そばアレルギーがある」と申告があった。うどんとそばを同じ釜でゆでている店の対応として適切なものはどれか。",
    "options": [
     "アレルギーへの対応はお客様の自己責任であると伝える",
@@ -341,7 +341,7 @@
    "qid": "gaishoku_tokutei2_016",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "衛生管理計画に基づき「使用水の残留塩素」を確認したところ0.05ppmだった。最も適切な対応はどれか。",
    "options": [
     "見た目の色さえ透明であれば数値を測らずに問題ないと自己判断してしまう",
@@ -359,7 +359,7 @@
    "qid": "gaishoku_tokutei2_017",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "HACCPの考え方に基づき、日々の衛生管理で営業者が行うべきこととして適切でないものはどれか。",
    "options": [
     "計画の内容を定期的に検証し必要に応じて見直す",
@@ -377,7 +377,7 @@
    "qid": "gaishoku_tokutei2_018",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "青菜（ほうれん草など）をゆでるときの方法として適切なものはどれか。",
    "options": [
     "少量の油でじっくりと時間をかけて揚げる",
@@ -395,7 +395,7 @@
    "qid": "gaishoku_tokutei2_019",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ごぼうやれんこんを切った後、褐変を防ぐための下処理として適切なものはどれか。",
    "options": [
     "切ったらすぐ水につける",
@@ -413,7 +413,7 @@
    "qid": "gaishoku_tokutei2_020",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "包丁とまな板の衛生的な使い方として適切なものはどれか。",
    "options": [
     "肉も魚も野菜も区別せず、すべて同じ包丁で続けて使う",
@@ -431,7 +431,7 @@
    "qid": "gaishoku_tokutei2_021",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "牛肉のうち、長時間の加熱でコラーゲンが分解し柔らかくなる部位はどれか。",
    "options": [
     "サーロイン",
@@ -449,7 +449,7 @@
    "qid": "gaishoku_tokutei2_022",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "揚げ油の劣化（酸化）を防ぐ方法として適切でないものはどれか。",
    "options": [
     "使わないときは空気にさらさない",
@@ -467,7 +467,7 @@
    "qid": "gaishoku_tokutei2_023",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ガスレンジを使用する厨房で特に注意すべき安全対策はどれか。",
    "options": [
     "窓を閉め切ったままで換気は特に行わなくてもよい",
@@ -485,7 +485,7 @@
    "qid": "gaishoku_tokutei2_024",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "フライヤーの油のAV値（酸価）が3.2だった。営業中の対応として適切なものはどれか。",
    "options": [
     "まだ新しい油のはずなので、交換せずそのまま1週間ほど使い続ける",
@@ -503,7 +503,7 @@
    "qid": "gaishoku_tokutei2_025",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "食器洗浄機を使う際の温度管理として適切な組み合わせはどれか。",
    "options": [
     "洗浄20℃前後・すすぎ30℃前後の低い温度で行う",
@@ -521,7 +521,7 @@
    "qid": "gaishoku_tokutei2_026",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "飲食店での労働災害で最も多い事故は何か。現場の安全対策を考えるうえで正しいものはどれか。",
    "options": [
     "飲食店で発生する労働災害の中では「火災」による事故が最も多い",
@@ -539,7 +539,7 @@
    "qid": "gaishoku_tokutei2_027",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "魚を焼くとき、うまみを逃がさず中まで火を通す方法として適切なものはどれか。",
    "options": [
     "強火や中火で表面を焼き固め、弱火で中まで火を通す",
@@ -557,7 +557,7 @@
    "qid": "gaishoku_tokutei2_028",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "店舗の評価を高めるために重視される「QSCA」の意味として正しいものはどれか。",
    "options": [
     "品質・安全性・費用・在庫管理の4つの要素",
@@ -575,7 +575,7 @@
    "qid": "gaishoku_tokutei2_029",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客の基本動作「ニコニコ・ハキハキ・キビキビ」のうち「キビキビ」の意味はどれか。",
    "options": [
     "笑顔を見せずにずっと真顔のままでいる",
@@ -593,7 +593,7 @@
    "qid": "gaishoku_tokutei2_030",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「消費期限」の説明として正しいものはどれか。",
    "options": [
     "たとえ期限を過ぎたとしても品質はほとんど変わらない期限のこと",
@@ -611,7 +611,7 @@
    "qid": "gaishoku_tokutei2_031",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「賞味期限」の説明として正しいものはどれか。",
    "options": [
     "おいしく食べられる期限で、過ぎても必ずしも食べられなくなるわけではない",
@@ -629,7 +629,7 @@
    "qid": "gaishoku_tokutei2_032",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食物アレルギーで最悪の場合に起こりうる、生命に関わる重篤な症状はどれか。",
    "options": [
     "少し眠くなる程度の軽い眠気",
@@ -647,7 +647,7 @@
    "qid": "gaishoku_tokutei2_033",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "イスラム教のお客様（ムスリム）への対応として適切なものはどれか。",
    "options": [
     "宗教上避けるべき豚肉料理をあえて積極的にすすめる",
@@ -665,7 +665,7 @@
    "qid": "gaishoku_tokutei2_034",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "顧客満足とリピートについて正しい説明はどれか。",
    "options": [
     "お客様の満足度の高さは再来店の有無とはまったく関係しない",
@@ -683,7 +683,7 @@
    "qid": "gaishoku_tokutei2_035",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "クレーム対応の考え方として最も適切なものはどれか。",
    "options": [
     "できるだけ多くの時間をかけて後回しにし、対応をずっとあとまわしにする",
@@ -701,7 +701,7 @@
    "qid": "gaishoku_tokutei2_036",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "未成年のお客様や車を運転するお客様への対応として正しいものはどれか。",
    "options": [
     "本人が希望すれば提供する",
@@ -719,7 +719,7 @@
    "qid": "gaishoku_tokutei2_037",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "配慮が必要なお客様への対応として適切でないものはどれか。",
    "options": [
     "車椅子でも利用しやすい席を案内する",
@@ -737,7 +737,7 @@
    "qid": "gaishoku_tokutei2_038",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "ランチのピーク時、複数の対応が重なった。優先順位として最も適切なものはどれか。",
    "options": [
     "新しく入った注文を受けることを最優先にする",
@@ -755,7 +755,7 @@
    "qid": "gaishoku_tokutei2_039",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "料理から髪の毛が見つかったとお客様から申告があった。最も適切な初期対応はどれか。",
    "options": [
     "お客様の勘違いではないかとやんわり指摘して説明する",
@@ -773,7 +773,7 @@
    "qid": "gaishoku_tokutei2_040",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "店内でお客様が突然倒れ、意識がない。最も適切な対応はどれか。",
    "options": [
     "反応や意識がなくてもとにかくすぐに立たせて無理に歩かせようとする",
@@ -791,7 +791,7 @@
    "qid": "gaishoku_tokutei2_041",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "割引券をお客様に渡すタイミングとして、販売促進の効果が高いのはどれか。",
    "options": [
     "次回来店を促すため、レジ精算時に渡す",
@@ -809,7 +809,7 @@
    "qid": "gaishoku_tokutei2_042",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「粗（荒）利益」の計算式として正しいものはどれか。",
    "options": [
     "売上高 × 原価率",
@@ -827,7 +827,7 @@
    "qid": "gaishoku_tokutei2_043",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「原価率」と「荒利益率」の関係として正しいものはどれか。",
    "options": [
     "原価率 × 荒利益率 = 100%",
@@ -845,7 +845,7 @@
    "qid": "gaishoku_tokutei2_044",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「労働分配率」の適正値の目安として正しいものはどれか。",
    "options": [
     "おおむね35〜40%",
@@ -863,7 +863,7 @@
    "qid": "gaishoku_tokutei2_045",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "検収（検品収納）で確認すべき3つの事項に含まれないものはどれか。",
    "options": [
     "納品された現品の数量と品質の状態",
@@ -881,7 +881,7 @@
    "qid": "gaishoku_tokutei2_046",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "在庫管理について、過剰在庫がもたらす問題として正しいものはどれか。",
    "options": [
     "販売できたはずの機会を逃す損失（チャンスロス）",
@@ -899,7 +899,7 @@
    "qid": "gaishoku_tokutei2_047",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "人材育成の「OJT」の説明として正しいものはどれか。",
    "options": [
     "座学形式で理念や知識をまとめて集合教育すること",
@@ -917,7 +917,7 @@
    "qid": "gaishoku_tokutei2_048",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "防火管理について、燃焼の三要素として正しい組み合わせはどれか。",
    "options": [
     "十分な水・空気・低い温度の3つ",
@@ -935,7 +935,7 @@
    "qid": "gaishoku_tokutei2_049",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "労働時間について、原則として正しいものはどれか（一般的な場合）。",
    "options": [
     "1日6時間・週30時間が原則",
@@ -953,7 +953,7 @@
    "qid": "gaishoku_tokutei2_050",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ABC分析で、売上構成比の累計が70%までに入る商品の区分はどれか。",
    "options": [
     "A",
@@ -971,7 +971,7 @@
    "qid": "gaishoku_tokutei2_051",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "時間帯責任者の役割として正しいものはどれか。",
    "options": [
     "調理場での調理業務だけを専門に担当する",
@@ -989,7 +989,7 @@
    "qid": "gaishoku_tokutei2_052",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ある日の売上が300,000円、その日の総労働時間が50時間だった。人時売上高はいくらか。",
    "options": [
     "6,000円",
@@ -1007,7 +1007,7 @@
    "qid": "gaishoku_tokutei2_053",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "人件費が80,000円、粗利益が200,000円のとき、労働分配率はいくらか。",
    "options": [
     "40%",
@@ -1025,7 +1025,7 @@
    "qid": "gaishoku_tokutei2_054",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "売価600円のハンバーグの原価が190円のとき、原価率に最も近いものはどれか。",
    "options": [
     "約19.0%",
@@ -1043,7 +1043,7 @@
    "qid": "gaishoku_tokutei2_055",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1品平均単価400円、1人あたりの注文点数が平均3点のとき、客単価はいくらか。",
    "options": [
     "1,200円",
@@ -1061,7 +1061,7 @@
    "qid": "gaishoku_tokutei2_056",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "前月末棚卸50,000円、当月仕入350,000円、当月末棚卸40,000円、当月売上1,200,000円のとき、実際原価率はいくらか。",
    "options": [
     "25%",
@@ -1079,7 +1079,7 @@
    "qid": "gaishoku_tokutei2_057",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "実際原価率が31%、標準原価率が30%だった。原価率差異の評価として正しいものはどれか（基準±0.5%）。",
    "options": [
     "差異は−1%程度にとどまっており特に問題はない",
@@ -1097,7 +1097,7 @@
    "qid": "gaishoku_tokutei2_058",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "月間売上予算が9,000,000円、目標の人時売上高を6,000円とするとき、月間計画総労働時間はおよそ何時間か。",
    "options": [
     "150時間",
@@ -1115,7 +1115,7 @@
    "qid": "gaishoku_tokutei2_059",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "労働時間が8時間を超える勤務の場合、与えるべき休憩時間として正しいものはどれか。",
    "options": [
     "少なくとも60分",
@@ -1133,7 +1133,7 @@
    "qid": "gaishoku_tokutei2_060",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "深夜（22時〜翌5時）に労働させた場合の割増賃金の最低率として正しいものはどれか。",
    "options": [
     "25%以上",
@@ -1151,7 +1151,7 @@
    "qid": "gaishoku_tokutei2_061",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "年次有給休暇について、一般の労働者に付与される要件として正しいものはどれか。",
    "options": [
     "入社したその初日から自動的に年20日付与される",
@@ -1169,7 +1169,7 @@
    "qid": "gaishoku_tokutei2_062",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「おもてなし（ホスピタリティ）」を実現するうえで最も大切な考え方はどれか。",
    "options": [
     "会話は必要最低限にとどめ、それ以上は話さない",
@@ -1187,7 +1187,7 @@
    "qid": "gaishoku_tokutei2_063",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客用語を使う目的として最も適切なものはどれか。",
    "options": [
     "できるだけ声を小さくしてお客様にひっそりとだけ話しかける",
@@ -1205,7 +1205,7 @@
    "qid": "gaishoku_tokutei2_064",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "お客様に配膳（サービング）するときの配慮として適切なものはどれか。",
    "options": [
     "同じテーブルの料理はできるだけ同時に提供する",
@@ -1223,7 +1223,7 @@
    "qid": "gaishoku_tokutei2_065",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "夜間、レジの売上金を金庫に入れる作業を行う。防犯上、最も適切な方法はどれか。",
    "options": [
     "店の入口を開けたまま行う",
@@ -1241,7 +1241,7 @@
    "qid": "gaishoku_tokutei2_066",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "和牛のうち、脂肪交雑（サシ）に優れ全体の大半を占める品種はどれか。",
    "options": [
     "黒毛和種",
@@ -1259,7 +1259,7 @@
    "qid": "gaishoku_tokutei2_067",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品添加物の用途として適切でないものはどれか。",
    "options": [
     "food在庫の発注量を自動計算する",
@@ -1277,7 +1277,7 @@
    "qid": "gaishoku_tokutei2_068",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "下処理中に食材の微生物を「増やさない・二次汚染させない」ために適切な行動はどれか。",
    "options": [
     "手を洗わないまま素手で複数の食材を次々と続けて扱ってしまう",
@@ -1295,7 +1295,7 @@
    "qid": "gaishoku_tokutei2_069",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "サルモネラ菌による食中毒の主な原因食品はどれか。",
    "options": [
     "作り置きの焼き飯やチャーハン",
@@ -1313,7 +1313,7 @@
    "qid": "gaishoku_tokutei2_070",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "海産魚介類が原因で、真水や加熱に弱い好塩性の食中毒菌はどれか。",
    "options": [
     "腸炎ビブリオ",
@@ -1331,7 +1331,7 @@
    "qid": "gaishoku_tokutei2_071",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "鶏肉が主な原因で少量でも発症し、ギラン・バレー症候群を起こすことがある菌はどれか。",
    "options": [
     "カンピロバクター",
@@ -1349,7 +1349,7 @@
    "qid": "gaishoku_tokutei2_072",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "手指の傷（化膿創）から食品を汚染し、その毒素（エンテロトキシン）が加熱に強い菌はどれか。",
    "options": [
     "カンピロバクター（鶏肉が主な原因の菌）",
@@ -1367,7 +1367,7 @@
    "qid": "gaishoku_tokutei2_073",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ベロ毒素を産生し、少量でも感染して溶血性尿毒症症候群（HUS）を起こすことがある菌はどれか。",
    "options": [
     "ウエルシュ菌（大量調理の煮込み料理で増える菌）",
@@ -1385,7 +1385,7 @@
    "qid": "gaishoku_tokutei2_074",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "冬季に多く、二枚貝（かきなど）や人から人へ感染し、アルコールが効きにくいのはどれか。",
    "options": [
     "黄色ブドウ球菌（手指の傷が原因となる菌）",
@@ -1403,7 +1403,7 @@
    "qid": "gaishoku_tokutei2_075",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "まぐろ・さば・いわしなどの赤身魚で増え、加熱しても分解されずアレルギー様症状を起こす物質はどれか。",
    "options": [
     "テトロドトキシン（フグに含まれる神経毒）",
@@ -1421,7 +1421,7 @@
    "qid": "gaishoku_tokutei2_076",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "さば・いか・さんまなどに寄生し、-20℃で24時間以上の冷凍や十分な加熱で対策する寄生虫はどれか。",
    "options": [
     "ボツリヌス菌（酸素の少ない環境で増える菌）",
@@ -1439,7 +1439,7 @@
    "qid": "gaishoku_tokutei2_077",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "缶詰・真空パック・保存食品などの酸素の少ない環境で増え、強い神経毒をつくる菌はどれか。",
    "options": [
     "カンピロバクター（鶏肉が原因で微好気性の菌）",
@@ -1457,7 +1457,7 @@
    "qid": "gaishoku_tokutei2_078",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "焼き飯やパスタなどを室温に長く置くと増え、嘔吐型の食中毒を起こす芽胞菌はどれか。",
    "options": [
     "腸炎ビブリオ（海産の魚介が原因の菌）",
@@ -1475,7 +1475,7 @@
    "qid": "gaishoku_tokutei2_079",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "まな板やふきん、ノロウイルスの消毒に有効な薬剤はどれか。",
    "options": [
     "逆性石けんのみを使って洗浄・消毒する",
@@ -1493,7 +1493,7 @@
    "qid": "gaishoku_tokutei2_080",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "手指の消毒に用いるが、ノロウイルスには効果が弱い消毒剤はどれか。",
    "options": [
     "煮沸（沸騰したお湯で加熱する方法）",
@@ -1511,7 +1511,7 @@
    "qid": "gaishoku_tokutei2_081",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "冷蔵庫内の温度管理として一般的な目安はどれか。",
    "options": [
     "10℃以下（望ましくは5℃以下）",
@@ -1529,7 +1529,7 @@
    "qid": "gaishoku_tokutei2_082",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "冷凍庫内の温度管理として一般的な目安はどれか。",
    "options": [
     "-5℃前後（家庭用冷蔵庫のチルド室程度）",
@@ -1547,7 +1547,7 @@
    "qid": "gaishoku_tokutei2_083",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "厨房を汚染度で分ける「作業区域（ゾーニング）」で、検収や下処理を行うのはどの区域か。",
    "options": [
     "清潔作業区域（盛付や保管を行う区域）",
@@ -1565,7 +1565,7 @@
    "qid": "gaishoku_tokutei2_084",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "盛り付けや製品の一時保管を行うのはどの作業区域か。",
    "options": [
     "清潔作業区域",
@@ -1583,7 +1583,7 @@
    "qid": "gaishoku_tokutei2_085",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品衛生法に基づき、飲食店の各施設に必ず1名置かなければならない者はどれか。",
    "options": [
     "調理師（各施設に必置とされる資格者）",
@@ -1601,7 +1601,7 @@
    "qid": "gaishoku_tokutei2_086",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "HACCPの手順で、健康被害を防ぐために特に管理が必要な工程を何というか。",
    "options": [
     "重要管理点（CCP）",
@@ -1619,7 +1619,7 @@
    "qid": "gaishoku_tokutei2_087",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「消費期限」が表示される食品として最も適切なものはどれか。",
    "options": [
     "常温で長期保存できるスナック菓子",
@@ -1637,7 +1637,7 @@
    "qid": "gaishoku_tokutei2_088",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "従業員の健康管理として、下痢や嘔吐の症状がある場合の対応で正しいものはどれか。",
    "options": [
     "調理業務から外し、責任者に報告する",
@@ -1655,7 +1655,7 @@
    "qid": "gaishoku_tokutei2_089",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "じゃがいもの芽や緑色に変色した皮に含まれ、食中毒を起こす有毒成分はどれか。",
    "options": [
     "ソラニン（チャコニン）",
@@ -1673,7 +1673,7 @@
    "qid": "gaishoku_tokutei2_090",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "フグの毒（テトロドトキシン）の特徴として正しいものはどれか。",
    "options": [
     "十分に加熱して調理すれば毒は分解され安全に食べられる",
@@ -1691,7 +1691,7 @@
    "qid": "gaishoku_tokutei2_091",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "在庫の使用順序として、食品衛生上望ましいのはどれか。",
    "options": [
     "使いやすいものから好きな順に使う",
@@ -1709,7 +1709,7 @@
    "qid": "gaishoku_tokutei2_092",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品を扱う人の身だしなみとして適切でないものはどれか。",
    "options": [
     "指輪や腕時計をつけて調理する",
@@ -1727,7 +1727,7 @@
    "qid": "gaishoku_tokutei2_093",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品の「二次汚染（交差汚染）」の説明として正しいものはどれか。",
    "options": [
     "決められた時間よりもかなり必要以上に長く加熱しすぎてしまうこと",
@@ -1745,7 +1745,7 @@
    "qid": "gaishoku_tokutei2_094",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ノロウイルス感染者の嘔吐物を処理するときの対応として適切なものはどれか。",
    "options": [
     "水で軽く濡らしただけの布で表面をさっと拭き取るだけで済ませる",
@@ -1763,7 +1763,7 @@
    "qid": "gaishoku_tokutei2_095",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食中毒が疑われる事故が発生した場合、営業者が行うべき対応として正しいものはどれか。",
    "options": [
     "念のため様子を見ながらそのまま通常どおり営業を続けてしまう",
@@ -1781,7 +1781,7 @@
    "qid": "gaishoku_tokutei2_096",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "検便（検便検査）を行う主な目的はどれか。",
    "options": [
     "調理従事者に視力の問題がないかどうかを確認するため",
@@ -1799,7 +1799,7 @@
    "qid": "gaishoku_tokutei2_097",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "温かい料理を提供まで保温する場合の温度の目安はどれか。",
    "options": [
     "30℃以下のぬるめの状態を保つ",
@@ -1817,7 +1817,7 @@
    "qid": "gaishoku_tokutei2_098",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品を扱う施設で使用する水として原則となるものはどれか。",
    "options": [
     "近くを流れる川の水をそのまま使用する",
@@ -1835,7 +1835,7 @@
    "qid": "gaishoku_tokutei2_099",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "まな板を肉・魚・野菜で色分けして使う主な目的はどれか。",
    "options": [
     "二次汚染（交差汚染）を防ぐため",
@@ -1853,7 +1853,7 @@
    "qid": "gaishoku_tokutei2_100",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品表示で、アレルギー表示が推奨されている「特定原材料に準ずるもの」の品目数はおよそいくつか。",
    "options": [
     "20品目",
@@ -1871,7 +1871,7 @@
    "qid": "gaishoku_tokutei2_101",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品の解凍を室温で長時間行うことが不適切な理由として正しいものはどれか。",
    "options": [
     "解凍中に食品の栄養価が増えてしまうから",
@@ -1889,7 +1889,7 @@
    "qid": "gaishoku_tokutei2_102",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "手洗いの手順として最も適切なものはどれか。",
    "options": [
     "石けんで指先・爪・指の間・手首まで洗い、流水ですすぎ、清潔なもので拭く",
@@ -1907,7 +1907,7 @@
    "qid": "gaishoku_tokutei2_103",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品の腐敗を防ぐ基本的な考え方として正しいものはどれか。",
    "options": [
     "低温・清潔・迅速を心がける",
@@ -1925,7 +1925,7 @@
    "qid": "gaishoku_tokutei2_104",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "化学性食中毒の原因として正しいものはどれか。",
    "options": [
     "洗剤や農薬などの化学物質の混入",
@@ -1943,7 +1943,7 @@
    "qid": "gaishoku_tokutei2_105",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "冷蔵庫の温度を確認したら12℃だった。最も適切な対応はどれか。",
    "options": [
     "基準（10℃以下）を超えているため原因を確認し、食材の状態を点検する",
@@ -1961,7 +1961,7 @@
    "qid": "gaishoku_tokutei2_106",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "鶏の刺身（加熱不十分な鶏肉）の提供を求められた。衛生上の対応として最も適切なものはどれか。",
    "options": [
     "カンピロバクター等のリスクを説明し、十分加熱したものを勧める",
@@ -1979,7 +1979,7 @@
    "qid": "gaishoku_tokutei2_107",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "作業中に絆創膏をした指の傷が気になった。盛り付け作業を続ける際の対応として適切なものはどれか。",
    "options": [
     "使い捨て手袋を着けて作業し、責任者に報告する",
@@ -1997,7 +1997,7 @@
    "qid": "gaishoku_tokutei2_108",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "生の魚を扱った後、同じ手で生野菜を触ろうとしている。適切な対応はどれか。",
    "options": [
     "はいている作業用のズボンで手をさっと拭いて済ませる",
@@ -2015,7 +2015,7 @@
    "qid": "gaishoku_tokutei2_109",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "厨房で使うふきんが濡れて生乾きの状態が続いている。衛生上、最も適切な対応はどれか。",
    "options": [
     "見た目の色がはっきり変わってくるまでそのまま使い続ける",
@@ -2033,7 +2033,7 @@
    "qid": "gaishoku_tokutei2_110",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "大量の煮込み料理を翌日も提供する。安全のための再加熱として適切なものはどれか。",
    "options": [
     "前日調理したものをそのまま再加熱せずに提供する",
@@ -2051,7 +2051,7 @@
    "qid": "gaishoku_tokutei2_111",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "検収時に、冷蔵品が生ぬるい状態で届いた。適切な対応はどれか。",
    "options": [
     "特に確認せずにとりあえず全部そのまま受け取ってしまう",
@@ -2069,7 +2069,7 @@
    "qid": "gaishoku_tokutei2_112",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "アレルギーのあるお客様に、原材料を確認できない料理を求められた。適切な対応はどれか。",
    "options": [
     "少量であれば体への影響はほとんどないだろうと伝える",
@@ -2087,7 +2087,7 @@
    "qid": "gaishoku_tokutei2_113",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "厨房でゴキブリを見かけた。衛生管理として適切な対応はどれか。",
    "options": [
     "調理中の食品のすぐそばで殺虫剤を大量に散布する",
@@ -2105,7 +2105,7 @@
    "qid": "gaishoku_tokutei2_114",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "衛生管理計画の記録を毎日つける意義として最も適切なものはどれか。",
    "options": [
     "問題の早期発見と、事故時の原因追及・改善に役立てるため",
@@ -2123,7 +2123,7 @@
    "qid": "gaishoku_tokutei2_115",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食中毒予防の「増やさない」に該当する行動として正しいものはどれか。",
    "options": [
     "使用する調理器具をこまめに洗浄・消毒しておくこと",
@@ -2141,7 +2141,7 @@
    "qid": "gaishoku_tokutei2_116",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "消毒用アルコールの効果が最も高くなる濃度の目安はどれか。",
    "options": [
     "およそ10%（かなり薄い濃度）",
@@ -2159,7 +2159,7 @@
    "qid": "gaishoku_tokutei2_117",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "盛り付け済みの料理を提供までしばらく置く必要がある。安全な扱いはどれか。",
    "options": [
     "料理の種類にかかわらずすべて厨房内の常温にそのまま置いておく",
@@ -2177,7 +2177,7 @@
    "qid": "gaishoku_tokutei2_118",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品を扱う施設のトイレの管理として適切でないものはどれか。",
    "options": [
     "手洗い・消毒設備を調理場と離れた場所に設ける",
@@ -2195,7 +2195,7 @@
    "qid": "gaishoku_tokutei2_119",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "和食の基本の調味順序「さしすせそ」で、最初に入れるものはどれか。",
    "options": [
     "醤油（大豆や小麦を発酵させてつくる調味料）",
@@ -2213,7 +2213,7 @@
    "qid": "gaishoku_tokutei2_120",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "計量の目安として正しいものはどれか。",
    "options": [
     "大さじ1=15ml、小さじ1=5ml",
@@ -2231,7 +2231,7 @@
    "qid": "gaishoku_tokutei2_121",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "計量カップ1杯（1カップ）の容量として正しいものはどれか。",
    "options": [
     "200ml",
@@ -2249,7 +2249,7 @@
    "qid": "gaishoku_tokutei2_122",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "揚げ物の油温で「中温」の目安はどれか。",
    "options": [
     "170〜180℃",
@@ -2267,7 +2267,7 @@
    "qid": "gaishoku_tokutei2_123",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "だしをとる材料として、うま味成分「グルタミン酸」を多く含むものはどれか。",
    "options": [
     "昆布",
@@ -2285,7 +2285,7 @@
    "qid": "gaishoku_tokutei2_124",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「一番だし」の特徴として正しいものはどれか。",
    "options": [
     "昆布とかつお節から短時間でとる、香りと風味のよいだし",
@@ -2303,7 +2303,7 @@
    "qid": "gaishoku_tokutei2_125",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "米を炊く際の一般的な水加減（米の容量に対する水）はどれか。",
    "options": [
     "米の約1.2倍",
@@ -2321,7 +2321,7 @@
    "qid": "gaishoku_tokutei2_126",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "日本料理の切り方で、繊維に沿って細く切る「せん切り」に近いものはどれか。",
    "options": [
     "さいころのような立方体に切るさいの目切り",
@@ -2339,7 +2339,7 @@
    "qid": "gaishoku_tokutei2_127",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "肉を焼く前に常温に戻す（室温に少し置く）主な理由はどれか。",
    "options": [
     "実際の重さよりも肉の重量を見かけ上増やすため",
@@ -2357,7 +2357,7 @@
    "qid": "gaishoku_tokutei2_128",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "魚をおろす前に「水洗い（血や汚れを落とす）」を行う主な目的はどれか。",
    "options": [
     "生臭みや汚れを取り、衛生と風味を保つため",
@@ -2375,7 +2375,7 @@
    "qid": "gaishoku_tokutei2_129",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "卵の調理で、加熱により固まる性質を何というか。",
    "options": [
     "泡立ててメレンゲのように膨らませる起泡性",
@@ -2393,7 +2393,7 @@
    "qid": "gaishoku_tokutei2_130",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "マヨネーズが油と酢（水分）を混ぜて安定するのは卵のどの性質によるか。",
    "options": [
     "起泡性",
@@ -2411,7 +2411,7 @@
    "qid": "gaishoku_tokutei2_131",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「廃棄率」の説明として正しいものはどれか。",
    "options": [
     "食材のうち、皮や骨など食べられず捨てる部分の割合",
@@ -2429,7 +2429,7 @@
    "qid": "gaishoku_tokutei2_132",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品の「五味」に含まれないものはどれか。",
    "options": [
     "うま味",
@@ -2447,7 +2447,7 @@
    "qid": "gaishoku_tokutei2_133",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "献立の基本「主食・主菜・副菜」で、ご飯やパン・麺にあたるのはどれか。",
    "options": [
     "肉・魚・卵・大豆などたんぱく質を多く含むおかず",
@@ -2465,7 +2465,7 @@
    "qid": "gaishoku_tokutei2_134",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食材を無駄なく使い「食品ロス」を減らす取り組みとして適切なものはどれか。",
    "options": [
     "まだ十分使えるものでも気にせず新しいものに替える",
@@ -2483,7 +2483,7 @@
    "qid": "gaishoku_tokutei2_135",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "野菜をゆでる際、根菜類（じゃがいも・大根など）の一般的なゆで方はどれか。",
    "options": [
     "熱湯に入れてさっとゆでる",
@@ -2501,7 +2501,7 @@
    "qid": "gaishoku_tokutei2_136",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食材の保存で「常温保存」が適するものはどれか。",
    "options": [
     "冷蔵での保存が必須となる生クリーム",
@@ -2519,7 +2519,7 @@
    "qid": "gaishoku_tokutei2_137",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "加熱調理「蒸す」の特徴として正しいものはどれか。",
    "options": [
     "多めの油を使って高温でしっかり加熱する",
@@ -2537,7 +2537,7 @@
    "qid": "gaishoku_tokutei2_138",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「煮る」調理で味を染み込ませるコツとして正しいものはどれか。",
    "options": [
     "調味料による味付けは仕上げの最後に一気に行う",
@@ -2555,7 +2555,7 @@
    "qid": "gaishoku_tokutei2_139",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「炒める」調理の特徴として正しいものはどれか。",
    "options": [
     "たっぷりの油を使って長時間かけてじっくり揚げる",
@@ -2573,7 +2573,7 @@
    "qid": "gaishoku_tokutei2_140",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "豚肉を扱う際に特に注意すべき点として正しいものはどれか。",
    "options": [
     "中心まで十分に加熱する",
@@ -2591,7 +2591,7 @@
    "qid": "gaishoku_tokutei2_141",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "調理器具のうち、焦げつきにくく扱いやすいが強い金属たわしで傷つきやすいものはどれか。",
    "options": [
     "焦げつきにくいが錆びやすい鉄のフライパン",
@@ -2609,7 +2609,7 @@
    "qid": "gaishoku_tokutei2_142",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食材の「旬」を意識する利点として正しいものはどれか。",
    "options": [
     "旬を意識すると衛生管理そのものが不要になる",
@@ -2627,7 +2627,7 @@
    "qid": "gaishoku_tokutei2_143",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "だしの「二番だし」の使い方として適切なものはどれか。",
    "options": [
     "煮物や味噌汁などしっかり味をつける料理に使う",
@@ -2645,7 +2645,7 @@
    "qid": "gaishoku_tokutei2_144",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食材の計量で「重量」を量るのに使う器具はどれか。",
    "options": [
     "時間を計るために使うタイマー",
@@ -2663,7 +2663,7 @@
    "qid": "gaishoku_tokutei2_145",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "油の「発煙点」を超えて加熱するとどうなるか。",
    "options": [
     "発煙点を超えて加熱すると栄養価がかえって上がる",
@@ -2681,7 +2681,7 @@
    "qid": "gaishoku_tokutei2_146",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ゼラチンと寒天の違いとして正しいものはどれか。",
    "options": [
     "ゼラチンは海藻からつくられ、常温に置いても固まる性質を持つ",
@@ -2699,7 +2699,7 @@
    "qid": "gaishoku_tokutei2_147",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "揚げ物の衣（ころも）に使う小麦粉のうち、天ぷらに向くのはどれか。",
    "options": [
     "強力粉",
@@ -2717,7 +2717,7 @@
    "qid": "gaishoku_tokutei2_148",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食材の切り方を揃える主な目的はどれか。",
    "options": [
     "火の通りを均一にし、見た目も整えるため",
@@ -2735,7 +2735,7 @@
    "qid": "gaishoku_tokutei2_149",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「霜降り（下処理）」の目的として正しいものはどれか。",
    "options": [
     "味付けした調味料をしっかりと濃く食材に染み込ませるため",
@@ -2753,7 +2753,7 @@
    "qid": "gaishoku_tokutei2_150",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品の栄養素で、体を動かすエネルギー源として最も主要なものはどれか。",
    "options": [
     "炭水化物（糖質）",
@@ -2771,7 +2771,7 @@
    "qid": "gaishoku_tokutei2_151",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "体をつくる主成分となり、肉・魚・卵・大豆に多い栄養素はどれか。",
    "options": [
     "たんぱく質",
@@ -2789,7 +2789,7 @@
    "qid": "gaishoku_tokutei2_152",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "みそ汁のみそを入れた後、長く煮立たせない方がよい理由はどれか。",
    "options": [
     "香りが飛び、風味が損なわれるから",
@@ -2807,7 +2807,7 @@
    "qid": "gaishoku_tokutei2_153",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「隠し包丁」を入れる目的として正しいものはどれか。",
    "options": [
     "料理の見た目の重さをわざと増やすため",
@@ -2825,7 +2825,7 @@
    "qid": "gaishoku_tokutei2_154",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "揚げ油をこして保存するとよい理由はどれか。",
    "options": [
     "揚げかすを除いて酸化・劣化を遅らせるため",
@@ -2843,7 +2843,7 @@
    "qid": "gaishoku_tokutei2_155",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食材のアク抜きの目的として正しいものはどれか。",
    "options": [
     "アク抜きをすると食材の栄養価が必ず増えてしまう",
@@ -2861,7 +2861,7 @@
    "qid": "gaishoku_tokutei2_156",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1kgの魚を仕入れ、廃棄率が40%のとき、可食部はおよそ何gか。",
    "options": [
     "1000g",
@@ -2879,7 +2879,7 @@
    "qid": "gaishoku_tokutei2_157",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "揚げ物の中心温度を確認したら70℃だった。安全提供のための対応はどれか。",
    "options": [
     "揚げ物の表面だけをもう一度軽く再加熱する",
@@ -2897,7 +2897,7 @@
    "qid": "gaishoku_tokutei2_158",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "多くの料理を同時に仕込む際、作業を効率化する考え方として適切なものはどれか。",
    "options": [
     "一品を完全に仕上げてから次の料理の下処理にとりかかる",
@@ -2915,7 +2915,7 @@
    "qid": "gaishoku_tokutei2_159",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "だしを大量にとった後、当日使い切れない分の保存として適切なものはどれか。",
    "options": [
     "鍋に入れたままの状態で常温にしばらく置いておく",
@@ -2933,7 +2933,7 @@
    "qid": "gaishoku_tokutei2_160",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "注文が集中し、揚げ油の温度が下がってしまった。適切な対応はどれか。",
    "options": [
     "揚げ油に少量の水を足して温度を上げようとしてしまう",
@@ -2951,7 +2951,7 @@
    "qid": "gaishoku_tokutei2_161",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "作り置きのサラダ（非加熱）を提供する際の衛生対応として適切なものはどれか。",
    "options": [
     "調理済みのサラダを常温のまま長時間置いたままにする",
@@ -2969,7 +2969,7 @@
    "qid": "gaishoku_tokutei2_162",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "複数の料理を同じコンロで作るとき、味や香りの移りを防ぐ工夫として適切なものはどれか。",
    "options": [
     "器具を使い分け・洗浄し、香りの強いものは順番を工夫する",
@@ -2987,7 +2987,7 @@
    "qid": "gaishoku_tokutei2_163",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "提供直前に盛り付けを行う利点として最も適切なものはどれか。",
    "options": [
     "適温・見た目・食感を保ちやすい",
@@ -3005,7 +3005,7 @@
    "qid": "gaishoku_tokutei2_164",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "包丁で手を切る事故を防ぐための行動として適切なものはどれか。",
    "options": [
     "切れ味の悪くなった包丁を無理に力を入れて使い続けてしまう",
@@ -3023,7 +3023,7 @@
    "qid": "gaishoku_tokutei2_165",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「湯せん」の説明として正しいものはどれか。",
    "options": [
     "強い直火を使って一気に食材の表面を加熱する方法",
@@ -3041,7 +3041,7 @@
    "qid": "gaishoku_tokutei2_166",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食材の「歩留まり」の説明として正しいものはどれか。",
    "options": [
     "お店の売上高に対して人件費が占めている割合のこと",
@@ -3059,7 +3059,7 @@
    "qid": "gaishoku_tokutei2_167",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "焼き物で「強火の遠火」がよいとされる理由はどれか。",
    "options": [
     "表面を焦がさず、中まで均一に火を通せるから",
@@ -3077,7 +3077,7 @@
    "qid": "gaishoku_tokutei2_168",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "冷めた料理を温め直して提供する際、品質を保つ工夫として適切なものはどれか。",
    "options": [
     "同じ料理を必要以上に何度も繰り返し温め直してしまう",
@@ -3095,7 +3095,7 @@
    "qid": "gaishoku_tokutei2_169",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "お客様が来店したときの最初の接客用語として正しいものはどれか。",
    "options": [
     "いらっしゃいませ",
@@ -3113,7 +3113,7 @@
    "qid": "gaishoku_tokutei2_170",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "注文を承ったときに使う接客用語として最も適切なものはどれか。",
    "options": [
     "いらっしゃいませ",
@@ -3131,7 +3131,7 @@
    "qid": "gaishoku_tokutei2_171",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "お客様を待たせた後に使う接客用語として正しいものはどれか。",
    "options": [
     "いらっしゃいませ",
@@ -3149,7 +3149,7 @@
    "qid": "gaishoku_tokutei2_172",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "敬語の種類で、相手の動作を高めて敬意を表すものはどれか。",
    "options": [
     "謙譲語（自分の動作をへりくだる敬語）",
@@ -3167,7 +3167,7 @@
    "qid": "gaishoku_tokutei2_173",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「言う」の尊敬語として正しいものはどれか。",
    "options": [
     "言っておく（特に敬語ではない普通の言い方）",
@@ -3185,7 +3185,7 @@
    "qid": "gaishoku_tokutei2_174",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「食べる」の尊敬語として正しいものはどれか。",
    "options": [
     "いただく（自分がへりくだって使う言い方）",
@@ -3203,7 +3203,7 @@
    "qid": "gaishoku_tokutei2_175",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客時の身だしなみとして適切なものはどれか。",
    "options": [
     "清潔な服装・整えた髪・短い爪を保つ",
@@ -3221,7 +3221,7 @@
    "qid": "gaishoku_tokutei2_176",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "料理をお客様の右側から提供するのが基本とされる理由に近いものはどれか。",
    "options": [
     "配膳の向きはどちら側からでもよく、特に決まりはまったくないから",
@@ -3239,7 +3239,7 @@
    "qid": "gaishoku_tokutei2_177",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "クレーム対応の基本手順として最も適切なものはどれか。",
    "options": [
     "まず自分の落ち度を認めようとせず言い訳から始めてしまう",
@@ -3257,7 +3257,7 @@
    "qid": "gaishoku_tokutei2_178",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "電話予約を受けるときに確認すべき事項として適切でないものはどれか。",
    "options": [
     "お客様の年収",
@@ -3275,7 +3275,7 @@
    "qid": "gaishoku_tokutei2_179",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "外国人のお客様への対応として適切なものはどれか。",
    "options": [
     "伝わっていなくても早口の日本語のままずっと押し通そうとする",
@@ -3293,7 +3293,7 @@
    "qid": "gaishoku_tokutei2_180",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ベジタリアン・ヴィーガンのお客様への配慮として正しいものはどれか。",
    "options": [
     "使用食材を確認し、食べられないものを避けて案内する",
@@ -3311,7 +3311,7 @@
    "qid": "gaishoku_tokutei2_181",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「QSC」に含まれないものはどれか。",
    "options": [
     "Service（サービス）",
@@ -3329,7 +3329,7 @@
    "qid": "gaishoku_tokutei2_182",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客における「第一印象」で特に大切とされるものはどれか。",
    "options": [
     "表情（笑顔）・挨拶・身だしなみ",
@@ -3347,7 +3347,7 @@
    "qid": "gaishoku_tokutei2_183",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "お客様に商品を勧めて客単価を上げる「サジェスト（推奨販売）」の例として適切なものはどれか。",
    "options": [
     "「ご一緒にサラダはいかがですか」と一言添える",
@@ -3365,7 +3365,7 @@
    "qid": "gaishoku_tokutei2_184",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "店内のPOP（案内・広告）を掲示する主な目的はどれか。",
    "options": [
     "特に意味もなく店内をあえて薄暗くするために掲示する",
@@ -3383,7 +3383,7 @@
    "qid": "gaishoku_tokutei2_185",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "高齢のお客様への配慮として適切でないものはどれか。",
    "options": [
     "聞き取りやすい声でゆっくりはっきりと話しかける",
@@ -3401,7 +3401,7 @@
    "qid": "gaishoku_tokutei2_186",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "会計（レジ）でお金を扱うときの対応として正しいものはどれか。",
    "options": [
     "金額を復唱し、預り金・釣り銭を声に出して確認する",
@@ -3419,7 +3419,7 @@
    "qid": "gaishoku_tokutei2_187",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "お客様が退店するときの接客用語として最も適切なものはどれか。",
    "options": [
     "ありがとうございました",
@@ -3437,7 +3437,7 @@
    "qid": "gaishoku_tokutei2_188",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "お客様の呼び出しに気づいたときの対応として最も適切なものはどれか。",
    "options": [
     "「はい、ただいま伺います」とすぐ返事をして向かう",
@@ -3455,7 +3455,7 @@
    "qid": "gaishoku_tokutei2_189",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "補助犬（盲導犬・介助犬・聴導犬）を連れたお客様への対応として正しいものはどれか。",
    "options": [
     "同伴を断ったうえで、店の外につないでもらうよう頼んでしまう",
@@ -3473,7 +3473,7 @@
    "qid": "gaishoku_tokutei2_190",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "車椅子のお客様への案内として適切なものはどれか。",
    "options": [
     "通路が広く出入りしやすい席へ案内し、必要に応じ手助けを申し出る",
@@ -3491,7 +3491,7 @@
    "qid": "gaishoku_tokutei2_191",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客で「クッション言葉」を使う目的として正しいものはどれか。",
    "options": [
     "わざとお客様を混乱させるために言葉を使う",
@@ -3509,7 +3509,7 @@
    "qid": "gaishoku_tokutei2_192",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "お客様に商品説明をするとき大切なことはどれか。",
    "options": [
     "お客様に伝わりにくい専門用語だけを並べて説明してしまう",
@@ -3527,7 +3527,7 @@
    "qid": "gaishoku_tokutei2_193",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "リピーター（常連客）を増やすために大切なことはどれか。",
    "options": [
     "お客様から寄せられたクレームをそのまま無視してしまう",
@@ -3545,7 +3545,7 @@
    "qid": "gaishoku_tokutei2_194",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "店の口コミ（SNS等）について正しい考え方はどれか。",
    "options": [
     "悪い口コミについては特に気にしなくてよい",
@@ -3563,7 +3563,7 @@
    "qid": "gaishoku_tokutei2_195",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "未成年者と思われるお客様がお酒を注文した。適切な対応はどれか。",
    "options": [
     "年齢を確認し、未成年なら提供しない",
@@ -3581,7 +3581,7 @@
    "qid": "gaishoku_tokutei2_196",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客の基本動作「ニコニコ・ハキハキ・キビキビ」の「ハキハキ」の意味はどれか。",
    "options": [
     "焦らずかなりゆっくりと時間をかけて話す",
@@ -3599,7 +3599,7 @@
    "qid": "gaishoku_tokutei2_197",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "メニュー表に「写真」や「説明」を載せる利点として正しいものはどれか。",
    "options": [
     "メニューにかかっている原価が必ず下がってしまう",
@@ -3617,7 +3617,7 @@
    "qid": "gaishoku_tokutei2_198",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "お客様同士のトラブルや泥酔者への対応で最も適切なものはどれか。",
    "options": [
     "対応を面倒に感じて他のお客様に押し付けてしまう",
@@ -3635,7 +3635,7 @@
    "qid": "gaishoku_tokutei2_199",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "忘れ物（遺失物）を見つけたときの対応として正しいものはどれか。",
    "options": [
     "見て見ぬふりをしてそのまま放置する",
@@ -3653,7 +3653,7 @@
    "qid": "gaishoku_tokutei2_200",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客で「傾聴」が大切な理由として最も適切なものはどれか。",
    "options": [
     "お客様の要望を正しく把握し、満足につなげられるから",
@@ -3671,7 +3671,7 @@
    "qid": "gaishoku_tokutei2_201",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「賞味期限」と「消費期限」の違いについて、接客での案内として正しいものはどれか。",
    "options": [
     "賞味期限は食品の安全性を示す期限である",
@@ -3689,7 +3689,7 @@
    "qid": "gaishoku_tokutei2_202",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客での「身だしなみ」と「おしゃれ」の違いとして正しいものはどれか。",
    "options": [
     "身だしなみは相手のための清潔感、おしゃれは自分のための表現",
@@ -3707,7 +3707,7 @@
    "qid": "gaishoku_tokutei2_203",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "料理を運ぶ（配膳する）ときの持ち方・運び方として適切なものはどれか。",
    "options": [
     "時間を優先して急いで走りながら料理を運ぶ",
@@ -3725,7 +3725,7 @@
    "qid": "gaishoku_tokutei2_204",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "お子様連れのお客様への配慮として適切なものはどれか。",
    "options": [
     "熱々の料理をそのまま何も考えず子供の目の前に置いてしまう",
@@ -3743,7 +3743,7 @@
    "qid": "gaishoku_tokutei2_205",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客での「アイコンタクト」の効果として正しいものはどれか。",
    "options": [
     "わざとお客様に威圧感を与えてしまうため",
@@ -3761,7 +3761,7 @@
    "qid": "gaishoku_tokutei2_206",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "料理を提供したところ「注文と違う」と言われた。最も適切な対応はどれか。",
    "options": [
     "すぐに謝罪し、正しい料理を確認して速やかに作り直す",
@@ -3779,7 +3779,7 @@
    "qid": "gaishoku_tokutei2_207",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "満席で待っているお客様がいる。最も適切な対応はどれか。",
    "options": [
     "何も伝えないまま案内せず放置する",
@@ -3797,7 +3797,7 @@
    "qid": "gaishoku_tokutei2_208",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "お客様から「この料理に〇〇（アレルギー食材）は入っていますか」と聞かれた。最も適切な対応はどれか。",
    "options": [
     "はっきり分からないままとりあえずそのまま提供してしまう",
@@ -3815,7 +3815,7 @@
    "qid": "gaishoku_tokutei2_209",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "レジ締めで、実際の現金がレジの記録より少なかった。最も適切な対応はどれか。",
    "options": [
     "差額を自分のお金でこっそり補ってそのまま黙っておく",
@@ -3833,7 +3833,7 @@
    "qid": "gaishoku_tokutei2_210",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "お客様に飲み物をこぼしてしまった。最も適切な対応はどれか。",
    "options": [
     "すぐ謝罪し、けがの有無を確認して拭き取り、必要な対応と報告をする",
@@ -3851,7 +3851,7 @@
    "qid": "gaishoku_tokutei2_211",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "外国人観光客に日本語のメニューが伝わらず困っている。最も適切な対応はどれか。",
    "options": [
     "内容を確認せずにとりあえず適当に料理を出してしまう",
@@ -3869,7 +3869,7 @@
    "qid": "gaishoku_tokutei2_212",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "混雑時に一人で複数のテーブルを担当している。効率と満足を両立する対応はどれか。",
    "options": [
     "優先順位をつけ、待たせる場合は一声かけて配膳を優先する",
@@ -3887,7 +3887,7 @@
    "qid": "gaishoku_tokutei2_213",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "お客様から「料理が遅い」と言われた。最も適切な対応はどれか。",
    "options": [
     "忙しいことを理由にお客様を突き放してしまう",
@@ -3905,7 +3905,7 @@
    "qid": "gaishoku_tokutei2_214",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "常連のお客様が来店した。満足度を高める対応として適切なものはどれか。",
    "options": [
     "お客様の顔や好みを覚えていないふりをする",
@@ -3923,7 +3923,7 @@
    "qid": "gaishoku_tokutei2_215",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "お客様に割引券（次回使えるクーポン）を渡す最適なタイミングはどれか。",
    "options": [
     "料理を提供するのと同時のタイミングで渡す",
@@ -3941,7 +3941,7 @@
    "qid": "gaishoku_tokutei2_216",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「接客」と「接遇」の違いとして最も適切なものはどれか。",
    "options": [
     "接遇というのは接客よりも簡単で雑なものだと考えてしまう",
@@ -3959,7 +3959,7 @@
    "qid": "gaishoku_tokutei2_217",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "お客様に不快感を与えないための行動として適切でないものはどれか。",
    "options": [
     "常に明るい表情を心がけて対応する",
@@ -3977,7 +3977,7 @@
    "qid": "gaishoku_tokutei2_218",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "クレームを受けたが自分では判断できない内容だった。最も適切な対応はどれか。",
    "options": [
     "対応方法が分からないのでそのまま放置する",
@@ -3995,7 +3995,7 @@
    "qid": "gaishoku_tokutei2_219",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「売上高」を求める基本の式として正しいものはどれか。",
    "options": [
     "客数 − 客単価",
@@ -4013,7 +4013,7 @@
    "qid": "gaishoku_tokutei2_220",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "飲食店の「FLコスト」が指すものはどれか。",
    "options": [
     "Food（食材費）とLabor（人件費）の合計",
@@ -4031,7 +4031,7 @@
    "qid": "gaishoku_tokutei2_221",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「損益分岐点」の説明として正しいものはどれか。",
    "options": [
     "1日のうちで最も来客数が多くなる時間帯のこと",
@@ -4049,7 +4049,7 @@
    "qid": "gaishoku_tokutei2_222",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「変動費」に分類されるものはどれか。",
    "options": [
     "正社員の基本給",
@@ -4067,7 +4067,7 @@
    "qid": "gaishoku_tokutei2_223",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「回転率」の説明として正しいものはどれか。",
    "options": [
     "提供する料理の原価が占めている割合のこと",
@@ -4085,7 +4085,7 @@
    "qid": "gaishoku_tokutei2_224",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "最低賃金について正しいものはどれか。",
    "options": [
     "店がまったく自由に好きな金額で決めてよいもの",
@@ -4103,7 +4103,7 @@
    "qid": "gaishoku_tokutei2_225",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "法定休日に労働させた場合の割増賃金の最低率はどれか。",
    "options": [
     "35%以上",
@@ -4121,7 +4121,7 @@
    "qid": "gaishoku_tokutei2_226",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「発注点（発注のタイミング）」を決める主な目的はどれか。",
    "options": [
     "お客様一人あたりが支払う客単価をあえて下げるため",
@@ -4139,7 +4139,7 @@
    "qid": "gaishoku_tokutei2_227",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "棚卸（在庫の実地確認）を行う主な目的はどれか。",
    "options": [
     "働いている従業員の接客態度を評価するため",
@@ -4157,7 +4157,7 @@
    "qid": "gaishoku_tokutei2_228",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "人材育成の「OFF-JT」の説明として正しいものはどれか。",
    "options": [
     "実際に作業をしながら少しずつ体で覚えさせること",
@@ -4175,7 +4175,7 @@
    "qid": "gaishoku_tokutei2_229",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "消火器を使うべき初期消火の対象として正しいものはどれか。",
    "options": [
     "炎が天井に届く前の小さな火",
@@ -4193,7 +4193,7 @@
    "qid": "gaishoku_tokutei2_230",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "個人情報保護の観点で適切な行動はどれか。",
    "options": [
     "許可を得ないまま外部の他社にそのまま渡してしまう",
@@ -4211,7 +4211,7 @@
    "qid": "gaishoku_tokutei2_231",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「クレンリネス」の意味として最も適切なものはどれか。",
    "options": [
     "お客様の目に見える所だけをきれいに整えること",
@@ -4229,7 +4229,7 @@
    "qid": "gaishoku_tokutei2_232",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "廃棄物（ごみ）の管理として適切なものはどれか。",
    "options": [
     "分別せずにすべてまとめて一箇所に置いておく",
@@ -4247,7 +4247,7 @@
    "qid": "gaishoku_tokutei2_233",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「原価率」の計算式として正しいものはどれか。",
    "options": [
     "原価 ÷ 売価 × 100",
@@ -4265,7 +4265,7 @@
    "qid": "gaishoku_tokutei2_234",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "人時売上高の計算式として正しいものはどれか。",
    "options": [
     "総労働時間 ÷ 売上高",
@@ -4283,7 +4283,7 @@
    "qid": "gaishoku_tokutei2_235",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "人件費を管理する指標「労働分配率」の計算式として正しいものはどれか。",
    "options": [
     "粗利益 ÷ 人件費 × 100",
@@ -4301,7 +4301,7 @@
    "qid": "gaishoku_tokutei2_236",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "店舗の売上を上げる要素として、客単価とともに重要なものはどれか。",
    "options": [
     "客数（来店数・回転率）",
@@ -4319,7 +4319,7 @@
    "qid": "gaishoku_tokutei2_237",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "シフト（勤務表）を組むときに考慮すべきことはどれか。",
    "options": [
     "労働時間の上限をまったく無視して配置する",
@@ -4337,7 +4337,7 @@
    "qid": "gaishoku_tokutei2_238",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「粗利益率（荒利益率）」の計算式として正しいものはどれか。",
    "options": [
     "粗利益 × 売上高",
@@ -4355,7 +4355,7 @@
    "qid": "gaishoku_tokutei2_239",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "防火管理者の役割として正しいものはどれか。",
    "options": [
     "消防計画の作成や避難訓練など防火管理を統括する",
@@ -4373,7 +4373,7 @@
    "qid": "gaishoku_tokutei2_240",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "メニュー分析（ABC分析＋人気度）で、売上も人気も高い「看板商品」の扱いとして適切なものはどれか。",
    "options": [
     "品質を維持し目立たせて売り伸ばす",
@@ -4391,7 +4391,7 @@
    "qid": "gaishoku_tokutei2_241",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "従業員のモチベーションを高める取り組みとして適切なものはどれか。",
    "options": [
     "理由を説明することなく一方的に叱りつけるだけにする",
@@ -4409,7 +4409,7 @@
    "qid": "gaishoku_tokutei2_242",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「客単価」を上げる方法として適切なものはどれか。",
    "options": [
     "お客様の目に入らないようメニューをあえて隠す",
@@ -4427,7 +4427,7 @@
    "qid": "gaishoku_tokutei2_243",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「時間帯責任者」に求められる役割として正しいものはどれか。",
    "options": [
     "店内の掃除業務だけを専門に担当して行う",
@@ -4445,7 +4445,7 @@
    "qid": "gaishoku_tokutei2_244",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "適正在庫を保つ利点として正しいものはどれか。",
    "options": [
     "在庫が増えることによって必ず原価が上がってしまう",
@@ -4463,7 +4463,7 @@
    "qid": "gaishoku_tokutei2_245",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「マニュアル」を整備する主な目的はどれか。",
    "options": [
     "作業やサービスの品質を標準化し、教育を効率化するため",
@@ -4481,7 +4481,7 @@
    "qid": "gaishoku_tokutei2_246",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "労働条件を明示する「労働条件通知書」に記載すべきものはどれか。",
    "options": [
     "賃金・労働時間・休日・業務内容など",
@@ -4499,7 +4499,7 @@
    "qid": "gaishoku_tokutei2_247",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "店舗の売上を分析する「日報・売上日報」の活用として適切なものはどれか。",
    "options": [
     "日々の売上・客数などを記録し、傾向を分析し改善に活かす",
@@ -4517,7 +4517,7 @@
    "qid": "gaishoku_tokutei2_248",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "コンプライアンス（法令遵守）の観点で適切な行動はどれか。",
    "options": [
     "食品表示・労働法・営業許可など関係法令を守って運営する",
@@ -4535,7 +4535,7 @@
    "qid": "gaishoku_tokutei2_249",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「販売促進（販促）」の例として適切なものはどれか。",
    "options": [
     "クーポン・季節フェア・SNS発信など集客の工夫",
@@ -4553,7 +4553,7 @@
    "qid": "gaishoku_tokutei2_250",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "設備・機器の「定期点検」を行う主な目的はどれか。",
    "options": [
     "特に必要のない電気代をあえて増やしてしまうため",
@@ -4571,7 +4571,7 @@
    "qid": "gaishoku_tokutei2_251",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「歩留まり」を店舗運営で使う場面として正しいものはどれか。",
    "options": [
     "営業時間を決めるとき",
@@ -4589,7 +4589,7 @@
    "qid": "gaishoku_tokutei2_252",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "売価800円の料理の原価が240円のとき、原価率はいくらか。",
    "options": [
     "24%",
@@ -4607,7 +4607,7 @@
    "qid": "gaishoku_tokutei2_253",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "原価率を30%にしたい料理の原価が210円のとき、売価はいくらにすればよいか。",
    "options": [
     "273円",
@@ -4625,7 +4625,7 @@
    "qid": "gaishoku_tokutei2_254",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ある日の来客数が150人、座席数が50席のとき、回転率はいくらか。",
    "options": [
     "3回転",
@@ -4643,7 +4643,7 @@
    "qid": "gaishoku_tokutei2_255",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1か月の売上が600万円、食材費が180万円、人件費が180万円のとき、FL比率はいくらか。",
    "options": [
     "90%",
@@ -4661,7 +4661,7 @@
    "qid": "gaishoku_tokutei2_256",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1か月の粗利益が400万円、人件費が160万円のとき、労働分配率はいくらか。",
    "options": [
     "40%",
@@ -4679,7 +4679,7 @@
    "qid": "gaishoku_tokutei2_257",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "客単価を上げるため「1品平均単価」を450円から500円に上げ、注文点数が平均3点で変わらないとき、客単価はいくらになるか。",
    "options": [
     "1,500円",
@@ -4697,7 +4697,7 @@
    "qid": "gaishoku_tokutei2_258",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "固定費が1か月120万円、粗利益率が60%のとき、損益分岐点売上高はおよそいくらか。",
    "options": [
     "200万円",
@@ -4715,7 +4715,7 @@
    "qid": "gaishoku_tokutei2_259",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "棚卸の結果、実際原価率が標準原価率より2%高かった。考えられる原因として適切なものはどれか。",
    "options": [
     "ポーション超過・廃棄・盗難・棚卸ミスなどのロス",
@@ -4733,7 +4733,7 @@
    "qid": "gaishoku_tokutei2_260",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "6時間を超え8時間以下の勤務の場合、与えるべき休憩時間はどれか。",
    "options": [
     "少なくとも60分",
@@ -4751,7 +4751,7 @@
    "qid": "gaishoku_tokutei2_261",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "時給1,200円の従業員が、深夜（22時〜翌5時）に2時間働いた。深夜割増(25%)を含む2時間分の賃金はいくらか。",
    "options": [
     "3,600円",
@@ -4769,7 +4769,7 @@
    "qid": "gaishoku_tokutei2_262",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "在庫を発注する際、過去の売上傾向をふまえて数量を決める理由として最も適切なものはどれか。",
    "options": [
     "需要に合わせ、品切れと廃棄ロスを防ぐため",
@@ -4787,7 +4787,7 @@
    "qid": "gaishoku_tokutei2_263",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "ピークタイムに人手が足りず提供が遅れている。店舗運営上の対応として適切なものはどれか。",
    "options": [
     "新規のお客様をあえて減らすために入店をずっと断り続ける",
@@ -4805,7 +4805,7 @@
    "qid": "gaishoku_tokutei2_264",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "月間売上目標800万円、目標人時売上高を5,000円とするとき、月間の計画総労働時間はおよそ何時間か。",
    "options": [
     "160時間",
@@ -4823,7 +4823,7 @@
    "qid": "gaishoku_tokutei2_265",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "売価500円の商品Aが1日120個、売価800円の商品Bが1日50個売れた。Aの1日の売上はいくらか。",
    "options": [
     "60,000円",
@@ -4841,7 +4841,7 @@
    "qid": "gaishoku_tokutei2_266",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「先入れ先出し（FIFO）」を在庫管理で徹底する主な目的はどれか。",
    "options": [
     "必要な量以上に在庫をどんどん増やしていくため",
@@ -4859,7 +4859,7 @@
    "qid": "gaishoku_tokutei2_267",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "店舗の「4S・5S」活動が店舗運営にもたらす効果として適切なものはどれか。",
    "options": [
     "作業効率・安全・衛生・印象が向上する",
@@ -4877,7 +4877,7 @@
    "qid": "gaishoku_tokutei2_268",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1日の粗利益が240,000円、その日の総労働時間が40時間のとき、人時生産性はいくらか。",
    "options": [
     "4,000円",
@@ -4895,7 +4895,7 @@
    "qid": "gaishoku_tokutei2_269",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1日の売上が360,000円、客単価が1,200円のとき、その日の客数は何人か。",
    "options": [
     "3,000人",
@@ -4913,7 +4913,7 @@
    "qid": "gaishoku_tokutei2_270",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "売価1,000円の料理の原価が350円のとき、荒利益はいくらか。",
    "options": [
     "650円",
@@ -4931,7 +4931,7 @@
    "qid": "gaishoku_tokutei2_271",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "売価1,000円の料理の荒利益が650円のとき、荒利益率はいくらか。",
    "options": [
     "65%",
@@ -4949,7 +4949,7 @@
    "qid": "gaishoku_tokutei2_272",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "原価が300円の料理を原価率40%で提供したい。売価はいくらにすればよいか。",
    "options": [
     "120円",
@@ -4967,7 +4967,7 @@
    "qid": "gaishoku_tokutei2_273",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1日の売上が480,000円、総労働時間が60時間のとき、人時売上高はいくらか。",
    "options": [
     "28,800円",
@@ -4985,7 +4985,7 @@
    "qid": "gaishoku_tokutei2_274",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ある日の来客数が240人、座席数が60席のとき、回転率はいくらか。",
    "options": [
     "14,400回転",
@@ -5003,7 +5003,7 @@
    "qid": "gaishoku_tokutei2_275",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "人件費が90,000円、粗利益が300,000円のとき、労働分配率はいくらか。",
    "options": [
     "33%",
@@ -5021,7 +5021,7 @@
    "qid": "gaishoku_tokutei2_276",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1か月の売上が500万円、食材費が150万円、人件費が175万円のとき、FL比率はいくらか。",
    "options": [
     "65%",
@@ -5039,7 +5039,7 @@
    "qid": "gaishoku_tokutei2_277",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1か月の固定費が90万円、粗利益率が45%のとき、損益分岐点売上高はいくらか。",
    "options": [
     "40.5万円",
@@ -5057,7 +5057,7 @@
    "qid": "gaishoku_tokutei2_278",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "時給1,000円の従業員が、時間外かつ深夜（22時以降）に3時間働いた。割増（時間外25%＋深夜25%＝50%）を含む3時間分の賃金はいくらか。",
    "options": [
     "3,750円",
@@ -5075,7 +5075,7 @@
    "qid": "gaishoku_tokutei2_279",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "時給1,200円の従業員が、法定休日に5時間働いた。休日割増（35%）を含む5時間分の賃金はいくらか。",
    "options": [
     "7,500円",
@@ -5093,7 +5093,7 @@
    "qid": "gaishoku_tokutei2_280",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ある食材で、可食部が3kg必要である。歩留まりが60%のとき、発注量はおよそ何kgか。",
    "options": [
     "4.8kg",
@@ -5111,7 +5111,7 @@
    "qid": "gaishoku_tokutei2_281",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ある食材で、可食部が4kg必要である。廃棄率が20%のとき、発注量はおよそ何kgか。",
    "options": [
     "4.8kg",
@@ -5129,7 +5129,7 @@
    "qid": "gaishoku_tokutei2_282",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "当月の実際原価が380,000円、当月売上が1,000,000円のとき、実際原価率はいくらか。",
    "options": [
     "26%",
@@ -5147,7 +5147,7 @@
    "qid": "gaishoku_tokutei2_283",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "売上が800,000円、原価率が30%のとき、粗利益はいくらか。",
    "options": [
     "800,000円",
@@ -5165,7 +5165,7 @@
    "qid": "gaishoku_tokutei2_284",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1日の売上が600,000円、客数が400人のとき、客単価はいくらか。",
    "options": [
     "240,000円",
@@ -5183,7 +5183,7 @@
    "qid": "gaishoku_tokutei2_285",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "月間売上目標が1,200万円、目標人時売上高を8,000円とするとき、月間の計画総労働時間はおよそ何時間か。",
    "options": [
     "1,600時間",
@@ -5201,7 +5201,7 @@
    "qid": "gaishoku_tokutei2_286",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "粗利益が500,000円、労働分配率を36%に保ちたいとき、人件費はいくらまでにすべきか。",
    "options": [
     "180,000円",
@@ -5219,7 +5219,7 @@
    "qid": "gaishoku_tokutei2_287",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "固定費が100万円、目標利益を50万円としたい。粗利益率が50%のとき、必要な売上高はいくらか。",
    "options": [
     "200万円",
@@ -5237,7 +5237,7 @@
    "qid": "gaishoku_tokutei2_288",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "細菌性食中毒の予防について、記述として最も適切なものはどれか。",
    "options": [
     "冷蔵庫内に入れておけば細菌は完全に死滅するので、期限を過ぎても冷蔵し続けていれば特に問題はない。",
@@ -5255,7 +5255,7 @@
    "qid": "gaishoku_tokutei2_289",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ノロウイルスに関する記述として正しいものはどれか。",
    "options": [
     "少量でも感染し、加熱は中心85〜90℃で90秒以上、消毒は次亜塩素酸ナトリウムが有効である。",
@@ -5273,7 +5273,7 @@
    "qid": "gaishoku_tokutei2_290",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "黄色ブドウ球菌による食中毒の特徴として、最も適切な組み合わせはどれか。",
    "options": [
     "手指の化膿創が汚染源となり、産生される毒素（エンテロトキシン）は加熱に強く、菌を「つけない・増やさない」ことが重要である。",
@@ -5291,7 +5291,7 @@
    "qid": "gaishoku_tokutei2_291",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ウエルシュ菌による食中毒とその対策として、最も適切なものはどれか。",
    "options": [
     "海産の魚介類が主な原因であるため、真水でよく洗い流せば加熱しなくても予防できる。",
@@ -5309,7 +5309,7 @@
    "qid": "gaishoku_tokutei2_292",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "HACCPに沿った衛生管理の考え方として、最も適切な記述はどれか。",
    "options": [
     "最終的にできあがった製品を抜き取って検査することだけで安全性を確認する方法である。",
@@ -5327,7 +5327,7 @@
    "qid": "gaishoku_tokutei2_293",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食物アレルギー表示について、最も適切な記述はどれか。",
    "options": [
     "ごく微量であればアレルゲンが含まれていても、あえてお客様に表示・説明する必要はない。",
@@ -5345,7 +5345,7 @@
    "qid": "gaishoku_tokutei2_294",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "消毒剤の使い分けについて、最も適切な組み合わせはどれか。",
    "options": [
     "まな板やふきん・ノロ対策には次亜塩素酸ナトリウム、手指や器具にはアルコール、手指の洗浄には逆性石けんを用いる。",
@@ -5363,7 +5363,7 @@
    "qid": "gaishoku_tokutei2_295",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品の温度管理について、正しい組み合わせはどれか。",
    "options": [
     "冷蔵は10℃以下（望ましくは5℃以下）、冷凍は-15℃以下（望ましくは-18℃以下）、温蔵は65℃以上に保つ。",
@@ -5381,7 +5381,7 @@
    "qid": "gaishoku_tokutei2_296",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "二次汚染（交差汚染）の防止策として、最も適切な組み合わせはどれか。",
    "options": [
     "十分に加熱しさえすれば二次汚染は問題にならないため、下処理段階での区分は特に不要である。",
@@ -5399,7 +5399,7 @@
    "qid": "gaishoku_tokutei2_297",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「消費期限」と「賞味期限」について、最も適切な記述はどれか。",
    "options": [
     "消費期限は弁当など傷みやすい食品に表示され過ぎたら食べない方がよく、賞味期限は日持ちする食品のおいしく食べられる期限で過ぎても直ちに食べられなくなるわけではない。",
@@ -5417,7 +5417,7 @@
    "qid": "gaishoku_tokutei2_298",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "アニサキスによる食中毒とその対策として、最も適切な組み合わせはどれか。",
    "options": [
     "熱には強く加熱では死なないが、酢でしっかりしめれば確実に死滅させることができる。",
@@ -5435,7 +5435,7 @@
    "qid": "gaishoku_tokutei2_299",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "手洗いについて、最も適切な記述はどれか。",
    "options": [
     "目に見える汚れさえなければ、水でさっと流すだけの手洗いで十分である。",
@@ -5453,7 +5453,7 @@
    "qid": "gaishoku_tokutei2_300",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品を扱う施設の作業区域（ゾーニング）について、正しい組み合わせはどれか。",
    "options": [
     "盛付は最も汚染度の高い汚染作業区域で、下処理は最も清潔な清潔作業区域で行うのが正しい。",
@@ -5471,7 +5471,7 @@
    "qid": "gaishoku_tokutei2_301",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "生の鶏肉を切ったまな板と包丁で、続けて生野菜サラダを作ろうとしている。最も適切な対応はどれか。",
    "options": [
     "乾いた布きんでさっと拭き取っておけば、洗浄・消毒まで行う必要はない。",
@@ -5489,7 +5489,7 @@
    "qid": "gaishoku_tokutei2_302",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "作り置きの弁当を大量に調理し、提供まで数時間ある。安全のための扱いとして最も適切なものはどれか。",
    "options": [
     "調理後は鍋や容器に入れたまま常温に置いておき、提供の直前にまとめて詰めればよい。",
@@ -5507,7 +5507,7 @@
    "qid": "gaishoku_tokutei2_303",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "お客様から「甲殻類（えび・かに）にアレルギーがある」と申告があった。最も適切な対応はどれか。",
    "options": [
     "メニュー表にえび・かにと明記されていなければ、あえて確認せずそのまま提供してよい。",
@@ -5525,7 +5525,7 @@
    "qid": "gaishoku_tokutei2_304",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "始業前の点検で、冷蔵庫の温度が12℃、使用水の残留塩素が0.05ppmだった。最も適切な対応はどれか。",
    "options": [
     "数値が基準外であっても、見た目やにおいに明らかな異常がなければ特に問題はない。",
@@ -5543,7 +5543,7 @@
    "qid": "gaishoku_tokutei2_305",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "店内でお客様がノロウイルスを疑わせる嘔吐をした。処理として最も適切なものはどれか。",
    "options": [
     "使い捨て手袋・マスクを着け、ペーパーで拭き取ってから次亜塩素酸ナトリウムで消毒し、汚染物は密閉して廃棄、処理後は手洗いを徹底する。",
@@ -5561,7 +5561,7 @@
    "qid": "gaishoku_tokutei2_306",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "食材の検収（納品の受け取り）時の対応として、最も適切なものはどれか。",
    "options": [
     "忙しいときは箱を開けて中身を確認せず、まとめて受領のサインをして受け取る。",
@@ -5579,7 +5579,7 @@
    "qid": "gaishoku_tokutei2_307",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "厨房で使うふきん・まな板の衛生管理として、最も適切なものはどれか。",
    "options": [
     "使用後は速やかに洗浄し、次亜塩素酸ナトリウムや熱湯で消毒してよく乾燥させ、まな板は用途別に使い分ける。",
@@ -5597,7 +5597,7 @@
    "qid": "gaishoku_tokutei2_308",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図のような最も深いお辞儀（最敬礼）が最も適切な場面はどれか。",
    "options": [
     "深いお詫びや、大切なお客様の見送りのとき",
@@ -5616,7 +5616,7 @@
    "qid": "gaishoku_tokutei2_309",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図のような浅いお辞儀（会釈）が最も適切な場面はどれか。",
    "options": [
     "重要な契約が成立したときなど特に丁重に扱うべき場面",
@@ -5635,7 +5635,7 @@
    "qid": "gaishoku_tokutei2_310",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図のお辞儀（敬礼・約30°）が基本として用いられる場面はどれか。",
    "options": [
     "重大な失敗を深くお詫びするときの場面",
@@ -5654,7 +5654,7 @@
    "qid": "gaishoku_tokutei2_311",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図に示すお辞儀の角度に最も近いものはどれか。",
    "options": [
     "約45度（最敬礼）",
@@ -5673,7 +5673,7 @@
    "qid": "gaishoku_tokutei2_312",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図の座席で、最も上位の席（上座）はどれか。",
    "options": [
     "①（入口から最も遠い席）",
@@ -5692,7 +5692,7 @@
    "qid": "gaishoku_tokutei2_313",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図の座席で、入口に最も近い下座はどれか。",
    "options": [
     "④（入口に最も近い席）",
@@ -5711,7 +5711,7 @@
    "qid": "gaishoku_tokutei2_314",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図のトレーのA・B・Cに、ご飯・汁物・主菜を置くとき、一般的な和食の配膳として正しい組み合わせはどれか。",
    "options": [
     "A＝ご飯（手前左）・B＝汁物（手前右）・C＝主菜（奥）",
@@ -5730,7 +5730,7 @@
    "qid": "gaishoku_tokutei2_315",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図のテーブルセッティングで、箸の置き方として正しいものはどれか。",
    "options": [
     "箸先をお客様の右側に向けて手前に置く置き方",
@@ -5749,7 +5749,7 @@
    "qid": "gaishoku_tokutei2_316",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図のテーブルセッティングで、グラス（飲み物）を置く一般的な位置はどれか。",
    "options": [
     "皿の右上",
@@ -5768,7 +5768,7 @@
    "qid": "gaishoku_tokutei2_317",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "図の矢印は料理を提供する向きを示す。一般的な配膳の基本として正しいものはどれか。",
    "options": [
     "配膳は必ず左側から行うものと決まっている",
@@ -5787,7 +5787,7 @@
    "qid": "gaishoku_tokutei2_318",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "図の矢印は食器を下げる向きを示す。一般的な下げ物の基本として正しいものはどれか。",
    "options": [
     "下げ物は必ずお客様の右側から行うものと決まっている",
@@ -5806,7 +5806,7 @@
    "qid": "gaishoku_tokutei2_319",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "図のような店内で、車椅子のお客様を案内する席として最も適切なものはどれか。",
    "options": [
     "特に案内をせずお客様に自由に座ってもらう",
@@ -5825,7 +5825,7 @@
    "qid": "gaishoku_tokutei2_320",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "図はお客様を席へ案内する様子である。案内の仕方として最も適切なものはどれか。",
    "options": [
     "お客様の少し前を歩き、歩調を合わせて席へ案内する",
@@ -5844,7 +5844,7 @@
    "qid": "gaishoku_tokutei2_321",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図はお客様に方向を指し示す様子である。指し示し方として最も適切なものはどれか。",
    "options": [
     "他の物を持ったままの片手でそのまま指し示す",
@@ -5863,7 +5863,7 @@
    "qid": "gaishoku_tokutei2_322",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図は接客者の身だしなみを示す。身だしなみとして適切なものはどれか。",
    "options": [
     "強い香水をつけたうえ、指輪や腕時計も着けたまま接客する",
@@ -5882,7 +5882,7 @@
    "qid": "gaishoku_tokutei2_323",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "図は満席で順番待ちのお客様がいる様子である。対応として最も適切なものはどれか。",
    "options": [
     "何も声をかけずにそのまま放置してしまう",
@@ -5901,7 +5901,7 @@
    "qid": "gaishoku_tokutei2_324",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "図は子供連れのお客様のテーブルである。料理提供時の配慮として最も適切なものはどれか。",
    "options": [
     "熱々の料理をそのまま何も考えず子供の目の前に置いてしまう",
@@ -5920,7 +5920,7 @@
    "qid": "gaishoku_tokutei2_325",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "図は会計時の様子である。金銭の受け渡しとして最も適切なものはどれか。",
    "options": [
     "カルトン（トレー）を使い、金額を復唱して受け渡す",
@@ -5939,7 +5939,7 @@
    "qid": "gaishoku_tokutei2_326",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "図のお辞儀（約30°）は接客で何と呼ばれるか。",
    "options": [
     "敬礼",
@@ -5958,7 +5958,7 @@
    "qid": "gaishoku_tokutei2_327",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "図のようにお客様の右側から料理を提供している。あわせて行う配慮として最も適切なものはどれか。",
    "options": [
     "料理の真上に手をかざしたままそっと運んでしまう",
@@ -5977,7 +5977,7 @@
    "qid": "gaishoku_tokutei2_328",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「食品添加物」の説明として最も適切なものはどれか。",
    "options": [
     "農産物や畜産物など、そのまま調理に使う食材原料のこと",
@@ -5995,7 +5995,7 @@
    "qid": "gaishoku_tokutei2_329",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品添加物の安全性を動物試験などの結果をもとに評価する機関はどれか。",
    "options": [
     "食品安全委員会（内閣府に設置された評価機関）",
@@ -6013,7 +6013,7 @@
    "qid": "gaishoku_tokutei2_330",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品添加物の4つの種類に含まれないものはどれか。",
    "options": [
     "既存添加物（長年の使用実績が認められた天然由来添加物）",
@@ -6031,7 +6031,7 @@
    "qid": "gaishoku_tokutei2_331",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "厚生労働大臣が指定する「指定添加物」の品目数はおよそいくつか（令和5年7月時点）。",
    "options": [
     "約475品目（安全性を確認し指定されたもの）",
@@ -6049,7 +6049,7 @@
    "qid": "gaishoku_tokutei2_332",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "添加物の分類「甘味料」の目的として正しいものはどれか。",
    "options": [
     "食品に甘みをつけて味を整えるため",
@@ -6067,7 +6067,7 @@
    "qid": "gaishoku_tokutei2_333",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "添加物の分類「保存料」の主な目的はどれか。",
    "options": [
     "食品に酸味を与えて風味を整えるため（酸味料の役割）",
@@ -6085,7 +6085,7 @@
    "qid": "gaishoku_tokutei2_334",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "添加物の分類「酸化防止剤」の主な目的はどれか。",
    "options": [
     "油脂などの酸化を防ぎ保存性をよくするため",
@@ -6103,7 +6103,7 @@
    "qid": "gaishoku_tokutei2_335",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「発色剤」は主に何のために使われるか。",
    "options": [
     "チューインガムのかみごたえを出す基材として使うため",
@@ -6121,7 +6121,7 @@
    "qid": "gaishoku_tokutei2_336",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「防カビ剤」が主に使われる目的として正しいものはどれか。",
    "options": [
     "輸入柑橘類などのかびの発生を防止するため",
@@ -6139,7 +6139,7 @@
    "qid": "gaishoku_tokutei2_337",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "お客様から「使っている食品添加物は安全なのか」と質問された。最も適切な対応はどれか。",
    "options": [
     "添加物の内容についてはお答えできないと言ってその場で対応を打ち切ってしまう",
@@ -6157,7 +6157,7 @@
    "qid": "gaishoku_tokutei2_338",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品が生産者から消費者に届くまでの一連の経路を何というか。",
    "options": [
     "流通",
@@ -6175,7 +6175,7 @@
    "qid": "gaishoku_tokutei2_339",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "卸売市場が持つ機能に含まれないものはどれか。",
    "options": [
     "集荷・価格形成",
@@ -6193,7 +6193,7 @@
    "qid": "gaishoku_tokutei2_340",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "飲食店が食材を仕入れる際の仕入先として、テキストに挙げられていないものはどれか。",
    "options": [
     "小売店（近隣商店・スーパー）",
@@ -6211,7 +6211,7 @@
    "qid": "gaishoku_tokutei2_341",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "新しい仕入先を選定する際、最も重要な視点はどれか。",
    "options": [
     "とにかく価格の安さだけを基準にしてすぐに仕入先を決めてしまう",
@@ -6229,7 +6229,7 @@
    "qid": "gaishoku_tokutei2_342",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "卸売市場を経由して仕入れることの利点として最も適切なものはどれか。",
    "options": [
     "必ず一般小売店より高い価格で仕入れることになる",
@@ -6247,7 +6247,7 @@
    "qid": "gaishoku_tokutei2_343",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "飲食店の労働災害で最も多い事故はどれか。",
    "options": [
     "転倒（全体の労働災害の約3割を占め最も多い事故）",
@@ -6265,7 +6265,7 @@
    "qid": "gaishoku_tokutei2_344",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "飲食店の労働災害で「転倒」に次いで多い事故の組み合わせとして正しいものはどれか。",
    "options": [
     "交通事故、感電（勤務中の移動や電気設備に関する事故）",
@@ -6283,7 +6283,7 @@
    "qid": "gaishoku_tokutei2_345",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "飲食店の労働災害に特徴的な傾向として正しいものはどれか。",
    "options": [
     "若年層の労働者の被災が目立つ",
@@ -6301,7 +6301,7 @@
    "qid": "gaishoku_tokutei2_346",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "重い荷物を運ぶ際、転倒リスクを減らす方法として適切でないものはどれか。",
    "options": [
     "台車などの運搬用具を活用して運ぶ",
@@ -6319,7 +6319,7 @@
    "qid": "gaishoku_tokutei2_347",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "厨房の床が水で濡れているのを見つけた。労働災害防止の観点で最も適切な対応はどれか。",
    "options": [
     "気にせずそのまま通り過ぎて特に何もしない",
@@ -6337,7 +6337,7 @@
    "qid": "gaishoku_tokutei2_348",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "フライヤーを使用する際の労働災害防止策として適切なものはどれか。",
    "options": [
     "長靴・長エプロン・耐熱手袋を着用する",
@@ -6355,7 +6355,7 @@
    "qid": "gaishoku_tokutei2_349",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "刃物（包丁）を使う際の安全上の注意として正しいものはどれか。",
    "options": [
     "作業中は刃先から目線を外さないようにする",
@@ -6373,7 +6373,7 @@
    "qid": "gaishoku_tokutei2_350",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "職場の「危険の見える化」の目的として最も適切なものはどれか。",
    "options": [
     "職場に潜む危険を視覚的に分かりやすく示し、事故を防ぐこと",
@@ -6391,7 +6391,7 @@
    "qid": "gaishoku_tokutei2_351",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品加工用の切断機・粉砕機などを清掃・調整する際、労働安全衛生規則で定められている措置として正しいものはどれか。",
    "options": [
     "原則として機械の運転を停止してから作業する",
@@ -6409,7 +6409,7 @@
    "qid": "gaishoku_tokutei2_352",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "缶詰のゴミを捨てる作業中、缶のふちで手を切りそうになった。今後の対策として適切なものはどれか。",
    "options": [
     "気にせず素手のまま同じように作業を続ける",
@@ -6427,7 +6427,7 @@
    "qid": "gaishoku_tokutei2_353",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "あるメニューのポーション基準は1食150gである。基準より20g多く盛り付けた場合、盛り付け量は何gか。",
    "options": [
     "170g",
@@ -6445,7 +6445,7 @@
    "qid": "gaishoku_tokutei2_354",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "仕入れた食材5kgのうち、廃棄率が20%だった場合、可食部はおよそ何kgか。",
    "options": [
     "4kg",
@@ -6463,7 +6463,7 @@
    "qid": "gaishoku_tokutei2_355",
    "sect": "chori",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「先入れ先出し」の説明として最も適切なものはどれか。",
    "options": [
     "価格が高いものから優先して使用するようにすること",
@@ -6481,7 +6481,7 @@
    "qid": "gaishoku_tokutei2_356",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "新しいスキルをトレーニーに教える際、初めに説明すべき要素に含まれないものはどれか。",
    "options": [
     "目的・方法・道具（何のため、どのように、何を使って行うか）",
@@ -6499,7 +6499,7 @@
    "qid": "gaishoku_tokutei2_357",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "人を育てる基本体系の順序として正しいものはどれか。",
    "options": [
     "教育（芽を引き出す）→導入（方向付ける）→訓練（反復練習する）→啓発（開発する）",
@@ -6517,7 +6517,7 @@
    "qid": "gaishoku_tokutei2_358",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客サービスを表現する3つの要素として正しい組み合わせはどれか。",
    "options": [
     "態度・表情・言葉遣い",
@@ -6535,7 +6535,7 @@
    "qid": "gaishoku_tokutei2_359",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客用語における「トーン」の説明として最も適切なものはどれか。",
    "options": [
     "音質、音の高低や声の抑揚（イントネーション）のこと",
@@ -6553,7 +6553,7 @@
    "qid": "gaishoku_tokutei2_360",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「OJT」の説明として最も適切なものはどれか。",
    "options": [
     "現場を離れておこなう理念や知識についての集合教育のことを主にいう表現方法",
@@ -6571,7 +6571,7 @@
    "qid": "gaishoku_tokutei2_361",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「OFFJT」の説明として最も適切なものはどれか。",
    "options": [
     "現場を離れておこなう理念や知識の集合教育のこと",
@@ -6589,7 +6589,7 @@
    "qid": "gaishoku_tokutei2_362",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "OJTの原則として正しいものはどれか。",
    "options": [
     "トレーナー1人とトレーニー1人のマンツーマンでおこなう",
@@ -6607,7 +6607,7 @@
    "qid": "gaishoku_tokutei2_363",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "トレーニングの4ステップの正しい順序はどれか。",
    "options": [
     "導入→掲示→適用→フォローアップ",
@@ -6625,7 +6625,7 @@
    "qid": "gaishoku_tokutei2_364",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "採用面接で履歴書を確認する際の適切な対応はどれか。",
    "options": [
     "年齢を証明書などの提示で求め、写真と本人を見比べて一致を確認する",
@@ -6643,7 +6643,7 @@
    "qid": "gaishoku_tokutei2_365",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "採用初日にまず教えるべき内容として最も適切なものはどれか。",
    "options": [
     "オリエンテーションとハウスルール（出退勤の仕方や身だしなみルールなど）",
@@ -6661,7 +6661,7 @@
    "qid": "gaishoku_tokutei2_366",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "面接をおこなった結果、応募者を採用することが決まった。この場での対応として適切なものはどれか。",
    "options": [
     "その場では採用の旨を伝えず、関係部署の了承を得てから連絡する",
@@ -6679,7 +6679,7 @@
    "qid": "gaishoku_tokutei2_367",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "接客サービスにおける「言葉遣い」のポイントとして最も重要なものはどれか。",
    "options": [
     "声の大きさやトーン、語調といった言い方",
@@ -6697,7 +6697,7 @@
    "qid": "gaishoku_tokutei2_368",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "防火管理者として選任される者の要件として正しいものはどれか。",
    "options": [
     "管理的・監督的地位にあり、店長又はそれに匹敵する者であること",
@@ -6715,7 +6715,7 @@
    "qid": "gaishoku_tokutei2_369",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "防火管理業務の内容に含まれないものはどれか。",
    "options": [
     "消火、通報及び避難訓練の定期的な実施",
@@ -6733,7 +6733,7 @@
    "qid": "gaishoku_tokutei2_370",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "燃焼三要素の組み合わせとして正しいものはどれか。",
    "options": [
     "可燃物・酸素・熱源",
@@ -6751,7 +6751,7 @@
    "qid": "gaishoku_tokutei2_371",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ガスの元栓を閉めるなど、燃えるもの自体を取り去ることで火を消す方法を何というか。",
    "options": [
     "除去消火法",
@@ -6769,7 +6769,7 @@
    "qid": "gaishoku_tokutei2_372",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "フライヤーの油に火が上がった。毛布やシーツのような布をかぶせて酸素を遮断し、一気に鎮火させる方法を何というか。",
    "options": [
     "窒息消火法",
@@ -6787,7 +6787,7 @@
    "qid": "gaishoku_tokutei2_373",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "水をかけて熱を奪い、燃焼の継続を遮断することで火を消す方法を何というか。",
    "options": [
     "冷却消火法",
@@ -6805,7 +6805,7 @@
    "qid": "gaishoku_tokutei2_374",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "床にこぼれたアルコールに引火してしまった。水をかけて薄めて鎮火させる方法を何というか。",
    "options": [
     "希釈消火法",
@@ -6823,7 +6823,7 @@
    "qid": "gaishoku_tokutei2_375",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "火災時の避難で命を守るための行動として最も適切なものはどれか。",
    "options": [
     "顔を床面に近づけ、大きな透明のビニール袋の中に顔を入れて避難する",
@@ -6841,7 +6841,7 @@
    "qid": "gaishoku_tokutei2_376",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "防火対策として適切でないものはどれか。",
    "options": [
     "物置や倉庫など普段人がいない場所には鍵をかけ、出入りができないようにする",
@@ -6859,7 +6859,7 @@
    "qid": "gaishoku_tokutei2_377",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "避難訓練の実施頻度として正しいものはどれか。",
    "options": [
     "年に1回は実施する",
@@ -6877,7 +6877,7 @@
    "qid": "gaishoku_tokutei2_378",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "厨房設備の日常点検で確認すべき項目として適切でないものはどれか。",
    "options": [
     "火災報知器や煙感知器が油で汚れていないか",
@@ -6895,7 +6895,7 @@
    "qid": "gaishoku_tokutei2_379",
    "sect": "tenpo",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "防火・防災管理として日ごろから確認しておくべきマニュアルに含まれないものはどれか。",
    "options": [
     "消防署への通報マニュアル",
@@ -6913,7 +6913,7 @@
    "qid": "gaishoku_tokutei2_380",
    "sect": "tenpo",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "見慣れないアルバイトが店内にいて、不審者かと勘違いしそうになった。今後の対策として適切なものはどれか。",
    "options": [
     "普段からアルバイトなど臨時従業員の顔をよく把握しておき、不審者と区別できるようにする",
@@ -6931,7 +6931,7 @@
    "qid": "gaishoku_tokutei2_381",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "お客様に体調不良者が発生し、同伴者がいる場合の対応として正しいものはどれか。",
    "options": [
     "慌てずに同伴者の指示に従う",
@@ -6949,7 +6949,7 @@
    "qid": "gaishoku_tokutei2_382",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "体調不良のお客様に同伴者がおらず、意識がある場合の対応として正しいものはどれか。",
    "options": [
     "ご本人の意思に従う",
@@ -6967,7 +6967,7 @@
    "qid": "gaishoku_tokutei2_383",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "体調不良のお客様に同伴者がおらず、意識がない場合の対応として正しいものはどれか。",
    "options": [
     "すぐに救急車を呼ぶ",
@@ -6985,7 +6985,7 @@
    "qid": "gaishoku_tokutei2_384",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "体調不良者を発見した際の対応として適切なものはどれか。",
    "options": [
     "むやみに抱き起こさず、そのままの状態で待機する",
@@ -7003,7 +7003,7 @@
    "qid": "gaishoku_tokutei2_385",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "てんかん発作で倒れたお客様への対応として正しいものはどれか。",
    "options": [
     "付き添いの方がいれば、その方の指示に従う",
@@ -7021,7 +7021,7 @@
    "qid": "gaishoku_tokutei2_386",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "てんかん発作で倒れたお客様に付き添いの方がいない場合の対応として正しいものはどれか。",
    "options": [
     "すぐに救急車を呼ぶ",
@@ -7039,7 +7039,7 @@
    "qid": "gaishoku_tokutei2_387",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "心停止を起こしたお客様への対応として正しいものはどれか。",
    "options": [
     "AED（自動体外式除細動器）をすぐに当て、同時に救急車を呼ぶ",
@@ -7057,7 +7057,7 @@
    "qid": "gaishoku_tokutei2_388",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "「AED」の名称として正しいものはどれか。",
    "options": [
     "自動体外式除細動器",
@@ -7075,7 +7075,7 @@
    "qid": "gaishoku_tokutei2_389",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "AEDの使い方についてテキストが求めている対応はどれか。",
    "options": [
     "定期的に訓練を実施する",
@@ -7093,7 +7093,7 @@
    "qid": "gaishoku_tokutei2_390",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "クレームの大半を占める異物混入として、最も多いものはどれか。",
    "options": [
     "髪の毛の混入",
@@ -7111,7 +7111,7 @@
    "qid": "gaishoku_tokutei2_391",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "髪の毛の次に多い異物混入は何か。",
    "options": [
     "虫の混入",
@@ -7129,7 +7129,7 @@
    "qid": "gaishoku_tokutei2_392",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "髪の毛の混入が発覚した際の対応として正しいものはどれか。",
    "options": [
     "事実を確認したらすぐにお詫びし、どこで混入したか調べて再発防止に努める",
@@ -7147,7 +7147,7 @@
    "qid": "gaishoku_tokutei2_393",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "異物混入が発覚した際、お客様への対応手順として正しいものはどれか。",
    "options": [
     "まず作り直してよいか確認し、不要と言われれば伝票をキャンセルする対応を素早くおこなう",
@@ -7165,7 +7165,7 @@
    "qid": "gaishoku_tokutei2_394",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "厨房に設置している捕虫器の管理として適切なものはどれか。",
    "options": [
     "ランプが切れていないか確認し、厨房以外から見えないようにする",
@@ -7183,7 +7183,7 @@
    "qid": "gaishoku_tokutei2_395",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "レストランでお客様が急に倒れ、同伴者が「大丈夫です、少し休めば良くなります」と言った。最も適切な対応はどれか。",
    "options": [
     "慌てず、同伴者の指示に従いながら経過を見守る",
@@ -7201,7 +7201,7 @@
    "qid": "gaishoku_tokutei2_396",
    "sect": "sekkyaku",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "レジを締めた際、ロール上の現金有り高より実際の現金有り高が少ない場合、何が起きたことを意味するか。",
    "options": [
     "店に損失が発生したことを意味する",
@@ -7219,7 +7219,7 @@
    "qid": "gaishoku_tokutei2_397",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "お客様の会計が2,480円で、5,000円札を受け取った。お釣りはいくらか。",
    "options": [
     "2,520円",
@@ -7237,7 +7237,7 @@
    "qid": "gaishoku_tokutei2_398",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "税抜価格2,000円の料理に消費税10%を加えた場合、税込価格はいくらか。",
    "options": [
     "2,200円",
@@ -7255,7 +7255,7 @@
    "qid": "gaishoku_tokutei2_399",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "4人で食事をし、合計金額が9,600円だった。均等に割り勘にする場合、1人当たりいくら支払うか。",
    "options": [
     "2,400円",
@@ -7273,7 +7273,7 @@
    "qid": "gaishoku_tokutei2_400",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "レジ締め時、ロール上の現金有り高が85,000円、実際の現金有り高が84,700円だった。差額はいくらか。",
    "options": [
     "300円不足",
@@ -7291,7 +7291,7 @@
    "qid": "gaishoku_tokutei2_401",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品衛生責任者に該当する者として、テキストに挙げられていないものはどれか。",
    "options": [
     "調理師や栄養士などの資格を持つ者",
@@ -7309,7 +7309,7 @@
    "qid": "gaishoku_tokutei2_402",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品衛生責任者が守るべきこととして正しいものはどれか。",
    "options": [
     "都道府県知事などがおこなう講習会を定期的に受講し、新たな知見の習得に努める",
@@ -7327,7 +7327,7 @@
    "qid": "gaishoku_tokutei2_403",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "紫外線殺菌灯の使用について正しいものはどれか。",
    "options": [
     "使用時間の経過とともに殺菌効果が減少し、寿命はおよそ3,000時間程度である",
@@ -7345,7 +7345,7 @@
    "qid": "gaishoku_tokutei2_404",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "手洗い設備の給水栓として望ましいものはどれか。",
    "options": [
     "センサー式、足踏み式、肘押し式など手指が触れずに操作できるもの",
@@ -7363,7 +7363,7 @@
    "qid": "gaishoku_tokutei2_405",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "中心温度計の点検について正しい対応はどれか。",
    "options": [
     "定期的に校正をおこない、実施した記録を残す",
@@ -7381,7 +7381,7 @@
    "qid": "gaishoku_tokutei2_406",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ねずみや昆虫対策が必要な理由として正しいものはどれか。",
    "options": [
     "食中毒菌や感染症を引き起こす有害微生物の運搬役となり、異物混入の原因にもなるため",
@@ -7399,7 +7399,7 @@
    "qid": "gaishoku_tokutei2_407",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "ねずみおよび昆虫の駆除の実施頻度として正しいものはどれか。",
    "options": [
     "1年に2回以上実施し、その記録を1年間保管する",
@@ -7417,7 +7417,7 @@
    "qid": "gaishoku_tokutei2_408",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "クマねずみとドブねずみの生態の違いとして正しいものはどれか。",
    "options": [
     "クマねずみは垂直面の移動が得意だが、ドブねずみは上下の動きが苦手である",
@@ -7435,7 +7435,7 @@
    "qid": "gaishoku_tokutei2_409",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品を調理・製造する際に生じる廃棄物の取扱いとして正しいものはどれか。",
    "options": [
     "昆虫やねずみの発生源やすみかにならないよう、適切に分別・処理し廃棄する",
@@ -7453,7 +7453,7 @@
    "qid": "gaishoku_tokutei2_410",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "生ゴミや資源回収ゴミを一時保管する場合の適切な対応はどれか。",
    "options": [
     "ねずみや昆虫が侵入しない状態で保管する",
@@ -7471,7 +7471,7 @@
    "qid": "gaishoku_tokutei2_411",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "施設からの排水を公共の下水道に放流する場合、遵守すべきものはどれか。",
    "options": [
     "「下水道法」や自治体条例による水質基準",
@@ -7489,7 +7489,7 @@
    "qid": "gaishoku_tokutei2_412",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品表示法で表示が義務づけられている特定原材料の品目数として正しいものはどれか。",
    "options": [
     "8品目（くるみを含む）",
@@ -7507,7 +7507,7 @@
    "qid": "gaishoku_tokutei2_413",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "対面販売やレストランなど「外食など」におけるアレルゲン情報の提供について正しいものはどれか。",
    "options": [
     "法律上の表示義務はないが、メニューへの記載など情報提供が推奨されている",
@@ -7525,7 +7525,7 @@
    "qid": "gaishoku_tokutei2_414",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品の自主回収（リコール）に関する営業者の義務として正しいものはどれか。",
    "options": [
     "2021年6月から、着手した旨および回収の状況を都道府県に届出することが義務づけられた",
@@ -7543,7 +7543,7 @@
    "qid": "gaishoku_tokutei2_415",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品リコールの届出制度において、届出が不要とされる場合として正しいものはどれか。",
    "options": [
     "消費期限や賞味期限を過ぎた食品など、消費者が飲食しないことが明らかな場合のことをいう",
@@ -7561,7 +7561,7 @@
    "qid": "gaishoku_tokutei2_416",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "食品運搬時の温度管理として正しいものはどれか。",
    "options": [
     "積み込み時の品温を点検し、必要な場合には車両やコンテナをあらかじめ予冷しておくこと",
@@ -7579,7 +7579,7 @@
    "qid": "gaishoku_tokutei2_417",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "販売時の商品管理として正しいものはどれか。",
    "options": [
     "商品の先入れ・先出しが守られるようロット管理を確実におこなう",
@@ -7597,7 +7597,7 @@
    "qid": "gaishoku_tokutei2_418",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "冷蔵・冷凍品をショーケースで販売する際に守るべきものはどれか。",
    "options": [
     "ロードライン（商品陳列の上限ライン）を守り、定期的に温度を確認して記録すること",
@@ -7615,7 +7615,7 @@
    "qid": "gaishoku_tokutei2_419",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "教育訓練の主な項目に含まれないものはどれか。",
    "options": [
     "健康管理、身だしなみ、手洗いなど",
@@ -7633,7 +7633,7 @@
    "qid": "gaishoku_tokutei2_420",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "chishiki",
+   "type": "handan",
    "q": "化学物質の安全な取扱いに関する教育訓練が重視される理由として正しいものはどれか。",
    "options": [
     "化学物質の食品への混入事故の多くが従業員の人為的なミスで発生しているため",
@@ -7651,7 +7651,7 @@
    "qid": "gaishoku_tokutei2_421",
    "sect": "eisei",
    "part": "gakka",
-   "type": "chishiki",
+   "type": "gakkachishiki",
    "q": "教育訓練の実施について正しいものはどれか。",
    "options": [
     "新規採用時や従事経験に応じて、その時点の立場や業務に必要な知識・技術を研修やOJTで習得させる",
@@ -7669,7 +7669,7 @@
    "qid": "gaishoku_tokutei2_422",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "食器類を80℃の湯で7分間加熱消毒した。基準（80℃で5分間以上）に対し、何分超過して消毒したか。",
    "options": [
     "2分",
@@ -7687,7 +7687,7 @@
    "qid": "gaishoku_tokutei2_423",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "食器を流水で12秒すすいだ。基準（流水の場合5秒間以上）に対し、何秒多くすすいだか。",
    "options": [
     "7秒",
@@ -7705,7 +7705,7 @@
    "qid": "gaishoku_tokutei2_424",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "加熱調理後の食品を35分かけて20℃まで冷却した。基準（30分以内に20℃まで冷却）に対し、何分基準を超過したか。",
    "options": [
     "5分",
@@ -7723,7 +7723,7 @@
    "qid": "gaishoku_tokutei2_425",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "使用水の残留塩素濃度を測定したところ0.25ppmだった。基準値（0.1ppm以上）に対し、何ppm上回っているか。",
    "options": [
     "0.15ppm",
@@ -7741,7 +7741,7 @@
    "qid": "gaishoku_tokutei2_426",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ハンバーグの中心温度を測ったら72℃だった。基準（中心部75℃で1分間以上）を満たすには、あと何℃上げる必要があるか。",
    "options": [
     "3℃",
@@ -7759,7 +7759,7 @@
    "qid": "gaishoku_tokutei2_427",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ノロウイルス汚染のおそれがある二枚貝を85℃で60秒間加熱した。基準（85〜90℃で90秒間以上）に対し、何秒不足しているか。",
    "options": [
     "90秒",
@@ -7777,7 +7777,7 @@
    "qid": "gaishoku_tokutei2_428",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "冷蔵庫内の温度を測ったら13℃だった。基準（10℃以下）を満たすには、あと何℃下げる必要があるか。",
    "options": [
     "13℃",
@@ -7795,7 +7795,7 @@
    "qid": "gaishoku_tokutei2_429",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "冷凍庫内の温度を測ったら−11℃だった。基準（−15℃以下）を満たすには、あと何℃下げる必要があるか。",
    "options": [
     "4℃",
@@ -7813,7 +7813,7 @@
    "qid": "gaishoku_tokutei2_430",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "細菌の増殖が可能な危険温度帯は10〜60℃とされる。この危険温度帯の温度の幅は何℃か。",
    "options": [
     "60℃",
@@ -7831,7 +7831,7 @@
    "qid": "gaishoku_tokutei2_431",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "加熱調理後の食品を75分かけて10℃まで冷却した。基準（1時間以内に10℃まで冷却）に対し、何分超過したか。",
    "options": [
     "75分",
@@ -7849,7 +7849,7 @@
    "qid": "gaishoku_tokutei2_432",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "温蔵庫内の食品の温度を測ったら58℃だった。基準（65℃以上）を満たすには、あと何℃上げる必要があるか。",
    "options": [
     "7℃",
@@ -7867,7 +7867,7 @@
    "qid": "gaishoku_tokutei2_433",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "野菜を洗浄剤の溶液に7分間浸せきした。使用基準（5分間以上浸せきさせないこと）に対し、何分超過しているか。",
    "options": [
     "5分",
@@ -7885,7 +7885,7 @@
    "qid": "gaishoku_tokutei2_434",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "洗浄剤を使用した野菜を流水で20秒間すすいだ。基準（流水の場合、野菜・果実は30秒間以上）に対し、何秒不足しているか。",
    "options": [
     "10秒",
@@ -7903,7 +7903,7 @@
    "qid": "gaishoku_tokutei2_435",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "布きんを100℃の湯で3分間煮沸した。基準（100℃で5分間以上の煮沸殺菌）に対し、何分不足しているか。",
    "options": [
     "3分",
@@ -7921,7 +7921,7 @@
    "qid": "gaishoku_tokutei2_436",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "紫外線殺菌灯を1日10時間使用している。寿命の目安が3,000時間のとき、交換の目安はおよそ何日後か。",
    "options": [
     "30日後",
@@ -7939,7 +7939,7 @@
    "qid": "gaishoku_tokutei2_437",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "始業前に使用水の残留塩素濃度を測ったら0.06ppmだった。基準（0.1ppm以上）に達するには、あと何ppm必要か。",
    "options": [
     "0.16ppm",
@@ -7957,7 +7957,7 @@
    "qid": "gaishoku_tokutei2_438",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "飲用井戸の水質検査を前回実施してから10か月が経過した。基準（1年1回以上）を守るには、遅くともあと何か月以内に実施すべきか。",
    "options": [
     "2か月以内",
@@ -7975,7 +7975,7 @@
    "qid": "gaishoku_tokutei2_439",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "今年度、ねずみおよび昆虫の駆除作業を1回実施した。法令上の基準（1年に2回以上）を満たすには、あと何回必要か。",
    "options": [
     "2回",
@@ -7993,7 +7993,7 @@
    "qid": "gaishoku_tokutei2_440",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "食品表示法で表示が義務づけられている特定原材料は8品目、表示が推奨されるものは20品目である。合計で何品目のアレルゲンが規定されているか。",
    "options": [
     "12品目",
@@ -8011,7 +8011,7 @@
    "qid": "gaishoku_tokutei2_441",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ノロウイルス食中毒の発生原因の約80％は食品取扱者に由来するとされる。ノロウイルス食中毒が150件発生した場合、食品取扱者由来はおよそ何件か。",
    "options": [
     "30件",
@@ -8029,7 +8029,7 @@
    "qid": "gaishoku_tokutei2_442",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "令和4年の食中毒の全事件数962件のうち、アニサキスによるものは566件だった。アニサキスが占める割合はおよそ何％か。",
    "options": [
     "約59％",
@@ -8047,7 +8047,7 @@
    "qid": "gaishoku_tokutei2_443",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "下処理後の生食用魚介類の保管温度を測ったら7℃だった。基準（4℃以下）を満たすには、あと何℃下げる必要があるか。",
    "options": [
     "3℃",
@@ -8065,7 +8065,7 @@
    "qid": "gaishoku_tokutei2_444",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ある月の営業日数は25日である。使用水の日常点検（1日1回以上）の記録を確認したところ20回分しかなかった。記録は何回不足しているか。",
    "options": [
     "20回",
@@ -8083,7 +8083,7 @@
    "qid": "gaishoku_tokutei2_445",
    "sect": "eisei",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "食品衛生監視票の基準点は「手洗設備に必要な備品が備えられている」3点、「機械器具の洗浄・消毒・補修を適切におこなっている」2点、「計器類・殺菌装置等の定期点検を実施している」2点である。この3項目の基準点の合計は何点か。",
    "options": [
     "5点",
@@ -8101,7 +8101,7 @@
    "qid": "gaishoku_tokutei2_446",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "野菜を2kg仕入れた。廃棄率が30％のとき、可食部はおよそ何kgか。",
    "options": [
     "0.6kg",
@@ -8119,7 +8119,7 @@
    "qid": "gaishoku_tokutei2_447",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "可食部が3kg必要である。廃棄率が25％のとき、発注量はおよそ何kgか。",
    "options": [
     "2.25kg",
@@ -8137,7 +8137,7 @@
    "qid": "gaishoku_tokutei2_448",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "歩留まりが80％の食材で、可食部が6kg必要である。発注量はおよそ何kgか。",
    "options": [
     "7.5kg",
@@ -8155,7 +8155,7 @@
    "qid": "gaishoku_tokutei2_449",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "フライヤーの油の酸化値（AV値）を測ったら3.4だった。基準（AV値3.0未満）をどれだけ超えているか。",
    "options": [
     "0.4",
@@ -8173,7 +8173,7 @@
    "qid": "gaishoku_tokutei2_450",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "茹で麺器の湯の温度を測ったら93℃だった。基準（ほぼ100℃）に対し、何℃低いか。",
    "options": [
     "93℃",
@@ -8191,7 +8191,7 @@
    "qid": "gaishoku_tokutei2_451",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "グリドルの端の温度が178℃、中央部が192℃だった。両者の温度差は何℃か。また調整は必要か。",
    "options": [
     "14℃・調整が必要",
@@ -8209,7 +8209,7 @@
    "qid": "gaishoku_tokutei2_452",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "食器洗浄機の洗浄温度を測ったら55℃だった。基本（60〜70℃）の下限に達するには、あと何℃上げる必要があるか。",
    "options": [
     "15℃",
@@ -8227,7 +8227,7 @@
    "qid": "gaishoku_tokutei2_453",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "食器洗浄機のすすぎ温度を測ったら95℃だった。基本（80〜90℃）の上限をどれだけ超えているか。",
    "options": [
     "5℃",
@@ -8245,7 +8245,7 @@
    "qid": "gaishoku_tokutei2_454",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "青菜のブランチングで、加える熱の温度を測ったら55℃だった。基準（60℃以上）に達するには、あと何℃上げる必要があるか。",
    "options": [
     "55℃",
@@ -8263,7 +8263,7 @@
    "qid": "gaishoku_tokutei2_455",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "野菜類の水分は一般に80〜90％前後である。野菜1kgに含まれる水分が85％のとき、水分の重量は何gか。",
    "options": [
     "150g",
@@ -8281,7 +8281,7 @@
    "qid": "gaishoku_tokutei2_456",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "食品添加物のうち、指定添加物は475品目、既存添加物は357品目である（令和5年7月時点）。この2つの合計は何品目か。",
    "options": [
     "118品目",
@@ -8299,7 +8299,7 @@
    "qid": "gaishoku_tokutei2_457",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ある飲食店で1年間に労働災害が200件発生した。最も多い「転倒」が全体の約3割を占めるとき、転倒はおよそ何件か。",
    "options": [
     "約20件",
@@ -8317,7 +8317,7 @@
    "qid": "gaishoku_tokutei2_458",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1食あたりのポーション基準が150gのメニューを80食分仕込む。必要な食材はおよそ何kgか。",
    "options": [
     "12kg",
@@ -8335,7 +8335,7 @@
    "qid": "gaishoku_tokutei2_459",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "可食部が4kgある。1食あたりのポーション基準が80gのとき、何食分つくれるか。",
    "options": [
     "32食",
@@ -8353,7 +8353,7 @@
    "qid": "gaishoku_tokutei2_460",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1人前120gの料理を40名分用意する。この食材の廃棄率が20％のとき、発注量はおよそ何kgか。",
    "options": [
     "4.8kg",
@@ -8371,7 +8371,7 @@
    "qid": "gaishoku_tokutei2_461",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "翌日の客数を200人と予測している。あるメニューの注文率が30％と見込まれるとき、仕込む食数はおよそ何食か。",
    "options": [
     "30食",
@@ -8389,7 +8389,7 @@
    "qid": "gaishoku_tokutei2_462",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "開店まであと60分ある。仕込みは3工程あり、それぞれ25分かかる。すべて開店前に終えられるか。",
    "options": [
     "終えられる（15分余る）",
@@ -8407,7 +8407,7 @@
    "qid": "gaishoku_tokutei2_463",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "売価800円のメニューの食材原価が240円である。原価率は何％か。",
    "options": [
     "30％",
@@ -8425,7 +8425,7 @@
    "qid": "gaishoku_tokutei2_464",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "和牛100頭のうち、黒毛和種が全体の95％以上を占めるとき、黒毛和種はおよそ何頭か。",
    "options": [
     "約5頭",
@@ -8443,7 +8443,7 @@
    "qid": "gaishoku_tokutei2_465",
    "sect": "chori",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "食器洗浄機は1回に50枚を3分間で洗浄できる。食器100枚を洗浄するのに何分かかるか。",
    "options": [
     "3分",
@@ -8461,7 +8461,7 @@
    "qid": "gaishoku_tokutei2_466",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "お客様の会計が3,780円で、10,000円札を受け取った。お釣りはいくらか。",
    "options": [
     "6,320円",
@@ -8479,7 +8479,7 @@
    "qid": "gaishoku_tokutei2_467",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "税抜価格1,500円の料理に消費税10％を加えた場合、税込価格はいくらか。",
    "options": [
     "1,650円",
@@ -8497,7 +8497,7 @@
    "qid": "gaishoku_tokutei2_468",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "税込価格3,300円（消費税10％）の料理の税抜価格はいくらか。",
    "options": [
     "2,970円",
@@ -8515,7 +8515,7 @@
    "qid": "gaishoku_tokutei2_469",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "5人で食事をし、合計金額が11,500円だった。均等に割り勘にする場合、1人当たりいくら支払うか。",
    "options": [
     "2,300円",
@@ -8533,7 +8533,7 @@
    "qid": "gaishoku_tokutei2_470",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "レジ締め時、ロール上の現金有り高が72,500円、実際の現金有り高が73,000円だった。この差額が意味することとして正しいものはどれか。",
    "options": [
     "500円不足しており、店に損失が発生している",
@@ -8551,7 +8551,7 @@
    "qid": "gaishoku_tokutei2_471",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "その日の売上金が185,000円、翌日用の釣銭として30,000円を店内金庫に残す。夜間金庫に入金する金額はいくらか。",
    "options": [
     "215,000円",
@@ -8569,7 +8569,7 @@
    "qid": "gaishoku_tokutei2_472",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ある日の客単価が1,200円、客数が150人だった。この日の売上はいくらか。",
    "options": [
     "180,000円",
@@ -8587,7 +8587,7 @@
    "qid": "gaishoku_tokutei2_473",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "客席40席の店で、その日の客数が120人だった。客席回転数は何回転か。",
    "options": [
     "3回転",
@@ -8605,7 +8605,7 @@
    "qid": "gaishoku_tokutei2_474",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "客席50席の店で、客席回転数を2.4回転と見込んでいる。予測される客数は何人か。",
    "options": [
     "約21人",
@@ -8623,7 +8623,7 @@
    "qid": "gaishoku_tokutei2_475",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "ファミリーレストランのサービングタイムの目安は、ランチタイムが5〜7分、ディナータイムが12〜15分である。ディナータイムの上限とランチタイムの下限の差は何分か。",
    "options": [
     "10分",
@@ -8641,7 +8641,7 @@
    "qid": "gaishoku_tokutei2_476",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "開店時刻が11時00分の店で、フライヤーは開店30分前に点火することになっている。点火する時刻は何時何分か。",
    "options": [
     "10時00分",
@@ -8659,7 +8659,7 @@
    "qid": "gaishoku_tokutei2_477",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "お客様の出迎えは3歩、お見送りは7歩が目安とされる。出迎えと見送りを合わせると何歩か。",
    "options": [
     "4歩",
@@ -8677,7 +8677,7 @@
    "qid": "gaishoku_tokutei2_478",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "欧米のテーブルサービスのレストランでは、利用額にチップが10〜20％必要とされる。利用額20,000円でチップを15％とした場合、チップはいくらか。",
    "options": [
     "2,000円",
@@ -8695,7 +8695,7 @@
    "qid": "gaishoku_tokutei2_479",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "会計金額4,500円のお客様が10％割引のクーポンを使用した。お支払いいただく金額はいくらか。",
    "options": [
     "450円",
@@ -8713,7 +8713,7 @@
    "qid": "gaishoku_tokutei2_480",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "1組4名の予約が6組入っている。4人掛けテーブルで受け入れる場合、必要なテーブルは何卓で、合計何名か。",
    "options": [
     "6卓・24名",
@@ -8731,7 +8731,7 @@
    "qid": "gaishoku_tokutei2_481",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "その日の売上500,000円のうち、キャッシュレス決済分が350,000円だった。現金売上はいくらで、キャッシュレス比率は何％か。",
    "options": [
     "150,000円・70％",
@@ -8749,7 +8749,7 @@
    "qid": "gaishoku_tokutei2_482",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "20名の予約が入った。1テーブルに4名まで着席できる場合、必要なテーブルは最低何卓か。",
    "options": [
     "4卓",
@@ -8767,7 +8767,7 @@
    "qid": "gaishoku_tokutei2_483",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "4人掛けテーブル10卓の店で、各テーブルに2名ずつ着席している。客席稼働率は何％か。",
    "options": [
     "20％",
@@ -8785,7 +8785,7 @@
    "qid": "gaishoku_tokutei2_484",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "釣銭として1,000円札を30枚、500円硬貨を20枚、100円硬貨を50枚用意した。釣銭在庫の合計はいくらか。",
    "options": [
     "45,000円",
@@ -8803,7 +8803,7 @@
    "qid": "gaishoku_tokutei2_485",
    "sect": "sekkyaku",
    "part": "jitsugi",
-   "type": "keisan",
+   "type": "keikakuritsuan",
    "q": "アイドルタイムに教育トレーニングを実施したい。営業時間11時間のうち、ピークタイムが合計4時間のとき、アイドルタイムはおよそ何時間か。",
    "options": [
     "4時間",
