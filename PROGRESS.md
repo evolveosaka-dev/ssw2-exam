@@ -1,5 +1,14 @@
 # 進捗状況
 
+## Hoàn tất (2026-07-23, màn nhập thông tin bắt buộc cho gói trả phí)
+
+- **Vấn đề**: với gói trả phí (mua qua Stripe), chỉ có email là dữ liệu chắc chắn thu được — Stripe Checkout chấp nhận tên rỗng, và không hề thu thập quốc tịch/độ tuổi/nơi ở. Màn khảo sát cũ (tùy chọn, bỏ qua được) không đủ để đảm bảo có đủ dữ liệu liên hệ cho nhóm khách hàng quan trọng nhất này.
+- **Giải pháp**: thêm màn hình mới `screen==="profile"` — **bắt buộc, không thể bỏ qua** — chỉ áp dụng cho `plan_type` `one_time`/`subscription` (trial/staff không đổi gì). Sau khi nhập access code, nếu `verify-code` trả `profile_required:true`, người dùng phải điền đủ 4 trường (Tên, Quốc tịch, Độ tuổi, Nơi ở theo tỉnh) — email hiển thị readonly để xác nhận, không cho sửa — mới được vào màn bắt đầu thi. Dữ liệu được gửi **ngay lập tức** tới corporate-site (endpoint mới `POST /api/access-codes/profile`), không đợi tới lúc nộp bài thi — tránh mất dữ liệu nếu người dùng bỏ ngang không thi.
+- Toàn bộ logic mới (`MANDATORY_PROFILE_PLAN_TYPES`, `submitMandatoryProfile()`, màn `profile`) nằm ở tầng App/UI, không đụng `buildExam()`/`finishExam()`. Màn `survey` cũ vẫn giữ nguyên hành vi cho trial/staff.
+- Đã kiểm tra kỹ Supabase trước khi làm: cả 5 trường (name/email/nationality/age_range/region) **đã có sẵn cột trong bảng `users`** từ trước — không cần migration mới, chỉ cần luồng nhập liệu mới.
+- Đã verify qua Playwright (mock-api, đủ 3 kịch bản: cần nhập profile/đã có sẵn profile/regression trial+staff) và qua test thật chống lại corporate-site dev server + Supabase production thật (tạo user rỗng tên → xác nhận `profile_required:true` → gửi profile → xác nhận `profile_required:false` → xác nhận gọi endpoint với code trial bị từ chối `plan_type_mismatch`) — chi tiết đầy đủ xem `corporate-site/CLAUDE.md` mục "有料プラン専用の必須プロフィール入力".
+- ⚠️ Cross-repo: `verify-code` response giờ có thêm `profile_required` (luôn có) và `email` (chỉ khi `profile_required:true` — ngoại lệ có chủ đích của nguyên tắc cũ "không bao giờ trả email"). Xem mục API contract.
+
 ## Hoàn tất (2026-07-23, nối nút "有料プランで対策する" sang landing page thật)
 
 - Nút "有料プランで対策する" ở màn kết quả trial trước đây trỏ tới `UPGRADE_URL_PLACEHOLDER` (`#upgrade-phase5-todo`, chưa làm gì). Đã thêm hàm `upgradeUrl(examType)` (`index.html`) trả về `${API_BASE}/upgrade?exam_type=${encodeURIComponent(examType)}` — tái dùng `API_BASE`/`PRODUCTION_API_BASE` sẵn có (không thêm hằng số domain thứ 2, khi đổi domain ở Phase 7 chỉ cần sửa 1 chỗ như cũ).

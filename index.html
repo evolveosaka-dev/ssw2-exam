@@ -210,6 +210,11 @@ const CODE_REASON_MESSAGES = {
 // plan_type がどちらにも属さない場合はエラーで受験をブロックする（当て推量しない）。
 const TRIAL_PLAN_TYPES = ["trial"];
 const FULL_PLAN_TYPES = ["staff","one_time","subscription"];
+// 有料プラン購入者(one_time/subscription)専用: Stripe決済ではnameが空文字でも
+// 通り、nationality/age_range/regionは一切収集されない。verify-codeが返す
+// profile_requiredがtrueの間は、この2 plan_typeだけ受験開始前に必須プロフィール
+// 入力画面(screen==="profile")を挟む。trial/staffは対象外(既存の任意survey画面のまま)。
+const MANDATORY_PROFILE_PLAN_TYPES = ["one_time","subscription"];
 const TRIAL_EXAM_MINUTES = 30;
 // corporate-siteの/upgradeは同じドメイン(API_BASE)配下 — ドメイン切替(フェーズ7)時は
 // PRODUCTION_API_BASEを直すだけで両方追従する(2重管理しない)。exam_typeをクエリで
@@ -477,6 +482,12 @@ function App(){
   const [surveyPrefecture,setSurveyPrefecture]=useState("");
   const [surveyOptIn,setSurveyOptIn]=useState(false);
   const [survey,setSurvey]=useState(null);
+  const [profileName,setProfileName]=useState("");
+  const [profileNationality,setProfileNationality]=useState("");
+  const [profilePrefecture,setProfilePrefecture]=useState("");
+  const [profileAgeRange,setProfileAgeRange]=useState("");
+  const [profileOptIn,setProfileOptIn]=useState(false);
+  const [profileStatus,setProfileStatus]=useState({status:"idle",msg:""});
   const [questions,setQuestions]=useState([]);
   const [answers,setAnswers]=useState({});
   const [cur,setCur]=useState(0);
@@ -569,11 +580,47 @@ function App(){
       setExamMode(mode);
       setVerifyInfo({...info, access_code:trimmed});
       setGateStatus("idle");
-      setScreen(info.is_first_attempt?"survey":"start");
+      if(MANDATORY_PROFILE_PLAN_TYPES.includes(info.plan_type)){
+        // 必須プロフィール入力対象(one_time/subscription)。既に入力済み
+        // (profile_required===false)ならsurvey画面を挟まず直接startへ —
+        // この2 plan_typeは任意surveyの対象外(下のelseと排他)。
+        setProfileName(info.display_name||"");
+        setScreen(info.profile_required?"profile":"start");
+      }else{
+        setScreen(info.is_first_attempt?"survey":"start");
+      }
       window.scrollTo(0,0);
     }catch(e){
       setGateStatus("error");
       setGateError("通信エラーが発生しました。しばらくしてから再度お試しください。");
+    }
+  }
+
+  async function submitMandatoryProfile(){
+    if(!profileName.trim() || !profileNationality || !profileAgeRange || !profilePrefecture){
+      setProfileStatus({status:"err", msg:"すべての項目を入力してください。"});
+      return;
+    }
+    setProfileStatus({status:"sending", msg:""});
+    try{
+      const r=await fetch(`${API_BASE}/api/access-codes/profile`,{
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          access_code:verifyInfo.access_code, name:profileName.trim(),
+          nationality:profileNationality, age_range:profileAgeRange, region:profilePrefecture,
+          marketing_opt_in:profileOptIn,
+        })
+      });
+      const body=await r.json();
+      if(!body.accepted){
+        setProfileStatus({status:"err", msg:"送信に失敗しました。もう一度お試しください。"});
+        return;
+      }
+      setProfileStatus({status:"idle", msg:""});
+      setScreen("start");
+      window.scrollTo(0,0);
+    }catch(e){
+      setProfileStatus({status:"err", msg:"通信エラーが発生しました。もう一度お試しください。"});
     }
   }
 
@@ -845,6 +892,63 @@ function App(){
             <button className="btn btn-ghost" style={{flex:1}} onClick={()=>proceedFromSurvey(true)}>スキップ</button>
             <button className="btn btn-seal" style={{flex:1}} onClick={()=>proceedFromSurvey(false)}>次へ</button>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if(screen==="profile"){
+    const canSubmit = profileName.trim() && profileNationality && profileAgeRange && profilePrefecture
+      && profileStatus.status!=="sending";
+    return (
+      <div className="wrap">
+        <Masthead/>
+        <div className="panel">
+          <h2>受験前のご登録(必須)</h2>
+          <p className="hint">
+            ご購入いただいたプランでは、受験を始める前に下記の情報のご入力が必要です。すべての項目にご入力ください。
+          </p>
+          <label className="field">
+            <span className="lbl">お名前 <span className="vn-s">（必須）</span></span>
+            <input type="text" value={profileName} onChange={e=>setProfileName(e.target.value)}
+              placeholder="例：山田太郎" disabled={profileStatus.status==="sending"} />
+          </label>
+          {verifyInfo?.email && (
+            <label className="field" style={{marginBottom:4}}>
+              <span className="lbl">メールアドレス</span>
+              <div style={{padding:"11px 12px",background:"var(--paper)",border:"1px solid var(--line)",borderRadius:"var(--radius)",fontSize:14.5}}>{verifyInfo.email}</div>
+            </label>
+          )}
+          <label className="field">
+            <span className="lbl">国籍 <span className="vn-s">（必須）</span></span>
+            <select value={profileNationality} onChange={e=>setProfileNationality(e.target.value)} disabled={profileStatus.status==="sending"}>
+              <option value="">選択してください</option>
+              {NATIONALITIES.map(n=><option key={n} value={n}>{n}</option>)}
+            </select>
+          </label>
+          <label className="field">
+            <span className="lbl">年代 <span className="vn-s">（必須）</span></span>
+            <select value={profileAgeRange} onChange={e=>setProfileAgeRange(e.target.value)} disabled={profileStatus.status==="sending"}>
+              <option value="">選択してください</option>
+              {AGE_RANGES.map(a=><option key={a} value={a}>{a}</option>)}
+            </select>
+          </label>
+          <label className="field" style={{marginBottom:4}}>
+            <span className="lbl">お住まい <span className="vn-s">（必須）</span></span>
+            <select value={profilePrefecture} onChange={e=>setProfilePrefecture(e.target.value)} disabled={profileStatus.status==="sending"}>
+              <option value="">選択してください</option>
+              {PREFECTURES.map(p=><option key={p} value={p}>{p}</option>)}
+            </select>
+          </label>
+          <label className="field" style={{display:"flex",gap:8,alignItems:"flex-start",marginTop:12}}>
+            <input type="checkbox" checked={profileOptIn} onChange={e=>setProfileOptIn(e.target.checked)}
+              style={{marginTop:3}} disabled={profileStatus.status==="sending"} />
+            <span style={{fontSize:12.5}}>試験やお仕事のご案内をメールでお送りしてもよい場合はチェックしてください。</span>
+          </label>
+          {profileStatus.status==="err" && <div className="err-box">{profileStatus.msg}</div>}
+          <button className="btn btn-seal" style={{width:"100%",marginTop:10}} disabled={!canSubmit} onClick={submitMandatoryProfile}>
+            {profileStatus.status==="sending"?"送信中…":"送信して次へ"}
+          </button>
         </div>
       </div>
     );

@@ -22,6 +22,9 @@
 //   TEST-BAD-RESPONSE -> valid, plan_type="subscription" — POST /api/exam-results luôn trả 404
 //                        với body không phải JSON (mô phỏng api_base sai/WAF chặn). Dùng để test
 //                        "fail fast, không đợi hết 3 lần retry" (NonRetryableSubmitError).
+//   TEST-PAID-NEEDS-PROFILE -> valid, plan_type="one_time", profile_required=true, email có giá trị
+//                        (mô phỏng người mua chưa nhập tên/quốc tịch/tuổi/nơi ở — phải qua
+//                        screen==="profile" bắt buộc trước khi vào thi).
 //   anything else     -> valid:false, reason="not_found"
 
 const http = require("node:http");
@@ -30,18 +33,19 @@ const PORT = Number(process.argv[2]) || 8787;
 const attemptCounts = new Map();
 
 const CODES = {
-  "TEST-FIRST": { valid: true, display_name: "テスト 太郎", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
-  "TEST-REPEAT": { valid: true, display_name: "テスト 花子", exam_type: "特定技能2号・外食業", remaining_attempts: 2, expires_at: "2027-01-01T00:00:00Z", plan_type: "one_time", is_first_attempt: false },
-  "TEST-STAFF": { valid: true, display_name: "テスト staff", exam_type: "特定技能2号・外食業", remaining_attempts: 5, expires_at: "2027-01-01T00:00:00Z", plan_type: "staff", is_first_attempt: true },
-  "TEST-TRIAL-FIRST": { valid: true, display_name: "テスト 次郎", exam_type: "特定技能2号・外食業", remaining_attempts: 1, expires_at: "2027-01-01T00:00:00Z", plan_type: "trial", is_first_attempt: true },
+  "TEST-FIRST": { valid: true, display_name: "テスト 太郎", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true, profile_required: false },
+  "TEST-REPEAT": { valid: true, display_name: "テスト 花子", exam_type: "特定技能2号・外食業", remaining_attempts: 2, expires_at: "2027-01-01T00:00:00Z", plan_type: "one_time", is_first_attempt: false, profile_required: false },
+  "TEST-STAFF": { valid: true, display_name: "テスト staff", exam_type: "特定技能2号・外食業", remaining_attempts: 5, expires_at: "2027-01-01T00:00:00Z", plan_type: "staff", is_first_attempt: true, profile_required: false },
+  "TEST-TRIAL-FIRST": { valid: true, display_name: "テスト 次郎", exam_type: "特定技能2号・外食業", remaining_attempts: 1, expires_at: "2027-01-01T00:00:00Z", plan_type: "trial", is_first_attempt: true, profile_required: false },
   "TEST-TRIAL-REPEAT": { valid: false, reason: "exhausted" },
-  "TEST-UNKNOWN-PLAN": { valid: true, display_name: "テスト 不明", exam_type: "特定技能2号・外食業", remaining_attempts: 1, expires_at: "2027-01-01T00:00:00Z", plan_type: "beta", is_first_attempt: true },
+  "TEST-UNKNOWN-PLAN": { valid: true, display_name: "テスト 不明", exam_type: "特定技能2号・外食業", remaining_attempts: 1, expires_at: "2027-01-01T00:00:00Z", plan_type: "beta", is_first_attempt: true, profile_required: false },
   "TEST-EXHAUSTED": { valid: false, reason: "exhausted" },
   "TEST-EXPIRED": { valid: false, reason: "expired" },
   "TEST-REVOKED": { valid: false, reason: "revoked" },
-  "TEST-FLAKY": { valid: true, display_name: "テスト 不安定", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
-  "TEST-ALWAYS-DOWN": { valid: true, display_name: "テスト 応答なし", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
-  "TEST-BAD-RESPONSE": { valid: true, display_name: "テスト 不正応答", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true },
+  "TEST-FLAKY": { valid: true, display_name: "テスト 不安定", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true, profile_required: false },
+  "TEST-ALWAYS-DOWN": { valid: true, display_name: "テスト 応答なし", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true, profile_required: false },
+  "TEST-BAD-RESPONSE": { valid: true, display_name: "テスト 不正応答", exam_type: "特定技能2号・外食業", remaining_attempts: 3, expires_at: "2027-01-01T00:00:00Z", plan_type: "subscription", is_first_attempt: true, profile_required: false },
+  "TEST-PAID-NEEDS-PROFILE": { valid: true, display_name: "", email: "paid-buyer@example.com", exam_type: "特定技能2号・外食業", remaining_attempts: 10, expires_at: "2027-01-01T00:00:00Z", plan_type: "one_time", is_first_attempt: true, profile_required: true },
 };
 
 // (access_code, client_submission_id) -> attempt_number, để mô phỏng dedup
@@ -129,6 +133,21 @@ const server = http.createServer(async (req, res) => {
     console.log("exam-results received:", JSON.stringify(payload, null, 2));
     res.writeHead(200, { "Content-Type": "application/json" });
     res.end(JSON.stringify({ accepted: true, attempt_number: n, remaining_attempts: Math.max(0, 3 - n) }));
+    return;
+  }
+
+  if (req.method === "POST" && req.url === "/api/access-codes/profile") {
+    const payload = await readJson(req).catch(() => ({}));
+    const required = ["access_code", "name", "nationality", "age_range", "region"];
+    if (required.some((k) => !payload[k])) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ accepted: false, reason: "invalid_request" }));
+      return;
+    }
+    console.log("access-codes/profile received:", JSON.stringify(payload));
+    if (CODES[payload.access_code]) CODES[payload.access_code].profile_required = false;
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ accepted: true }));
     return;
   }
 
