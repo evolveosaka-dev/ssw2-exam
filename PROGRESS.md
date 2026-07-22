@@ -10,6 +10,8 @@
 - **Cấu trúc rút đề 実技 giờ đúng bản chất đề thật**: mỗi section thực kỹ luôn rút đúng **3 câu 判断試験 + 2 câu 計画立案** (trước đây rút ngẫu nhiên 5 câu trộn lẫn 2 loại, không đảm bảo tỷ lệ). Đã xác nhận tường minh với người dùng trước khi sửa `buildExam()` (RULE #1 ngoại lệ #3 mới trong `CLAUDE.md`) — verify 500 lần chạy đều đúng tuyệt đối 3+2/section.
 - **Màn kết quả FULL thêm breakdown 学科(120点)/実技(130点)**, và trong 実技 tách tiếp 判断試験(78点)/計画立案(52点) — tính bằng hàm `partTypeBreakdown()` độc lập, không đụng `finishExam()` (cùng pattern `trialBreakdown()` có sẵn).
 - Toàn bộ thay đổi trên đã **push lên GitHub Pages (production)**, xác nhận qua Playwright E2E (build/nộp/chấm điểm) + kiểm tra trực tiếp dữ liệu live sau mỗi lần deploy.
+- **Sửa lỗi phát hiện qua test thật (access code RZYAMXEL)**: 47 câu mới thiếu hoàn toàn furigana (bỏ sót khi thêm câu, vì generator furigana chạy offline không nằm trong repo) — đã sinh lại bằng `kuroshiro`+`kuroshiro-analyzer-kuromoji`, verify khớp byte-for-byte với format cũ, coverage 100% (3254→3579 entries).
+- **Liên kết chéo (2026-07-22): corporate-site Phase 6 (AI feedback qua Make.com) đã hoàn tất**, dùng trực tiếp dữ liệu ssw2-exam gửi lên (`wrong_questions[].id` ổn định theo `qid`, `sections[].correct/total`) để tính `repeated_mistakes_text`/`section_trend_text` — **không cần thay đổi gì ở ssw2-exam**, toàn bộ nằm ở phía `corporate-site`. Chi tiết xem `corporate-site/CLAUDE.md` mục "フェーズ6".
 
 ## Hoàn tất (trước đó)
 
