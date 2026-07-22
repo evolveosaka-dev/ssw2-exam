@@ -52,11 +52,10 @@
 
 ## Việc chờ
 
-- **Merge `feature/access-code` vào `main`** khi go-live bản mới (chưa merge — nhánh vẫn đang mở để chờ thời điểm go-live).
-- **Vô hiệu webhook Make.com cũ** (đã được thay thế bởi `POST /api/exam-results` trong code, nhưng webhook Make.com phía ngoài — nếu vẫn còn cấu hình nhận dữ liệu ở đâu đó — cần được tắt/gỡ khi go-live để tránh nhầm lẫn nguồn dữ liệu).
+- ~~Merge `feature/access-code` vào `main` khi go-live~~ → **đã xong từ lâu** (xác nhận lại 2026-07-24: `git log main..feature/access-code` rỗng — không còn commit nào của nhánh này chưa nằm trong `main`; `main` đã có thêm 22 commit kể từ đó và đang chạy production qua GitHub Pages). Nhánh cũ `feature/access-code` vẫn còn tồn tại trên remote nhưng chỉ là lịch sử, không cần thao tác gì thêm — có thể xoá khi thuận tiện, không phải việc gấp.
+- **Vô hiệu webhook Make.com cũ**: chưa xác nhận lại trong phiên này — nếu webhook Make.com đời trước (từ trước khi có `POST /api/exam-results` thật) vẫn còn cấu hình nhận dữ liệu ở đâu đó bên ngoài 2 repo, nên rà soát và tắt để tránh nhầm nguồn dữ liệu. Không chặn vận hành hiện tại.
 
 ## Chưa xác nhận / theo dõi tiếp
 
-- Domain production chính thức `avecvous-evolve.com` cho corporate-site (Phase 7 phía corporate-site) — khi gắn xong cần đổi `API_BASE` trong `index.html`.
-- **Đã bỏ hẳn ô nhập email và field `email` khỏi payload `/api/exam-results`** (email nay tra theo `access_code` trong DB, server tự lo). ⚠️ Cần đội corporate-site xác nhận schema `exam-results` không còn bắt buộc `email` — nếu vẫn required phía server sẽ lại bị `invalid_request` (400) như lần hợp long trước, cần sửa đồng bộ hai đầu trước khi go-live.
-- **Màn khảo sát đổi từ ô gõ tự do sang 3 dropdown** (年代/国籍/お住まい), payload `survey` đổi field name (`age_range`/`nationality`/`prefecture`/`opted_in` thay vì `age`/`location`/`opted_in`). ⚠️ **Danh sách `NATIONALITIES` trong `index.html` hiện là danh sách tạm** (10 quốc gia phổ biến + その他) — cần đội corporate-site xác nhận/cung cấp danh sách thật khớp enum phía DB trước khi go-live, tránh ghi nhận sai giá trị.
+- **Domain production chính thức `avecvous-evolve.com`** (Phase 7 phía corporate-site) — vẫn đang **cố ý hoãn** (xác nhận lại 2026-07-23 qua `corporate-site/CLAUDE.md`: chờ nội dung/thiết kế trang chủ hoàn thiện xong mới chuyển). Hiện toàn bộ production (cả API lẫn trang web) chạy qua `api.avecvous-evolve.com`. Khi chuyển domain thật, chỉ cần sửa `PRODUCTION_API_BASE` trong `index.html` — đã thiết kế sẵn 1 điểm sửa duy nhất.
+- ~~email/NATIONALITIES chưa đồng bộ với corporate-site~~ → **đã xác nhận từ lâu, không còn là vấn đề** (xem mục "API contract" trong `CLAUDE.md`): payload `/api/exam-results` không gửi `email` nữa và corporate-site đã cập nhật đồng bộ; `NATIONALITIES` (9 giá trị) đã khớp với `corporate-site/src/lib/surveyCategories.ts`. Đây là 2 mục còn sót lại từ giai đoạn Phase 4 (trước go-live), nay dọn bỏ vì đã lỗi thời so với thực tế production hiện tại.
