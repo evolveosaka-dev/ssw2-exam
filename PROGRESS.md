@@ -1,5 +1,16 @@
 # 進捗状況
 
+## Hoàn tất (2026-07-23, TRIAL đổi sang 20 câu cố định)
+
+- **TRIAL đổi từ 40 câu random mỗi lần thi sang 20 câu cố định, thứ tự cố định, giống nhau cho mọi user** — mục đích: cho user thấy đủ **các loại câu hỏi** (4 phân môn × 3 type: 学科/判断試験/計画立案), không phải luyện đề diện rộng. Danh sách 20 `qid` do người dùng duyệt tay (câu dễ hiểu, có `explain`/`why_wrong` rõ, không câu khó nhất, không câu có `img`), đủ 12 tổ hợp sect×type, giữ nguyên trọng số điểm/câu như đề thật (93 điểm: 学科 12 câu/41点 + 実技 8 câu/52点, chia theo 4 sect đúng bảng cấu trúc thật — khác thiết kế cũ vốn làm phẳng về `per=1`/40 điểm). Chi tiết cơ chế (`TRIAL_FIXED_QIDS`, `deriveTrialBlueprintFromFixedQids()`, `buildTrialExam()`) xem `CLAUDE.md` mục "Chế độ FULL / TRIAL". `buildExam()`/`finishExam()` không đổi — `buildTrialExam()` là hàm hoàn toàn tách biệt, chỉ `startExam()` rẽ nhánh gọi hàm nào theo `examMode`.
+- Chỉ **thứ tự đáp án** trong mỗi câu vẫn `shuffle()` (giữ giá trị chống học thuộc vị trí đáp án khi thi lại tối đa 3 lần); thứ tự 20 câu thì cố định tuyệt đối, không random.
+- Thêm 3 tính năng UI liên quan (đã duyệt tay trước khi code):
+  1. Bảng so sánh Trial vs Đề thật (学科試験/実技試験/合計/合否判定/問題) ở màn start, chỉ hiện khi `examMode==="trial"`, số liệu tự tính từ `BLUEPRINT`/`REAL_BLUEPRINT` (không hardcode).
+  2. Nhãn loại câu (`typeLabel(q.type)`: 学科試験/実技試験・判断試験/実技試験・計画立案) hiển thị ở quiz + phần "解説" màn kết quả — áp dụng cho **cả FULL lẫn TRIAL**, chỉ đọc để hiển thị, không gửi payload.
+  3. Bảng điểm chi tiết theo phần (`sectPartScoreBreakdown()`: 分野/学科/実技/合計/正答率, 4 dòng + 1 dòng 合計) thay cho bảng "8 hạng mục" đếm số câu cũ (`trialBreakdown()` — đã xoá hàm này, không còn nơi gọi) ở màn kết quả trial.
+- Đã verify qua Playwright (local, `tools/mock-api.js` + `TEST-TRIAL-FIRST`/`TEST-FIRST`): đủ 20 câu đúng thứ tự/nhãn loại, bảng điểm cộng đúng 93 theo từng sect, gửi kết quả thành công; đồng thời regression-test lại FULL mode (`TEST-FIRST`, 55 câu) — không có console error, không có thay đổi hành vi.
+- ⚠️ **Cross-repo (chưa xác nhận với corporate-site)**: `total_score`/`sectScore` gửi trong `POST /api/exam-results` cho trial giờ dùng thang **93 điểm** (lệch theo sect: 32/12/21/28), thay vì thang 40 điểm phẳng (`per=1`) như trước. `sections[].correct/total` **không đổi** (luôn là số câu, không phải điểm). Cần đối chiếu lại phía corporate-site (đặc biệt Phase 6 AI feedback/section trend) xem có giả định trial luôn max=40 hay không trước khi coi thay đổi này là an toàn cho production.
+
 ## Hoàn tất (2026-07, cập nhật ngân hàng đề + cấu trúc rút đề/chấm điểm)
 
 - **Đối chiếu toàn bộ 485 câu hỏi (sau đó 532) với 4 file PDF giáo trình gốc** (学習テキスト 衛生管理/飲食物調理/接客全般/店舗運営, 一般社団法人日本フードサービス協会) — đọc từng trang (127 trang) qua ảnh render (fix bug font CJK của `pdf-parse`: cần trỏ `cMapUrl`/`standardFontDataUrl` vào data có sẵn trong `pdfjs-dist`, không cần cài poppler), đối chiếu từng câu một với 4 agent song song.

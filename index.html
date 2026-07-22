@@ -164,10 +164,21 @@
   .foot-note { text-align:center; font-size:11px; color:var(--ink-soft); margin-top:26px; line-height:1.7; }
   .err-box { margin-top:14px; padding:12px 14px; border-radius:var(--radius); background:rgba(178,58,46,.06);
     border:1px solid rgba(178,58,46,.3); color:var(--seal-deep); font-size:12.5px; }
+  .data-table { width:100%; border-collapse:collapse; margin-top:10px; font-size:12.5px; }
+  .data-table th, .data-table td { padding:9px 10px; border:1px solid var(--line-soft); text-align:center;
+    white-space:nowrap; }
+  .data-table th { background:var(--paper); font-weight:800; color:var(--indigo); font-size:11.5px; }
+  .data-table td:first-child, .data-table th:first-child { text-align:left; font-weight:700; white-space:normal; }
+  .data-table tr.total-row td { font-weight:800; background:rgba(47,72,88,.05); }
+  .data-table tr.tb-red td.tb-pct { color:var(--fail); font-weight:800; }
+  .data-table tr.tb-yellow td.tb-pct { color:var(--gold); font-weight:800; }
+  .data-table tr.tb-green td.tb-pct { color:var(--pass); font-weight:800; }
   @media (max-width:560px) {
     .exam-facts { grid-template-columns:repeat(2,1fr); }
     .sect-breakdown { grid-template-columns:1fr; }
     .ss-name { flex-basis:108px; }
+    .data-table { font-size:11.5px; }
+    .data-table th, .data-table td { padding:7px 6px; }
   }
 </style>
 </head>
@@ -194,12 +205,28 @@ const CODE_REASON_MESSAGES = {
   exam_type_mismatch: "試験区分が一致しません。担当者にご連絡ください。",
 };
 
-// TRIAL = 40問の体験版（合否判定なし）。FULL = 本番同一の55問（既存の合否判定）。
+// TRIAL = 20問固定の体験版（合否判定なし、全ユーザー共通の同一問題・同一順序）。
+// FULL = 本番同一の55問（既存の合否判定、buildExam()でランダム抽選）。
 // plan_type がどちらにも属さない場合はエラーで受験をブロックする（当て推量しない）。
 const TRIAL_PLAN_TYPES = ["trial"];
 const FULL_PLAN_TYPES = ["staff","one_time","subscription"];
 const TRIAL_EXAM_MINUTES = 30;
 const UPGRADE_URL_PLACEHOLDER = "#upgrade-phase5-todo";
+
+// TRIAL専用の固定20問（4sect×3type=12通りを網羅、ユーザー承認済みリスト）。
+// 配列の順序 = 出題順序（buildTrialExam()はshuffleしない）。点数配分は本番と同一
+// （sect.perをそのまま使う、buildExam()のようにper=1へ均す変換はしない）。
+const TRIAL_FIXED_QIDS = [
+  // 衛生管理（学科4+判断1+計画1=6問, 32点）
+  "gaishoku_tokutei2_001","gaishoku_tokutei2_009","gaishoku_tokutei2_102","gaishoku_tokutei2_096",
+  "gaishoku_tokutei2_111","gaishoku_tokutei2_423",
+  // 飲食物調理（学科2+判断1+計画1=4問, 12点）
+  "gaishoku_tokutei2_120","gaishoku_tokutei2_122","gaishoku_tokutei2_160","gaishoku_tokutei2_156",
+  // 接客全般（学科3+判断1+計画1=5問, 21点）
+  "gaishoku_tokutei2_391","gaishoku_tokutei2_030","gaishoku_tokutei2_173","gaishoku_tokutei2_207","gaishoku_tokutei2_467",
+  // 店舗運営（学科3+判断1+計画1=5問, 28点）
+  "gaishoku_tokutei2_222","gaishoku_tokutei2_224","gaishoku_tokutei2_220","gaishoku_tokutei2_263","gaishoku_tokutei2_252",
+];
 
 const AGE_RANGES = ["10代","20代","30代","40代","50代以上"];
 
@@ -254,11 +281,31 @@ function withFurigana(text){
   return <span dangerouslySetInnerHTML={{__html: html}} />;
 }
 
-// TRIAL専用: 本番のBLUEPRINTと同じsect構成を使い、各sectをn=5・per=1に固定した「入力データ」を作るだけ。
-// buildExam()のアルゴリズム（選定・シャッフル・remap）は一切変更しない — 呼び出し前にBLUEPRINTを差し替えるだけ。
-function deriveTrialBlueprint(full){
-  const shrink = arr => arr.map(s => ({...s, n:5, per:1}));
-  return { gakka: shrink(full.gakka), jitsugi: shrink(full.jitsugi) };
+// 表示専用ラベル(q.typeを読むだけ、送信payloadには含めない)。FULL/TRIAL共通。
+function typeLabel(type){
+  if(type==="gakkachishiki") return "学科試験";
+  if(type==="handan") return "実技試験・判断試験";
+  if(type==="keikakuritsuan") return "実技試験・計画立案";
+  return "";
+}
+
+// TRIAL専用: TRIAL_FIXED_QIDSの実際の内訳(sect×part×typeの件数)を集計して、本番と
+// 同じshape(n/per/handan/keikakuritsuan)のblueprintを作るだけ。per/jpは本番の値を
+// そのまま引き継ぐ(点数配分は本番と同一、n=5/per=1に均していた旧方式から変更)。
+// buildExam()のアルゴリズムには一切触れない — Masthead/出題構成パネルが読むBLUEPRINT
+// を「20問固定の実態」に合わせて差し替えるだけの入力データ生成。
+function deriveTrialBlueprintFromFixedQids(real){
+  const fixedQs = TRIAL_FIXED_QIDS.map(qid => QUESTION_BANK.find(q => q.qid === qid));
+  const build = part => real[part].map(s => {
+    const inSect = fixedQs.filter(q => q.part === part && q.sect === s.key);
+    const entry = { ...s, n: inSect.length };
+    if(part === "jitsugi"){
+      entry.handan = inSect.filter(q => q.type === "handan").length;
+      entry.keikakuritsuan = inSect.filter(q => q.type === "keikakuritsuan").length;
+    }
+    return entry;
+  });
+  return { gakka: build("gakka"), jitsugi: build("jitsugi") };
 }
 
 function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
@@ -301,6 +348,26 @@ function buildExam(){
     });
   });
   return out.map((q,i)=>({...q,id:i}));
+}
+
+// TRIAL専用: TRIAL_FIXED_QIDSの順序どおり20問を固定で並べるだけ(buildExam()の
+// ランダム抽選・順序シャッフルは使わない — 全ユーザーが同じ問題を同じ順序で受験する)。
+// 選択肢(options)の並びだけはbuildExam()と同じくshuffleする(合否がない体験版でも、
+// 3回までのリトライで答えの位置を丸暗記されるのを防ぐため)。buildExam()自体は完全
+// 独立で一切変更していない — このtrial専用関数を呼ぶかどうかはstartExam()側で分岐する。
+function buildTrialExam(){
+  return TRIAL_FIXED_QIDS.map((qid,i)=>{
+    const q=QUESTION_BANK.find(x=>x.qid===qid);
+    const sectMeta=(q.part==="gakka"?BLUEPRINT.gakka:BLUEPRINT.jitsugi).find(s=>s.key===q.sect);
+    const order=shuffle(q.options.map((_,i)=>i));
+    const newOptions=order.map(i=>q.options[i]);
+    const newAnswer=order.indexOf(q.answer);
+    const remap={}; order.forEach((oldI,newI)=>{ remap[oldI]=newI; });
+    const newWhy={};
+    if(q.why_wrong){ Object.entries(q.why_wrong).forEach(([oldI,txt])=>{ newWhy[remap[oldI]]=txt; }); }
+    return { part:q.part, sect:q.sect, per:sectMeta.per, _sectJP:sectMeta.jp, qid:q.qid, type:q.type,
+      q:q.q, img:q.img, options:newOptions, answer:newAnswer, explain:q.explain, why_wrong:newWhy, id:i };
+  });
 }
 
 // ============================================================
@@ -488,7 +555,7 @@ function App(){
       await loadExamData(info.exam_type);
       if(mode==="trial"){
         REAL_BLUEPRINT=BLUEPRINT; REAL_PASS_MARK=PASS_MARK; REAL_TOTAL_MARK=TOTAL_MARK;
-        BLUEPRINT=deriveTrialBlueprint(REAL_BLUEPRINT);
+        BLUEPRINT=deriveTrialBlueprintFromFixedQids(REAL_BLUEPRINT);
         TOTAL_MARK=[...BLUEPRINT.gakka,...BLUEPRINT.jitsugi].reduce((s,x)=>s+x.n*x.per,0);
         PASS_MARK=null;
         EXAM_MINUTES=TRIAL_EXAM_MINUTES;
@@ -512,7 +579,7 @@ function App(){
   }
 
   function startExam(){
-    const q=buildExam();
+    const q=examMode==="trial" ? buildTrialExam() : buildExam();
     setQuestions(q); setAnswers({}); setCur(0); setRemaining(EXAM_MINUTES*60);
     submittingRef.current=false;
     setScreen("quiz");
@@ -628,22 +695,25 @@ function App(){
     await attemptResultSubmission(payload);
   }
 
-  // TRIAL専用の集計。finishExam()のsectScore（sect単位、part混在）とは別物 — finishExam()本体は未変更。
-  // questions/answersはfinishExam()実行後もstateに残っているため、ここで独立に part+sect単位へ再集計する。
-  function trialBreakdown(qs, ans){
-    const buckets = {};
-    qs.forEach(q=>{
-      const key = q.part+"_"+q.sect;
-      const b = (buckets[key] ||= {part:q.part, sect:q.sect, correct:0, total:0});
-      b.total++;
-      if(ans[q.id]===q.answer) b.correct++;
-    });
-    return Object.values(buckets);
-  }
   function trialTierColor(rate){
     if(rate<0.6) return "red";
     if(rate<0.8) return "yellow";
     return "green";
+  }
+
+  // TRIAL専用「分野別・学科/実技」得点集計(点数ベース)。finishExam()のsectScore
+  // (sect単位、part混在、点数)とは別に、sect×partで独立に再集計するだけ — questions/
+  // answersはfinishExam()実行後もstateに残っているためここで読み直す。finishExam()
+  // 本体・sectScoreの算出方法は未変更。
+  function sectPartScoreBreakdown(qs, ans){
+    const bySect = {};
+    qs.forEach(q=>{
+      const b = (bySect[q.sect] ||= { sect:q.sect, gakka:{got:0,max:0}, jitsugi:{got:0,max:0} });
+      const bucket = q.part==="gakka" ? b.gakka : b.jitsugi;
+      bucket.max += q.per;
+      if(ans[q.id]===q.answer) bucket.got += q.per;
+    });
+    return Object.values(bySect);
   }
 
   // FULL専用の追加集計（学科/実技、実技内の判断試験/計画立案を分けて表示するため）。
@@ -790,6 +860,48 @@ function App(){
           </p>
           <button className="btn btn-seal" style={{width:"100%",marginTop:10}} onClick={startExam}>試験を始める</button>
         </div>
+        {examMode==="trial" && (
+          <div className="panel">
+            <h2>無料体験について</h2>
+            <p className="hint">
+              これは本番試験の出題タイプを知っていただくための体験版です。学科試験・実技試験（判断試験・計画立案）の各パターンを一通り体験できます。本番試験は問題数が多く、合否判定など追加の機能もご利用いただけます。
+            </p>
+            <div style={{overflowX:"auto"}}>
+              <table className="data-table">
+                <thead>
+                  <tr><th>項目</th><th>無料体験</th><th>本番試験</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>学科試験</td>
+                    <td>{BLUEPRINT.gakka.reduce((s,x)=>s+x.n,0)}問</td>
+                    <td>{REAL_BLUEPRINT.gakka.reduce((s,x)=>s+x.n,0)}問</td>
+                  </tr>
+                  <tr>
+                    <td>実技試験</td>
+                    <td>{BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n,0)}問（判断{BLUEPRINT.jitsugi.reduce((s,x)=>s+(x.handan||0),0)}・計画{BLUEPRINT.jitsugi.reduce((s,x)=>s+(x.keikakuritsuan||0),0)}）</td>
+                    <td>{REAL_BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n,0)}問（判断{REAL_BLUEPRINT.jitsugi.reduce((s,x)=>s+(x.handan||0),0)}・計画{REAL_BLUEPRINT.jitsugi.reduce((s,x)=>s+(x.keikakuritsuan||0),0)}）</td>
+                  </tr>
+                  <tr className="total-row">
+                    <td>合計</td>
+                    <td>{[...BLUEPRINT.gakka,...BLUEPRINT.jitsugi].reduce((s,x)=>s+x.n,0)}問・{TOTAL_MARK}点満点</td>
+                    <td>{[...REAL_BLUEPRINT.gakka,...REAL_BLUEPRINT.jitsugi].reduce((s,x)=>s+x.n,0)}問・{REAL_TOTAL_MARK}点満点</td>
+                  </tr>
+                  <tr>
+                    <td>合否判定</td>
+                    <td>なし</td>
+                    <td>あり（合格ライン{REAL_PASS_MARK}点）</td>
+                  </tr>
+                  <tr>
+                    <td>問題</td>
+                    <td>固定・毎回同じ</td>
+                    <td>ランダム</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
         <div className="panel">
           <h2>出題構成</h2>
           <p className="hint">
@@ -846,7 +958,7 @@ function App(){
             </div>
           </div>
           <div className="q-card">
-            <span className="q-eyebrow">{partJP} <span className="div">·</span> {q._sectJP} <span className="div">·</span> {q.per}点</span>
+            <span className="q-eyebrow">{partJP} <span className="div">·</span> {q._sectJP} <span className="div">·</span> {q.per}点 <span className="div">·</span> {typeLabel(q.type)}</span>
             <div className="q-num">問 {cur+1} / {questions.length}</div>
             <div className="q-jp">{q.q}</div>
             {q.img && <div style={{margin:"14px 0",textAlign:"center"}} dangerouslySetInnerHTML={{__html:q.img}} />}
@@ -888,17 +1000,42 @@ function App(){
           {examMode==="trial" ? (
             <>
               <div style={{position:"relative"}}>
-                <div className="sect-scores">
-                  {trialBreakdown(questions,answers).map((b,i)=>{
-                    const rate=b.correct/b.total, tier=trialTierColor(rate);
-                    return (
-                      <div className={"ss-row tb-"+tier} key={i}>
-                        <div className="ss-name">{b.part==="gakka"?"学科":"実技"}・{SECT_LABEL[b.sect]}</div>
-                        <div className="ss-track"><div className="ss-fill tb-fill" style={{width:(rate*100)+"%"}}/></div>
-                        <div className="ss-pts tb-pct">{b.correct}/{b.total}（{Math.round(rate*100)}%）</div>
-                      </div>
-                    );
-                  })}
+                <div style={{overflowX:"auto"}}>
+                  <table className="data-table">
+                    <thead><tr><th>分野</th><th>学科</th><th>実技</th><th>合計</th><th>正答率</th></tr></thead>
+                    <tbody>
+                      {(() => {
+                        const rows=sectPartScoreBreakdown(questions,answers);
+                        const gGot=rows.reduce((s,r)=>s+r.gakka.got,0), gMax=rows.reduce((s,r)=>s+r.gakka.max,0);
+                        const jGot=rows.reduce((s,r)=>s+r.jitsugi.got,0), jMax=rows.reduce((s,r)=>s+r.jitsugi.max,0);
+                        const tGot=gGot+jGot, tMax=gMax+jMax;
+                        return (
+                          <>
+                            {rows.map(row=>{
+                              const got=row.gakka.got+row.jitsugi.got, max=row.gakka.max+row.jitsugi.max;
+                              const rate=max>0?got/max:0;
+                              return (
+                                <tr className={"tb-"+trialTierColor(rate)} key={row.sect}>
+                                  <td>{SECT_LABEL[row.sect]}</td>
+                                  <td>{row.gakka.got}/{row.gakka.max}</td>
+                                  <td>{row.jitsugi.got}/{row.jitsugi.max}</td>
+                                  <td>{got}/{max}</td>
+                                  <td className="tb-pct">{Math.round(rate*100)}%</td>
+                                </tr>
+                              );
+                            })}
+                            <tr className="total-row">
+                              <td>合計</td>
+                              <td>{gGot}/{gMax}</td>
+                              <td>{jGot}/{jMax}</td>
+                              <td>{tGot}/{tMax}</td>
+                              <td>{tMax>0?Math.round(tGot/tMax*100):0}%</td>
+                            </tr>
+                          </>
+                        );
+                      })()}
+                    </tbody>
+                  </table>
                 </div>
                 <div className="rev-explain" style={{marginTop:16}}>
                   <div className="ex-lbl">本番の試験構成</div>
@@ -906,7 +1043,7 @@ function App(){
                     本番は学科{REAL_BLUEPRINT.gakka.reduce((s,x)=>s+x.n,0)}問{REAL_BLUEPRINT.gakka.reduce((s,x)=>s+x.n*x.per,0)}点＋実技{REAL_BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n,0)}問{REAL_BLUEPRINT.jitsugi.reduce((s,x)=>s+x.n*x.per,0)}点＝{REAL_TOTAL_MARK}点満点、合格基準{REAL_PASS_MARK}点。
                   </div>
                   <div className="ex-vn" style={{borderTop:"none",paddingTop:0}}>
-                    この40問体験の正答率をもとにした目安です。本番形式(55問)では出題範囲が広がるため、結果は変わる可能性があります。しっかり対策するには有料プランがおすすめです。
+                    この{[...BLUEPRINT.gakka,...BLUEPRINT.jitsugi].reduce((s,x)=>s+x.n,0)}問体験の正答率をもとにした目安です。本番形式（{[...REAL_BLUEPRINT.gakka,...REAL_BLUEPRINT.jitsugi].reduce((s,x)=>s+x.n,0)}問）では出題範囲が広がるため、結果は変わる可能性があります。しっかり対策するには有料プランがおすすめです。
                   </div>
                 </div>
                 {saveState.status==="sending" && <SavingOverlay/>}
@@ -991,7 +1128,7 @@ function App(){
                 <div className="rev-head">
                   <div className={"rev-badge "+(ok?"ok":"no")}>{ok?"✓":"✕"}</div>
                   <div>
-                    <div className="rev-qmeta">問{idx+1} · {q.part==="gakka"?"学科":"実技"} · {q._sectJP} · {q.per}点</div>
+                    <div className="rev-qmeta">問{idx+1} · {q.part==="gakka"?"学科":"実技"} · {q._sectJP} · {q.per}点 · {typeLabel(q.type)}</div>
                     <div className="rev-q">{withFurigana(q.q)}</div>
                   </div>
                 </div>

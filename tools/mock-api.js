@@ -8,7 +8,7 @@
 //   TEST-FIRST        -> valid, plan_type="subscription" (FULL/55問), is_first_attempt=true
 //   TEST-REPEAT       -> valid, plan_type="one_time" (FULL/55問), is_first_attempt=false
 //   TEST-STAFF        -> valid, plan_type="staff" (FULL/55問), is_first_attempt=true
-//   TEST-TRIAL-FIRST  -> valid, plan_type="trial" (TRIAL/40問), is_first_attempt=true
+//   TEST-TRIAL-FIRST  -> valid, plan_type="trial" (TRIAL/20問固定), is_first_attempt=true
 //   TEST-TRIAL-REPEAT -> valid:false, reason="exhausted" (trial chỉ có 1 lượt, mô phỏng lượt đã dùng hết)
 //   TEST-UNKNOWN-PLAN -> valid, plan_type="beta" (không thuộc whitelist FULL/TRIAL nào -> FE phải chặn ở gate)
 //   TEST-EXHAUSTED    -> valid:false, reason="exhausted"
