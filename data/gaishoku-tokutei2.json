@@ -32,25 +32,33 @@
     "key": "eisei",
     "jp": "衛生管理",
     "n": 5,
-    "per": 8
+    "per": 8,
+    "handan": 3,
+    "keikakuritsuan": 2
    },
    {
     "key": "chori",
     "jp": "飲食物調理",
     "n": 5,
-    "per": 4
+    "per": 4,
+    "handan": 3,
+    "keikakuritsuan": 2
    },
    {
     "key": "sekkyaku",
     "jp": "接客全般",
     "n": 5,
-    "per": 6
+    "per": 6,
+    "handan": 3,
+    "keikakuritsuan": 2
    },
    {
     "key": "tenpo",
     "jp": "店舗運営",
     "n": 5,
-    "per": 8
+    "per": 8,
+    "handan": 3,
+    "keikakuritsuan": 2
    }
   ]
  },

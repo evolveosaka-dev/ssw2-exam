@@ -267,10 +267,27 @@ function buildExam(){
   const out=[];
   ["gakka","jitsugi"].forEach(part=>{
     BLUEPRINT[part].forEach(sect=>{
-      let pool=QUESTION_BANK.filter(q=>q.sect===sect.key && q.part===part);
-      let extra=QUESTION_BANK.filter(q=>q.sect===sect.key && q.part!==part);
-      let picks=shuffle(pool).slice(0,sect.n);
-      if(picks.length<sect.n){ picks=picks.concat(shuffle(extra).slice(0,sect.n-picks.length)); }
+      let picks;
+      // 実技の判断試験/計画立案の内訳(sect.handan/sect.keikakuritsuan)がblueprintにあるsectだけ、
+      // 各typeごとに個別に抽選する(3問+2問を保証)。ないsect/industryは従来通り全体からn問抽選。
+      if(part==="jitsugi" && sect.handan!=null && sect.keikakuritsuan!=null){
+        picks=[];
+        [["handan",sect.handan],["keikakuritsuan",sect.keikakuritsuan]].forEach(([type,n])=>{
+          const typePool=QUESTION_BANK.filter(q=>q.sect===sect.key && q.part===part && q.type===type && !picks.includes(q));
+          picks=picks.concat(shuffle(typePool).slice(0,n));
+        });
+        if(picks.length<sect.n){
+          const sameSectPool=QUESTION_BANK.filter(q=>q.sect===sect.key && q.part===part && !picks.includes(q));
+          picks=picks.concat(shuffle(sameSectPool).slice(0,sect.n-picks.length));
+        }
+      } else {
+        let pool=QUESTION_BANK.filter(q=>q.sect===sect.key && q.part===part);
+        picks=shuffle(pool).slice(0,sect.n);
+      }
+      if(picks.length<sect.n){
+        let extra=QUESTION_BANK.filter(q=>q.sect===sect.key && q.part!==part && !picks.includes(q));
+        picks=picks.concat(shuffle(extra).slice(0,sect.n-picks.length));
+      }
       picks.forEach(q=>{
         const order=shuffle(q.options.map((_,i)=>i));
         const newOptions=order.map(i=>q.options[i]);
@@ -278,7 +295,7 @@ function buildExam(){
         const remap={}; order.forEach((oldI,newI)=>{ remap[oldI]=newI; });
         const newWhy={};
         if(q.why_wrong){ Object.entries(q.why_wrong).forEach(([oldI,txt])=>{ newWhy[remap[oldI]]=txt; }); }
-        out.push({ part, sect:sect.key, per:sect.per, _sectJP:sect.jp, qid:q.qid,
+        out.push({ part, sect:sect.key, per:sect.per, _sectJP:sect.jp, qid:q.qid, type:q.type,
           q:q.q, img:q.img, options:newOptions, answer:newAnswer, explain:q.explain, why_wrong:newWhy });
       });
     });
@@ -629,6 +646,23 @@ function App(){
     return "green";
   }
 
+  // FULL専用の追加集計（学科/実技、実技内の判断試験/計画立案を分けて表示するため）。
+  // finishExam()のsectScore/total/maxTotal/passedの算出方法は未変更 — questions/answersから独立に再集計するだけ。
+  function partTypeBreakdown(qs, ans){
+    const gakka={got:0,max:0}, jitsugi={got:0,max:0};
+    const byType={handan:{got:0,max:0}, keikakuritsuan:{got:0,max:0}};
+    qs.forEach(q=>{
+      const bucket = q.part==="gakka" ? gakka : jitsugi;
+      bucket.max+=q.per;
+      if(ans[q.id]===q.answer) bucket.got+=q.per;
+      if(q.part==="jitsugi" && byType[q.type]){
+        byType[q.type].max+=q.per;
+        if(ans[q.id]===q.answer) byType[q.type].got+=q.per;
+      }
+    });
+    return {gakka, jitsugi, byType};
+  }
+
   function Masthead(){
     const totalQuestions=[...BLUEPRINT.gakka,...BLUEPRINT.jitsugi].reduce((s,x)=>s+x.n,0);
     return (
@@ -905,6 +939,24 @@ function App(){
                   <div className="verdict-label">{result.passed?"合格":"不合格"}</div>
                 </div>
                 <div className="sect-scores">
+                  {(() => {
+                    const pb=partTypeBreakdown(questions,answers);
+                    const rows=[
+                      {label:"学科", b:pb.gakka},
+                      {label:"実技", b:pb.jitsugi},
+                      {label:"　└ 判断試験", b:pb.byType.handan},
+                      {label:"　└ 計画立案", b:pb.byType.keikakuritsuan},
+                    ].filter(r=>r.b.max>0);
+                    return rows.map(r=>(
+                      <div className="ss-row" key={r.label}>
+                        <div className="ss-name">{r.label}</div>
+                        <div className="ss-track"><div className="ss-fill" style={{width:(r.b.got/r.b.max*100)+"%"}}/></div>
+                        <div className="ss-pts">{r.b.got}/{r.b.max}</div>
+                      </div>
+                    ));
+                  })()}
+                </div>
+                <div className="sect-scores" style={{marginTop:16}}>
                   {Object.entries(result.sectScore).map(([k,v])=>(
                     <div className="ss-row" key={k}>
                       <div className="ss-name">{SECT_LABEL[k]}</div>
