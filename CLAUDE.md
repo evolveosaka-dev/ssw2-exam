@@ -15,12 +15,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Các ngoại lệ đã được duyệt và đã đóng (không còn treo, không cần hỏi lại):**
 1. `buildExam()` có thêm đúng 1 field pass-through `qid: q.qid` khi dựng object câu hỏi output — để `sendResult()` có thể tham chiếu id gốc ổn định trong ngân hàng đề. Không đụng vào lựa chọn câu, thuật toán shuffle, hay remap `answer`/`why_wrong`.
 2. Dòng sinh thứ tự shuffle đổi từ literal `shuffle([0,1,2,3])` thành `shuffle(q.options.map((_,i)=>i))` — để hỗ trợ ngân hàng đề chuyển từ 4 xuống 3 đáp án/câu (giảm khả năng đoán bừa theo độ dài đáp án dài nhất). Với data 4 đáp án, biểu thức mới cho ra kết quả y hệt `[0,1,2,3]` — đây là tham số hóa số lượng đáp án đọc từ chính data, không đổi cơ chế shuffle/remap/dựng lại `newOptions`/`newAnswer`/`newWhy` phía sau.
+3. `buildExam()` phần rút câu 実技 (`part==="jitsugi"`): khi blueprint entry của sect đó có `handan`/`keikakuritsuan` (số câu mỗi type), rút riêng đúng số lượng mỗi type thay vì rút ngẫu nhiên `sect.n` câu từ toàn bộ pool jitsugi gộp chung — để đảm bảo đúng cấu trúc đề thật (mỗi section 実技 luôn có 3 判断試験+2 計画立案, xem mục "Cấu trúc đề 学科/実技"). Sect/industry nào **không có** 2 field này thì rơi về đúng hành vi cũ (rút `sect.n` ngẫu nhiên từ toàn pool, không phân biệt type) — không đổi hành vi khi thiếu field, nên tương thích ngược cho các ngành sẽ thêm sau. Cơ chế fallback `extra` khi thiếu câu vẫn giữ nguyên, áp dụng sau bước rút theo type nếu vẫn còn thiếu. Đồng thời thêm field pass-through thứ 2 `type: q.type` (cùng dạng với ngoại lệ #1) để màn kết quả tính được breakdown 判断試験/計画立案 mà không cần đụng `finishExam()`. Đã xác nhận tường minh bằng lời trước khi sửa (2026-07).
 
 Mọi thay đổi khác (UI, màn hình gate/survey, nguồn dữ liệu câu hỏi, endpoint/định dạng gửi kết quả, thêm ngành mới...) đều được phép, **miễn là không chạm vào hai vùng trên**. Nếu một thay đổi bắt buộc phải sửa thêm vào `buildExam`/`finishExam` ngoài ngoại lệ đã đóng ở trên, phải dừng lại và hỏi lại người dùng trước khi sửa, không tự ý suy diễn.
 
 ## Tổng quan dự án
 
-Site thi thử kỹ năng đặc định (特定技能) cho lao động nước ngoài tại Nhật, chạy tĩnh trên GitHub Pages, không có backend riêng trong repo này. Dự kiến mở rộng cho 11 ngành × 2 bậc (特定技能1号/2号); hiện tại chỉ có ngành ẩm thực/外食業 bậc 2号 (425 câu, mỗi câu 3 đáp án) làm **mẫu/template** cho các ngành sau. Xác thực và ghi nhận kết quả thi qua API của một hệ thống corporate-site riêng (xem mục API contract).
+Site thi thử kỹ năng đặc định (特定技能) cho lao động nước ngoài tại Nhật, chạy tĩnh trên GitHub Pages, không có backend riêng trong repo này. Dự kiến mở rộng cho 11 ngành × 2 bậc (特定技能1号/2号); hiện tại chỉ có ngành ẩm thực/外食業 bậc 2号 (532 câu, mỗi câu 3 đáp án) làm **mẫu/template** cho các ngành sau. Xác thực và ghi nhận kết quả thi qua API của một hệ thống corporate-site riêng (xem mục API contract).
 
 ## Lệnh thường dùng
 
@@ -41,14 +42,37 @@ App shell là **một file `index.html`** (React 18 UMD + Babel standalone qua C
 ```
 data/
   manifest.json                  # exam_type -> {industry, industryLabel, tier, tierLabel, file, examMinutes, passMark, totalMark}
-  gaishoku-tokutei2.json         # {blueprint, sectLabels, questions}  — ngành mẫu (外食業/特定技能2号, 425 câu, 3 đáp án/câu)
+  gaishoku-tokutei2.json         # {blueprint, sectLabels, questions}  — ngành mẫu (外食業/特定技能2号, 532 câu, 3 đáp án/câu)
   gaishoku-tokutei2.meta.json    # {furigana} — dữ liệu bổ trợ CHỈ để hiển thị, xem mục "Furigana"
 ```
 
 - Key trong `manifest.json` là chuỗi `exam_type` mà API `/api/verify-code` trả về — phải khớp chính xác với giá trị thật từ corporate-site.
-- Mỗi file dữ liệu ngành đóng gói `blueprint` (số câu + điểm/câu mỗi sect×part), `sectLabels` (nhãn hiển thị + dùng làm `topic` khi gửi kết quả), và `questions` (mỗi câu có `qid` ổn định + schema gốc: `sect, part, q, options, answer, explain, why_wrong, img?`). `options`/`answer`/`why_wrong` không cố định số lượng đáp án — `buildExam()` đọc `q.options.length` (xem RULE #1, ngoại lệ #2); hiện tại toàn bộ 425 câu của `gaishoku-tokutei2.json` là 3 đáp án/câu, cố ý cân độ dài đáp án đúng/sai trong khoảng ≤10 ký tự để giảm khả năng đoán bừa theo đáp án dài nhất.
-- `gaishoku-tokutei2.json` còn có thêm top-level `schemaVersion`, `examRules`, và field `type` trong mỗi câu — chỉ phục vụ biên tập nội dung, `index.html` không đọc tới. **Không còn field `source`** (chương/trang/nguồn tài liệu) — đã xóa khỏi toàn bộ 425 câu vì đối chiếu thực tế với tài liệu gốc không khớp (dữ liệu đến từ 1 quy trình tự động, `match_confidence` phần lớn thấp và không đáng tin — xem lịch sử commit).
-- **Thêm ngành mới**: chỉ cần thêm 1 entry vào `manifest.json` + 1 file JSON cùng shape — không cần sửa `index.html`. File `.meta.json` là tùy chọn (xem bên dưới) — thiếu cũng không lỗi.
+- Mỗi file dữ liệu ngành đóng gói `blueprint` (số câu + điểm/câu mỗi sect×part, xem mục "Cấu trúc đề 学科/実技" cho shape đầy đủ của các entry `jitsugi`), `sectLabels` (nhãn hiển thị + dùng làm `topic` khi gửi kết quả), và `questions` (mỗi câu có `qid` ổn định + schema gốc: `sect, part, type, q, options, answer, explain, why_wrong, img?`). `options`/`answer`/`why_wrong` không cố định số lượng đáp án — `buildExam()` đọc `q.options.length` (xem RULE #1, ngoại lệ #2); hiện tại toàn bộ 532 câu của `gaishoku-tokutei2.json` là 3 đáp án/câu, cố ý cân độ dài đáp án đúng/sai trong khoảng ≤10 ký tự để giảm khả năng đoán bừa theo đáp án dài nhất.
+- Field `type` trên mỗi câu nhận 1 trong 3 giá trị: `"gakkachishiki"` (câu 学科, thuần biên tập, `index.html` không đọc), `"handan"`/`"keikakuritsuan"` (câu 実技 — 判断試験/計画立案; 2 giá trị này **được `buildExam()` đọc** để rút đúng tỷ lệ 3:2 mỗi section, xem RULE #1 ngoại lệ #3 và mục "Cấu trúc đề 学科/実技"). Trước đây field này chỉ có 2 giá trị thuần biên tập `chishiki`/`keisan` (không phân theo part) — đã đổi mapping sang 3 giá trị trên (`gakka+chishiki→gakkachishiki`, `jitsugi+chishiki→handan`, `jitsugi+keisan→keikakuritsuan`) dựa trên đối chiếu nội dung câu hỏi thật (câu dạng "tình huống → chọn phản ứng phù hợp" = handan, câu tính toán số liệu = keikakuritsuan), xem lịch sử commit.
+- `gaishoku-tokutei2.json` còn có thêm top-level `schemaVersion`, `examRules` — chỉ phục vụ biên tập nội dung, `index.html` không đọc tới (bao gồm cả tên field `keisanMin`/`keisanMax` bên trong `examRules`, vẫn giữ tên cũ vì là dữ liệu chết, không liên quan tới việc đổi giá trị `type` ở trên). **Không còn field `source`** (chương/trang/nguồn tài liệu) — đã xóa khỏi 425 câu đầu vì đối chiếu thực tế với tài liệu gốc không khớp (dữ liệu đến từ 1 quy trình tự động, `match_confidence` phần lớn thấp và không đáng tin — xem lịch sử commit). 107 câu thêm sau này (60 câu thực kỹ tính toán + 47 câu lấp khoảng trống nội dung) cũng không có field `source`, nhất quán với toàn bộ ngân hàng đề.
+- **Thêm ngành mới**: chỉ cần thêm 1 entry vào `manifest.json` + 1 file JSON cùng shape — không cần sửa `index.html`. File `.meta.json` là tùy chọn (xem bên dưới) — thiếu cũng không lỗi. Nếu ngành mới không cần phân biệt 判断試験/計画立案 trong 実技, chỉ cần bỏ 2 field `handan`/`keikakuritsuan` khỏi blueprint entry — `buildExam()` tự rơi về hành vi rút ngẫu nhiên `n` câu như cũ (xem RULE #1 ngoại lệ #3).
+
+### Cấu trúc đề 学科/実技 (外食業/特定技能2号)
+
+Đề thi thật gồm 2 phần: **学科試験** (35問, 120点) và **実技試験** (20問, 130点) — tổng **55問, 250点**, khớp đúng bảng cấu trúc chính thức do 一般社団法人日本フードサービス協会 quy định:
+
+| 学科 | 問題数 | 点/問 | tổng |
+|---|---|---|---|
+| 衛生管理 | 10 | 4 | 40 |
+| 飲食物調理 | 5 | 2 | 10 |
+| 接客全般 | 10 | 3 | 30 |
+| 店舗運営 | 10 | 4 | 40 |
+
+| 実技 (mỗi section 判断試験3問+計画立案2問=5問) | 点/問 | tổng |
+|---|---|---|
+| 衛生管理 | 8 | 40 |
+| 飲食物調理 | 4 | 20 |
+| 接客全般 | 6 | 30 |
+| 店舗運営 | 8 | 40 |
+
+Trong `blueprint.jitsugi`, mỗi entry có thêm 2 field `handan`/`keikakuritsuan` (số câu mỗi type, cộng lại đúng bằng `n`) bên cạnh `n`(tổng câu)/`per`(điểm/câu) sẵn có — vd. `{"key":"eisei","n":5,"per":8,"handan":3,"keikakuritsuan":2}`. `buildExam()` đọc 2 field này để rút riêng đúng 3 câu type=`handan` + 2 câu type=`keikakuritsuan` cho mỗi section thực kỹ (RULE #1 ngoại lệ #3) — đã verify 500 lần chạy `buildExam()` đều cho đúng tuyệt đối 3+2/section, 55 câu tổng, không trùng `qid`.
+
+Màn kết quả FULL có thêm breakdown 学科/実技 và trong 実技 tách tiếp 判断試験/計画立案 (điểm), tính bằng hàm `partTypeBreakdown(questions, answers)` — cùng pattern với `trialBreakdown()` đã có sẵn (đọc lại state `questions`/`answers`, độc lập hoàn toàn với `finishExam()`, không đụng `sectScore`/`total`/`maxTotal`/`passed`). Hiển thị **thêm vào** phía trên breakdown theo 4 section (衛生管理/飲食物調理/接客全般/店舗運営) đã có từ trước, không thay thế.
 
 ### Furigana (chỉ hiển thị ở màn kết quả, không đụng RULE #1)
 

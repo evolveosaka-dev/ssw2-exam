@@ -1,6 +1,17 @@
 # 進捗状況
 
-## Hoàn tất
+## Hoàn tất (2026-07, cập nhật ngân hàng đề + cấu trúc rút đề/chấm điểm)
+
+- **Đối chiếu toàn bộ 485 câu hỏi (sau đó 532) với 4 file PDF giáo trình gốc** (学習テキスト 衛生管理/飲食物調理/接客全般/店舗運営, 一般社団法人日本フードサービス協会) — đọc từng trang (127 trang) qua ảnh render (fix bug font CJK của `pdf-parse`: cần trỏ `cMapUrl`/`standardFontDataUrl` vào data có sẵn trong `pdfjs-dist`, không cần cài poppler), đối chiếu từng câu một với 4 agent song song.
+  - Phát hiện & sửa 2 lỗi nhỏ: `qid_006` sai cách đọc "習慣" (ghi nhầm しつけ thay vì しゅうかん trong `explain`), `qid_067` lẫn chữ "food" tiếng Anh vào đáp án sai.
+  - Không phát hiện lỗi sai đáp án nào trong toàn bộ 485 câu — bộ đề chính xác cao.
+  - Phát hiện một số nội dung sách chưa được câu hỏi nào bao phủ → soạn thêm **47 câu mới** (qid 486–536, có xác minh từng câu với đúng trang sách trước khi thêm), ngân hàng đề: 485 → **532 câu**.
+- **Đổi field `type` mỗi câu từ 2 giá trị (`chishiki`/`keisan`, không phân theo part) sang 3 giá trị** (`gakkachishiki`/`handan`/`keikakuritsuan`, xem `CLAUDE.md` mục "Cấu trúc đề 学科/実技") — mapping xác định từ chính nội dung câu hỏi (câu judgment-style = `handan`, câu tính toán = `keikakuritsuan`), không phải đoán mò.
+- **Cấu trúc rút đề 実技 giờ đúng bản chất đề thật**: mỗi section thực kỹ luôn rút đúng **3 câu 判断試験 + 2 câu 計画立案** (trước đây rút ngẫu nhiên 5 câu trộn lẫn 2 loại, không đảm bảo tỷ lệ). Đã xác nhận tường minh với người dùng trước khi sửa `buildExam()` (RULE #1 ngoại lệ #3 mới trong `CLAUDE.md`) — verify 500 lần chạy đều đúng tuyệt đối 3+2/section.
+- **Màn kết quả FULL thêm breakdown 学科(120点)/実技(130点)**, và trong 実技 tách tiếp 判断試験(78点)/計画立案(52点) — tính bằng hàm `partTypeBreakdown()` độc lập, không đụng `finishExam()` (cùng pattern `trialBreakdown()` có sẵn).
+- Toàn bộ thay đổi trên đã **push lên GitHub Pages (production)**, xác nhận qua Playwright E2E (build/nộp/chấm điểm) + kiểm tra trực tiếp dữ liệu live sau mỗi lần deploy.
+
+## Hoàn tất (trước đó)
 
 - **Phase 4** (cổng access code + khảo sát lần đầu + gửi kết quả qua API corporate-site) — **hoàn tất**.
   - Tách ngân hàng đề ra `data/manifest.json` + `data/gaishoku-tokutei2.json` (327 câu, `exam_type="特定技能2号・外食業"` đã xác nhận và corporate-site đã triển khai).
