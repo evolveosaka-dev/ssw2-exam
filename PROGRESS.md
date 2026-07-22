@@ -1,5 +1,12 @@
 # 進捗状況
 
+## Hoàn tất (2026-07-23, nối nút "有料プランで対策する" sang landing page thật)
+
+- Nút "有料プランで対策する" ở màn kết quả trial trước đây trỏ tới `UPGRADE_URL_PLACEHOLDER` (`#upgrade-phase5-todo`, chưa làm gì). Đã thêm hàm `upgradeUrl(examType)` (`index.html`) trả về `${API_BASE}/upgrade?exam_type=${encodeURIComponent(examType)}` — tái dùng `API_BASE`/`PRODUCTION_API_BASE` sẵn có (không thêm hằng số domain thứ 2, khi đổi domain ở Phase 7 chỉ cần sửa 1 chỗ như cũ).
+- Trang `/upgrade` thật (landing page thuyết phục có bảng so sánh, ảnh minh họa, nút mua) đã dựng bên **corporate-site** — dùng chính `exam_type` truyền qua để tra đúng sản phẩm khớp ngành (`getProductByExamType()`), nếu không khớp/không có sẽ hiện "プランが見つかりませんでした" thay vì đoán mò sang sản phẩm ngành khác. Chi tiết đầy đủ xem `corporate-site/CLAUDE.md` mục "/upgrade".
+- Đã verify end-to-end bằng Playwright: từ màn kết quả trial (mock-api) → href đúng format → mở đúng bằng corporate-site dev server → hiện đúng sản phẩm 特定技能2号・外食業 → nút mua nhảy thẳng sang Stripe Checkout (test mode).
+- ⚠️ Cross-repo: trang `/upgrade` bên corporate-site có hardcode lại số liệu trial (20問/93点/3回/7日間) thành hằng số `TRIAL_SUMMARY` riêng để hiển thị bảng so sánh — **không tự động đồng bộ**. Nếu sau này đổi cấu trúc trial (`TRIAL_FIXED_QIDS`) hoặc đổi `max_attempts`/hạn dùng của trial code, phải cập nhật tay `TRIAL_SUMMARY` bên corporate-site.
+
 ## Hoàn tất (2026-07-23, TRIAL đổi sang 20 câu cố định)
 
 - **TRIAL đổi từ 40 câu random mỗi lần thi sang 20 câu cố định, thứ tự cố định, giống nhau cho mọi user** — mục đích: cho user thấy đủ **các loại câu hỏi** (4 phân môn × 3 type: 学科/判断試験/計画立案), không phải luyện đề diện rộng. Danh sách 20 `qid` do người dùng duyệt tay (câu dễ hiểu, có `explain`/`why_wrong` rõ, không câu khó nhất, không câu có `img`), đủ 12 tổ hợp sect×type, giữ nguyên trọng số điểm/câu như đề thật (93 điểm: 学科 12 câu/41点 + 実技 8 câu/52点, chia theo 4 sect đúng bảng cấu trúc thật — khác thiết kế cũ vốn làm phẳng về `per=1`/40 điểm). Chi tiết cơ chế (`TRIAL_FIXED_QIDS`, `deriveTrialBlueprintFromFixedQids()`, `buildTrialExam()`) xem `CLAUDE.md` mục "Chế độ FULL / TRIAL". `buildExam()`/`finishExam()` không đổi — `buildTrialExam()` là hàm hoàn toàn tách biệt, chỉ `startExam()` rẽ nhánh gọi hàm nào theo `examMode`.

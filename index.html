@@ -211,7 +211,13 @@ const CODE_REASON_MESSAGES = {
 const TRIAL_PLAN_TYPES = ["trial"];
 const FULL_PLAN_TYPES = ["staff","one_time","subscription"];
 const TRIAL_EXAM_MINUTES = 30;
-const UPGRADE_URL_PLACEHOLDER = "#upgrade-phase5-todo";
+// corporate-siteの/upgradeは同じドメイン(API_BASE)配下 — ドメイン切替(フェーズ7)時は
+// PRODUCTION_API_BASEを直すだけで両方追従する(2重管理しない)。exam_typeをクエリで
+// 渡し、corporate-site側 getProductByExamType() で厳密一致した商品だけを表示する
+// (一致しなければ「プランが見つかりません」— 他 industry の商品への誤爆をUI側でも防止)。
+function upgradeUrl(examType){
+  return `${API_BASE}/upgrade?exam_type=${encodeURIComponent(examType)}`;
+}
 
 // TRIAL専用の固定20問（4sect×3type=12通りを網羅、ユーザー承認済みリスト）。
 // 配列の順序 = 出題順序（buildTrialExam()はshuffleしない）。点数配分は本番と同一
@@ -1057,7 +1063,7 @@ function App(){
                 <button className="btn btn-seal" style={{width:"100%",marginTop:8}} onClick={retryResultSubmission}>再送信</button>
               )}
               <div className="btn-row">
-                <a className="btn btn-seal" style={{flex:1,textDecoration:"none",display:"flex",alignItems:"center",justifyContent:"center"}} href={UPGRADE_URL_PLACEHOLDER}>有料プランで対策する</a>
+                <a className="btn btn-seal" style={{flex:1,textDecoration:"none",display:"flex",alignItems:"center",justifyContent:"center"}} href={upgradeUrl(verifyInfo.exam_type)}>有料プランで対策する</a>
                 {(resultMeta.remainingAttempts==null || resultMeta.remainingAttempts>0) && (
                   <button className="btn btn-ghost" style={{flex:1}} onClick={handleRetakeSameExam}>もう一度</button>
                 )}
