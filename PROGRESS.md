@@ -1,5 +1,13 @@
 # 進捗状況
 
+## Hoàn tất (2026-07-27, radar chart 4 phân môn ở màn kết quả)
+
+- Theo yêu cầu người dùng: màn kết quả (cả thi thử TRIAL lẫn thi thật FULL) hiển thị thêm biểu đồ lưới nhện (radar chart) 4 góc = 4 phân môn 衛生管理/飲食物調理/接客全般/店舗運営.
+- Thêm 2 hàm thuần hiển thị trong `index.html`: `sectAccuracyData()` (đọc lại `sectPartScoreBreakdown()`/`result.sectScore` có sẵn, không đụng `finishExam()`/`buildExam()` — RULE #1) và `SectRadarChart({data})` (vẽ SVG tay, không thêm thư viện ngoài).
+- Sự cố phát hiện lúc test: nhãn trục bên phải bị cắt mất ký tự cuối do `textAnchor="middle"` cố định làm chữ tràn ra ngoài `viewBox`. Đã sửa bằng cách chọn `textAnchor` động theo hướng trục (phải→start/trái→end/trên-dưới→middle).
+- Test thủ công qua `tools/mock-api.js` với `TEST-TRIAL-FIRST` (TRIAL, 20 câu) và `TEST-FIRST` (FULL, 55 câu) — cả 2 hiển thị đúng 4 trục, không lỗi console kể cả lúc tải trang. Chưa viết test script tự động cho phần này (app không có test suite, xem mục "Lệnh thường dùng" trong `CLAUDE.md`).
+- Chi tiết kỹ thuật đầy đủ xem `CLAUDE.md` mục "Radar chart 4 phân môn ở màn kết quả".
+
 ## Hoàn tất (2026-07-23, màn nhập thông tin bắt buộc cho gói trả phí)
 
 - **Vấn đề**: với gói trả phí (mua qua Stripe), chỉ có email là dữ liệu chắc chắn thu được — Stripe Checkout chấp nhận tên rỗng, và không hề thu thập quốc tịch/độ tuổi/nơi ở. Màn khảo sát cũ (tùy chọn, bỏ qua được) không đủ để đảm bảo có đủ dữ liệu liên hệ cho nhóm khách hàng quan trọng nhất này.
@@ -53,9 +61,9 @@
 ## Việc chờ
 
 - ~~Merge `feature/access-code` vào `main` khi go-live~~ → **đã xong từ lâu** (xác nhận lại 2026-07-24: `git log main..feature/access-code` rỗng — không còn commit nào của nhánh này chưa nằm trong `main`; `main` đã có thêm 22 commit kể từ đó và đang chạy production qua GitHub Pages). Nhánh cũ `feature/access-code` vẫn còn tồn tại trên remote nhưng chỉ là lịch sử, không cần thao tác gì thêm — có thể xoá khi thuận tiện, không phải việc gấp.
-- **Vô hiệu webhook Make.com cũ**: chưa xác nhận lại trong phiên này — nếu webhook Make.com đời trước (từ trước khi có `POST /api/exam-results` thật) vẫn còn cấu hình nhận dữ liệu ở đâu đó bên ngoài 2 repo, nên rà soát và tắt để tránh nhầm nguồn dữ liệu. Không chặn vận hành hiện tại.
+- ~~Vô hiệu webhook Make.com cũ~~ → **hoàn tất (2026-07-27)**: rà soát trực tiếp trên Make.com dashboard, xác nhận webhook đời cũ `https://hook.us2.make.com/jpntp3uy57g9dtdp9r6qsqmaub263ujd` (tên "SSW2 外食 試験結果 受信", dùng trước khi có `POST /api/exam-results` thật) vẫn còn tồn tại và **đang bật**, gắn với scenario "特定技能2号 外食 試験結果 → Google Sheets" (Scenario ID `5581542`, lần chạy cuối 2026-07-07 — trước go-live). Đã xác nhận với người dùng và chuyển scenario này vào Trash (Make giữ 30 ngày trước khi xoá vĩnh viễn, khôi phục được trong thời gian đó nếu cần) — webhook gắn liền với trigger của scenario này tự động biến mất khỏi danh sách Webhooks theo. Danh sách Webhooks hiện chỉ còn đúng 5 webhook đang dùng thật của outbox pattern hiện tại: `registration`/`contact`/`exam_result`/`MAKE_WEBHOOK_URL_EXAM_FAILURE`/`Avecvous-Evolve_order`.
 
 ## Chưa xác nhận / theo dõi tiếp
 
-- **Domain production chính thức `avecvous-evolve.com`** (Phase 7 phía corporate-site) — vẫn đang **cố ý hoãn** (xác nhận lại 2026-07-23 qua `corporate-site/CLAUDE.md`: chờ nội dung/thiết kế trang chủ hoàn thiện xong mới chuyển). Hiện toàn bộ production (cả API lẫn trang web) chạy qua `api.avecvous-evolve.com`. Khi chuyển domain thật, chỉ cần sửa `PRODUCTION_API_BASE` trong `index.html` — đã thiết kế sẵn 1 điểm sửa duy nhất.
+- ~~Domain production chính thức `avecvous-evolve.com` vẫn đang cố ý hoãn~~ → **cập nhật (2026-07-27, đối chiếu lại `corporate-site/CLAUDE.md` bản 2026-07-24): domain đã chuyển xong**, không còn hoãn. DNS thực tế cho thấy Aレコード của `avecvous-evolve.com` đã trỏ sang Vercel (`76.76.21.21`) — thời điểm/người thực hiện việc chuyển DNS không có ghi chép rõ bên corporate-site. Kèm theo đó corporate-site đã dọn xong hậu kỳ: xoá WordPress cũ trên Xserver (file+DB), thêm 301 redirect cho URL cũ, gắn canonical tag + `X-Robots-Tag: noindex` cho `api.avecvous-evolve.com` (tránh trùng nội dung với domain chính), và đã submit sitemap lên Google Search Console. **`PRODUCTION_API_BASE` trong `index.html` của ssw2-exam vẫn đang trỏ `https://api.avecvous-evolve.com`(chưa đổi sang domain chính) — vẫn hoạt động bình thường vì cả 2 domain trỏ cùng 1 deployment, chỉ là `api.` subdomain giờ bị noindex. Đổi sang `avecvous-evolve.com` không bắt buộc, có thể làm khi thuận tiện (SEO/nhất quán), chỉ cần sửa 1 dòng hằng số này.**
 - ~~email/NATIONALITIES chưa đồng bộ với corporate-site~~ → **đã xác nhận từ lâu, không còn là vấn đề** (xem mục "API contract" trong `CLAUDE.md`): payload `/api/exam-results` không gửi `email` nữa và corporate-site đã cập nhật đồng bộ; `NATIONALITIES` (9 giá trị) đã khớp với `corporate-site/src/lib/surveyCategories.ts`. Đây là 2 mục còn sót lại từ giai đoạn Phase 4 (trước go-live), nay dọn bỏ vì đã lỗi thời so với thực tế production hiện tại.

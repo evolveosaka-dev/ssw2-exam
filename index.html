@@ -173,6 +173,10 @@
   .data-table tr.tb-red td.tb-pct { color:var(--fail); font-weight:800; }
   .data-table tr.tb-yellow td.tb-pct { color:var(--gold); font-weight:800; }
   .data-table tr.tb-green td.tb-pct { color:var(--pass); font-weight:800; }
+  .radar-wrap { margin-top:16px; padding:14px 10px; background:var(--paper-2);
+    border:1px solid var(--line-soft); border-radius:var(--radius); text-align:center; }
+  .radar-wrap .radar-title { font-size:11.5px; font-weight:800; color:var(--indigo);
+    text-transform:uppercase; letter-spacing:.5px; margin-bottom:2px; }
   @media (max-width:560px) {
     .exam-facts { grid-template-columns:repeat(2,1fr); }
     .sect-breakdown { grid-template-columns:1fr; }
@@ -786,6 +790,72 @@ function App(){
     return {gakka, jitsugi, byType};
   }
 
+  // 分野別レーダーチャート用データ(4分野: 衛生管理/飲食物調理/接客全般/店舗運営)。TRIAL/FULL
+  // 両対応の表示専用ヘルパー — sectPartScoreBreakdown()/result.sectScoreを読み直すだけで、
+  // finishExam()/buildExam()の算出方法・sectScore自体は未変更(RULE#1に抵触しない、上の2関数と同じパターン)。
+  function sectAccuracyData(){
+    const order = BLUEPRINT.gakka.map(s=>s.key);
+    if(examMode==="trial"){
+      const bySect = Object.fromEntries(sectPartScoreBreakdown(questions,answers).map(r=>[r.sect,r]));
+      return order.map(key=>{
+        const r = bySect[key] || {gakka:{got:0,max:0}, jitsugi:{got:0,max:0}};
+        const got = r.gakka.got+r.jitsugi.got, max = r.gakka.max+r.jitsugi.max;
+        return {key, label:SECT_LABEL[key], pct: max>0 ? got/max*100 : 0};
+      });
+    }
+    return order.map(key=>{
+      const v = result.sectScore[key] || {got:0,max:0};
+      return {key, label:SECT_LABEL[key], pct: v.max>0 ? v.got/v.max*100 : 0};
+    });
+  }
+
+  // 4分野を軸にしたレーダーチャート(SVG手描き、外部ライブラリ不使用)。表示専用、
+  // 採点・出題ロジックには一切関与しない。
+  function SectRadarChart({data}){
+    const size=280, cx=size/2, cy=size/2, r=size*0.257;
+    const n=data.length;
+    const angleFor=i=>-90+(360/n)*i;
+    const pointAt=(i,frac)=>{
+      const a=angleFor(i)*Math.PI/180;
+      return [cx+r*frac*Math.cos(a), cy+r*frac*Math.sin(a)];
+    };
+    const rings=[0.25,0.5,0.75,1];
+    const dataPts=data.map((d,i)=>pointAt(i, Math.max(0,Math.min(100,d.pct))/100));
+    // ラベルは軸の向き(左/右/上下)に応じてtextAnchorを切り替え、SVG外へのはみ出し
+    // (viewBox境界でのクリッピング)を防ぐ。ラベルと正答率は別のtext要素に分けて2行表示。
+    return (
+      <svg viewBox={`0 0 ${size} ${size}`} width="100%" style={{maxWidth:260,display:"block",margin:"0 auto"}}>
+        {rings.map((frac,ri)=>(
+          <polygon key={"ring"+ri} points={data.map((_,i)=>pointAt(i,frac).join(",")).join(" ")}
+            fill="none" stroke="var(--line-soft)" strokeWidth="1"/>
+        ))}
+        {data.map((_,i)=>{
+          const [x,y]=pointAt(i,1);
+          return <line key={"axis"+i} x1={cx} y1={cy} x2={x} y2={y} stroke="var(--line-soft)" strokeWidth="1"/>;
+        })}
+        <polygon points={dataPts.map(p=>p.join(",")).join(" ")}
+          fill="rgba(178,58,46,.22)" stroke="var(--seal)" strokeWidth="2"/>
+        {dataPts.map((p,i)=><circle key={"pt"+i} cx={p[0]} cy={p[1]} r="3.5" fill="var(--seal)"/>)}
+        {data.map((d,i)=>{
+          const angle=angleFor(i);
+          const cos=Math.cos(angle*Math.PI/180);
+          const anchor = cos>0.3 ? "start" : cos<-0.3 ? "end" : "middle";
+          const [x,y]=pointAt(i,1.16);
+          return (
+            <g key={"lbl"+i}>
+              <text x={x} y={y-6} fontSize="11" fontWeight="700" textAnchor={anchor} fill="var(--ink)">
+                {d.label}
+              </text>
+              <text x={x} y={y+8} fontSize="11" textAnchor={anchor} fill="var(--ink-soft)">
+                {Math.round(d.pct)}%
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+    );
+  }
+
   function Masthead(){
     const totalQuestions=[...BLUEPRINT.gakka,...BLUEPRINT.jitsugi].reduce((s,x)=>s+x.n,0);
     return (
@@ -1147,6 +1217,10 @@ function App(){
                     </tbody>
                   </table>
                 </div>
+                <div className="radar-wrap">
+                  <div className="radar-title">分野別 正答率</div>
+                  <SectRadarChart data={sectAccuracyData()}/>
+                </div>
                 <div className="rev-explain" style={{marginTop:16}}>
                   <div className="ex-lbl">本番の試験構成</div>
                   <div className="ex-jp">
@@ -1211,6 +1285,10 @@ function App(){
                       <div className="ss-pts">{v.got}/{v.max}</div>
                     </div>
                   ))}
+                </div>
+                <div className="radar-wrap">
+                  <div className="radar-title">分野別 正答率</div>
+                  <SectRadarChart data={sectAccuracyData()}/>
                 </div>
                 {saveState.status==="sending" && <SavingOverlay/>}
               </div>

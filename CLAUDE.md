@@ -80,6 +80,15 @@ Màn kết quả FULL có thêm breakdown 学科/実技 và trong 実技 tách t
 
 `loadExamData()` fetch file này **best-effort** (đường dẫn suy ra từ `cfg.file` bằng cách đổi đuôi `.json`→`.meta.json`) — lỗi/thiếu file thì `FURIGANA` rỗng, màn kết quả tự động rơi về hiện text thường, không chặn luồng thi. `withFurigana(text)` (module-level, ngoài `App`) tra `FURIGANA[text]`, có thì render `dangerouslySetInnerHTML` (HTML tự sinh offline, không phải input người dùng), không có thì trả về text thường — dùng ở khối "解説" (câu hỏi, đáp án, giải thích, why_wrong) trên màn kết quả, dùng chung cho cả FULL và TRIAL vì khối này đã share sẵn.
 
+### Radar chart 4 phân môn ở màn kết quả (2026-07-27, không đụng RULE #1)
+
+Màn kết quả (cả FULL lẫn TRIAL) hiển thị thêm 1 biểu đồ lưới nhện (radar/spider chart) với đúng 4 góc là 4 phân môn của 外食業・特定技能2号: 衛生管理/飲食物調理/接客全般/店舗運営 (theo thứ tự cố định `BLUEPRINT.gakka.map(s=>s.key)`, tức `eisei`/`chori`/`sekkyaku`/`tenpo`).
+
+- `sectAccuracyData()`: hàm tính dữ liệu hiển thị, **đọc lại** `sectPartScoreBreakdown(questions,answers)` (TRIAL) hoặc `result.sectScore` (FULL) — cùng pattern với `partTypeBreakdown()`/`sectPartScoreBreakdown()` đã có sẵn (đọc state độc lập, không sửa `finishExam()`/`buildExam()`, không đổi cách tính điểm). Trả về mảng 4 phần tử `{key,label,pct}` theo đúng thứ tự cố định trên, để 2 mode luôn vẽ cùng 1 hình dạng trục dù nguồn dữ liệu khác nhau (TRIAL: 20 câu cố định; FULL: 55 câu random).
+- `SectRadarChart({data})`: component vẽ SVG tay (không dùng thư viện ngoài, phù hợp app 1-file không bundler). 4 trục cách đều 90°, vẽ lưới tham chiếu 25/50/75/100%, 1 đa giác dữ liệu tô màu `--seal`. Nhãn mỗi trục dùng `textAnchor` động theo hướng trục (trục phải→`start`, trục trái→`end`, trục trên/dưới→`middle`) để tránh bị cắt chữ ở rìa `viewBox` — lỗi này đã gặp thực tế lúc test đầu tiên (nhãn "飲食物調理" bị cắt mất "%") và đã sửa bằng cách này thay vì `textAnchor="middle"` cố định.
+- Vị trí hiển thị: TRIAL — ngay sau bảng "分野/学科/実技/合計/正答率", trước khối "本番の試験構成". FULL — ngay sau khối thanh tiến trình theo phân môn (`result.sectScore`), trước `SavingOverlay`.
+- Đã test thủ công qua `tools/mock-api.js` (`TEST-TRIAL-FIRST` và `TEST-FIRST`), không có lỗi console kể cả lúc tải trang (xác nhận Babel transform JSX hợp lệ).
+
 ### Nạp dữ liệu runtime
 
 `loadExamData(examType)` (đầu file JS trong `index.html`) fetch `manifest.json` rồi fetch file ngành tương ứng, gán vào các biến module-level `QUESTION_BANK`, `BLUEPRINT`, `SECT_LABEL`, `PASS_MARK`, `TOTAL_MARK`, `EXAM_MINUTES`, `EXAM_LABEL`. `buildExam()`/`finishExam()` đọc các biến này y hệt cách chúng hardcode trước đây — không phụ thuộc vào cách chúng được nạp.
