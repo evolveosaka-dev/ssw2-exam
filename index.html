@@ -177,6 +177,18 @@
     border:1px solid var(--line-soft); border-radius:var(--radius); text-align:center; }
   .radar-wrap .radar-title { font-size:11.5px; font-weight:800; color:var(--indigo);
     text-transform:uppercase; letter-spacing:.5px; margin-bottom:2px; }
+  .radar-locked { position:relative; overflow:hidden; }
+  .radar-blur { filter:blur(4px); opacity:.45; pointer-events:none; user-select:none; }
+  .radar-lock-overlay { position:absolute; inset:0; top:32px; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:8px; text-align:center; padding:16px; }
+  .radar-lock-overlay .lock-icon { font-size:22px; }
+  .radar-lock-overlay .lock-text { font-size:12.5px; font-weight:700; color:var(--indigo);
+    background:var(--paper-2); padding:7px 14px; border-radius:8px; border:1px solid var(--line-soft);
+    max-width:220px; }
+  .rev-explain.locked .ex-jp { color:var(--ink-soft); }
+  .rev-locked-note { margin:6px 0 14px; padding:9px 12px; background:var(--amber-bg);
+    border-left:3px solid var(--gold); border-radius:0 var(--radius) var(--radius) 0;
+    font-size:12.5px; color:var(--ink-soft); }
   @media (max-width:560px) {
     .exam-facts { grid-template-columns:repeat(2,1fr); }
     .sect-breakdown { grid-template-columns:1fr; }
@@ -809,6 +821,14 @@ function App(){
     });
   }
 
+  // TRIAL用レーダーチャートのプレースホルダーデータ。実際の正答率(sectAccuracyData())は
+  // 見せない — 有料プランへの訴求のため、4軸とも同じ値にして意味の無い正方形の見た目だけ
+  // 見せる(さらにradar-blurで視覚的にもぼかす、下のJSX参照)。ラベルのみ本物のSECT_LABELを使う。
+  function previewRadarData(){
+    const order = BLUEPRINT.gakka.map(s=>s.key);
+    return order.map(key=>({key, label:SECT_LABEL[key], pct:62}));
+  }
+
   // 4分野を軸にしたレーダーチャート(SVG手描き、外部ライブラリ不使用)。表示専用、
   // 採点・出題ロジックには一切関与しない。
   function SectRadarChart({data}){
@@ -1217,9 +1237,15 @@ function App(){
                     </tbody>
                   </table>
                 </div>
-                <div className="radar-wrap">
+                <div className="radar-wrap radar-locked">
                   <div className="radar-title">分野別 正答率</div>
-                  <SectRadarChart data={sectAccuracyData()}/>
+                  <div className="radar-blur">
+                    <SectRadarChart data={previewRadarData()}/>
+                  </div>
+                  <div className="radar-lock-overlay">
+                    <div className="lock-icon">🔒</div>
+                    <div className="lock-text">分野別の詳しい正答率は有料プランでご確認いただけます</div>
+                  </div>
                 </div>
                 <div className="rev-explain" style={{marginTop:16}}>
                   <div className="ex-lbl">本番の試験構成</div>
@@ -1309,15 +1335,25 @@ function App(){
         <div className="panel">
           <h2>解説</h2>
           <p className="hint">正解の理由と、各誤答が違う理由を確認しましょう。</p>
+          {examMode==="trial" && (
+            <div className="rev-locked-note">
+              無料体験でご覧いただけるのは問1〜4の解説のみです。問5以降の解説（ふりがな表示を含む）は有料プランでご利用いただけます。
+            </div>
+          )}
           {questions.map((q,idx)=>{
             const chosen=answers[q.id]; const ok=chosen===q.answer;
+            // TRIALは問1〜4のみ解説・ふりがなを見せ、問5以降は有料プランの訴求として
+            // 解説(解説・誤答理由の両方)とふりがなをロックする(ユーザー指示、2026-07-28)。
+            // FULLは常にfalse — 挙動は変更していない。
+            const locked = examMode==="trial" && idx>=4;
+            const fg = locked ? (t=>t) : withFurigana;
             return (
               <div className="rev-item" key={q.id}>
                 <div className="rev-head">
                   <div className={"rev-badge "+(ok?"ok":"no")}>{ok?"✓":"✕"}</div>
                   <div>
                     <div className="rev-qmeta">問{idx+1} · {q.part==="gakka"?"学科":"実技"} · {q._sectJP} · {q.per}点 · {typeLabel(q.type)}</div>
-                    <div className="rev-q">{withFurigana(q.q)}</div>
+                    <div className="rev-q">{fg(q.q)}</div>
                   </div>
                 </div>
                 <div className="rev-body">
@@ -1327,22 +1363,31 @@ function App(){
                     const isChosenWrong=i===chosen && chosen!==q.answer;
                     return (
                       <div key={i} className={"rev-opt"+(isCorrect?" correct":"")+(isChosenWrong?" chosen-wrong":"")}>
-                        <b>{"ABCD"[i]}.</b> {withFurigana(opt)}
+                        <b>{"ABCD"[i]}.</b> {fg(opt)}
                         {isCorrect && <span className="tag">正解</span>}
                         {isChosenWrong && <span className="tag">あなたの解答</span>}
                       </div>
                     );
                   })}
-                  <div className="rev-explain">
-                    <div className="ex-lbl">解説</div>
-                    <div className="ex-jp">{withFurigana(q.explain)}</div>
-                  </div>
-                  {q.why_wrong && Object.keys(q.why_wrong).length>0 && (
-                    <div className="rev-why-wrong">
-                      {Object.entries(q.why_wrong).sort((a,b)=>a[0]-b[0]).map(([i,reason])=>(
-                        <div key={i} style={{marginTop:4}}><b>{"ABCD"[Number(i)]} が誤りの理由：</b>{withFurigana(reason)}</div>
-                      ))}
+                  {locked ? (
+                    <div className="rev-explain locked">
+                      <div className="ex-lbl">解説</div>
+                      <div className="ex-jp">🔒 有料プランでご覧いただけます</div>
                     </div>
+                  ) : (
+                    <>
+                      <div className="rev-explain">
+                        <div className="ex-lbl">解説</div>
+                        <div className="ex-jp">{fg(q.explain)}</div>
+                      </div>
+                      {q.why_wrong && Object.keys(q.why_wrong).length>0 && (
+                        <div className="rev-why-wrong">
+                          {Object.entries(q.why_wrong).sort((a,b)=>a[0]-b[0]).map(([i,reason])=>(
+                            <div key={i} style={{marginTop:4}}><b>{"ABCD"[Number(i)]} が誤りの理由：</b>{fg(reason)}</div>
+                          ))}
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </div>

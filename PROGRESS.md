@@ -1,5 +1,12 @@
 # 進捗状況
 
+## Hoàn tất (2026-07-28, khóa 1 phần màn kết quả TRIAL làm phễu chuyển đổi lên gói trả phí)
+
+- Theo yêu cầu người dùng: màn kết quả TRIAL không còn hiển thị dữ liệu thật của radar chart (4 phân môn), thay bằng hình minh họa cố định + làm mờ (`filter:blur`) + overlay "🔒 分野別の詳しい正答率は有料プランでご確認いただけます".
+- Phần 解説 (giải thích đáp án) của TRIAL: chỉ vấn 4 câu đầu (問1〜4) hiển thị đầy đủ furigana + giải thích + lý do đáp án sai như cũ. Từ câu 5 trở đi: bỏ furigana, ẩn giải thích/lý do sai, thay bằng box "🔒 有料プランでご覧いただけます". Câu hỏi/đáp án/kết quả đúng-sai vẫn hiển thị bình thường ở mọi câu.
+- FULL mode không đổi gì (đã verify thủ công qua `TEST-FIRST`: radar chart hiện rõ dữ liệu thật, 問5+ vẫn đầy đủ furigana/解説).
+- Chi tiết kỹ thuật đầy đủ xem `CLAUDE.md` mục "TRIAL: khóa 1 phần nội dung màn kết quả làm phễu chuyển đổi sang gói trả phí".
+
 ## Hoàn tất (2026-07-27, radar chart 4 phân môn ở màn kết quả)
 
 - Theo yêu cầu người dùng: màn kết quả (cả thi thử TRIAL lẫn thi thật FULL) hiển thị thêm biểu đồ lưới nhện (radar chart) 4 góc = 4 phân môn 衛生管理/飲食物調理/接客全般/店舗運営.

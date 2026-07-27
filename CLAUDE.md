@@ -89,6 +89,19 @@ Màn kết quả (cả FULL lẫn TRIAL) hiển thị thêm 1 biểu đồ lư�
 - Vị trí hiển thị: TRIAL — ngay sau bảng "分野/学科/実技/合計/正答率", trước khối "本番の試験構成". FULL — ngay sau khối thanh tiến trình theo phân môn (`result.sectScore`), trước `SavingOverlay`.
 - Đã test thủ công qua `tools/mock-api.js` (`TEST-TRIAL-FIRST` và `TEST-FIRST`), không có lỗi console kể cả lúc tải trang (xác nhận Babel transform JSX hợp lệ).
 
+### TRIAL: khóa 1 phần nội dung màn kết quả làm phễu chuyển đổi sang gói trả phí (2026-07-28, không đụng RULE #1)
+
+Theo yêu cầu người dùng, màn kết quả TRIAL giờ chỉ hé lộ một phần nội dung, phần còn lại khóa lại kèm chú thích "有料プラン" để thúc đẩy nâng cấp. **FULL không đổi gì** (luôn hiển thị đầy đủ, không có khái niệm "khóa").
+
+- **Radar chart**: TRIAL không còn truyền `sectAccuracyData()` (dữ liệu thật) vào `SectRadarChart` nữa, mà truyền `previewRadarData()` (hàm mới, cùng chỗ với `sectAccuracyData()`) — trả về 4 giá trị **cố định bằng nhau** (62%) chỉ để vẽ hình dạng minh họa, không hé lộ tỷ lệ đúng thật. Bọc trong `<div className="radar-blur">` (CSS `filter:blur(4px)`) + overlay `<div className="radar-lock-overlay">` (🔒 + dòng chữ "分野別の詳しい正答率は有料プランでご確認いただけます") đè lên trên. Class `.radar-locked`/`.radar-blur`/`.radar-lock-overlay` mới thêm trong `<style>`.
+- **解説 (câu 5~20)**: trong vòng lặp `questions.map((q,idx)=>...)` ở khối 解説 (dùng chung FULL/TRIAL), thêm biến `const locked = examMode==="trial" && idx>=4` (idx 0-based nên `idx>=4` = 問5 trở đi). Khi `locked`:
+  - Furigana bị tắt: `const fg = locked ? (t=>t) : withFurigana;` rồi dùng `fg(...)` thay cho gọi `withFurigana(...)` trực tiếp ở mọi chỗ trong item đó (câu hỏi, đáp án, giải thích, why_wrong) — chỉ đổi *tham chiếu hàm dùng để hiển thị*, không đụng dữ liệu `q.q`/`q.options`/`q.explain` gốc.
+  - Khối `rev-explain` (解説) **và** khối `rev-why-wrong` (giải thích đáp án sai) đều bị thay bằng 1 box khóa chung: `<div className="rev-explain locked"><div className="ex-lbl">解説</div><div className="ex-jp">🔒 有料プランでご覧いただけます</div></div>` — quyết định của người dùng là khóa cả 2 cùng lúc (không tách riêng why_wrong).
+  - Câu hỏi/đáp án/nhãn đúng-sai (badge ✓/✕, tag "正解"/"あなたの解答") **vẫn hiển thị bình thường** cho mọi câu kể cả bị khóa — chỉ ẩn phần giải thích + furigana, không ẩn phần chấm điểm.
+  - Thêm 1 dòng chú thích chung ở đầu panel 解説 (chỉ hiện khi `examMode==="trial"`): "無料体験でご覧いただけるのは問1〜4の解説のみです。問5以降の解説（ふりがな表示を含む）は有料プランでご利用いただけます。" (class `.rev-locked-note` mới, style giống `.rev-explain` nhưng dùng riêng để không đụng style box đang có).
+- `locked` luôn `false` khi `examMode==="full"` bất kể `idx`, nên hành vi FULL (mọi câu đều có furigana + giải thích đầy đủ) không đổi — đã verify thủ công qua `TEST-FIRST` (問5 vẫn đầy đủ furigana/解説/why_wrong).
+- Test thủ công qua `tools/mock-api.js` với `TEST-TRIAL-FIRST`: xác nhận 問1〜4 vẫn đầy đủ furigana+解説, 問5 trở đi mất furigana + hiện box khóa "🔒 有料プランでご覧いただけます"; radar chart hiện mờ + overlay khóa. `TEST-FIRST` (FULL): xác nhận radar chart hiện rõ (không mờ/không khóa), 問5+ vẫn đầy đủ furigana/解説.
+
 ### Nạp dữ liệu runtime
 
 `loadExamData(examType)` (đầu file JS trong `index.html`) fetch `manifest.json` rồi fetch file ngành tương ứng, gán vào các biến module-level `QUESTION_BANK`, `BLUEPRINT`, `SECT_LABEL`, `PASS_MARK`, `TOTAL_MARK`, `EXAM_MINUTES`, `EXAM_LABEL`. `buildExam()`/`finishExam()` đọc các biến này y hệt cách chúng hardcode trước đây — không phụ thuộc vào cách chúng được nạp.
