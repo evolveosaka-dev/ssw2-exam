@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>移転しました — 外食業 特定技能2号 技能測定試験 練習アプリ</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<!--
+  このリポジトリは「旧URLを生かしておくためのリダイレクト」だけを持つ。
+
+  練習アプリ本体は 2026-08-19 に corporate-site へ移設し、
+  https://avecvous-evolve.com/exam/ で配信している。移設の理由は、問題バンク
+  (532問+正答+解説)と学習ガイドがこの public リポジトリに静的ファイルとして
+  置かれていて、有料で売っている中身を誰でもダウンロードできたこと。
+  いまはアクセスコードを確認したうえで API 越しに配っている。
+
+  この旧URLを消せない理由: すでに送信ずみの案内メールに載っている。
+  受験者がそのメールから辿ってくるので、302 で新URLへ送る。
+
+  ⚠️ ここにアプリのコードやデータを置かないこと。public なので、置いた時点で
+     移設した意味が無くなる。アプリは evolveosaka-dev/ssw2-exam-app(private)、
+     配信は corporate-site。
+-->
+<script>
+  // クエリ文字列(?code=... など)はそのまま引き継ぐ — メールのリンクに
+  // アクセスコードが付いている場合に入力し直させないため。
+  location.replace("https://avecvous-evolve.com/exam/" + location.search + location.hash);
+</script>
+<style>
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+         background:#faf7f2; color:#2b2b2b;
+         font-family:-apple-system,"Segoe UI","Yu Gothic","Noto Sans JP",sans-serif; }
+  .box { max-width:34rem; padding:2rem 1.5rem; text-align:center; line-height:1.9; }
+  a { color:#9c2b2b; font-weight:700; }
+</style>
+</head>
+<body>
+  <div class="box">
+    <p>この練習アプリは新しいアドレスへ移動しました。<br>自動で移動します。</p>
+    <p><a href="https://avecvous-evolve.com/exam/">https://avecvous-evolve.com/exam/</a></p>
+    <p style="font-size:.9em;color:#6b6b6b">
+      Ứng dụng thi thử đã chuyển sang địa chỉ mới. Trang sẽ tự chuyển.
+    </p>
+  </div>
+</body>
+</html>
